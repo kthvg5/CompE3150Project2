@@ -4,7 +4,7 @@
 map:
 WWWWWWW
 WWWWWWW
-WLLDWWW
+WRRDWWW
 WWWDWWW
 WWWDWWW
 WWWGWWW
@@ -21,7 +21,7 @@ G: goal, Represented by a blinking light
 char map1[7][7] = {
   {'W','W','W','W','W','W', 'W'} ,
   {'W','W','W','W','W','W', 'W'} ,
-  {'W','L','L','D','W','W', 'W'} ,
+  {'W','R','R','D','W','W', 'W'} ,
   {'W','W','W','D','W','W', 'W'} ,
   {'W','W','W','D','W','W', 'W'} ,
   {'W','W','W','G','W','W', 'W'} ,
