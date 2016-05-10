@@ -1,0 +1,41 @@
+//Below is the Pseudo code for moving the player around in the maze
+//This can then be implemented in C to be put on the Simon Board
+
+
+//Intial Code to Wait for Input
+While (GameOver==0) {
+	Button_Pressed = Read_Input;
+	//Jump to code for each button
+}
+
+//Button Actions
+//Up - The middle top row
+	If (Map(Play_x,Play_y-1)!= W) 
+		Play_y -= 1;
+	Redraw_Map();
+
+//Down - The middle, bottom row
+	If (Map(Play_x,Play_y+1)!= W) 
+		Play_y += 1
+	Redraw_Map();
+
+//Right - The right, middle row
+	If (Map(Play_x+1,Play_y)!= W) 
+		Play_x += 1
+	Redraw_Map();
+
+//Left - The left, middle row
+	If (Map(Play_x-1,Play_y)!= W) 
+		Play_x -= 1
+	Redraw_Map();
+
+//Check if Player is at goal
+	If (Map(Play_x,Play_y)== G)
+		GameOver = 1;
+
+//Ask the game for help
+	If (Button_Pressed(Help_Button)==1)
+		Display("The Best Way to go is: " + Map(Play_x,Play_y));
+	
+
+	
