@@ -18,7 +18,7 @@ WWWDWWW
 WWWGWWW
 WWWWWWW
 */
-const char map1[7][7] = {
+code char map1[7][7] = {
 	{ 'W', 'W', 'W', 'W', 'W', 'W', 'W' },
 	{ 'W', 'W', 'W', 'W', 'W', 'W', 'W' },
 	{ 'W', 'R', 'R', 'D', 'W', 'W', 'W' },
@@ -40,7 +40,7 @@ WWRRRDW
 WRUWWGW
 WWWWWWW
 */
-const char map2[7][7] = {
+code char map2[7][7] = {
 	{ 'W', 'W', 'W', 'W', 'W', 'W', 'W' },
 	{ 'W', 'D', 'W', 'W', 'D', 'W', 'W' },
 	{ 'W', 'R', 'R', 'D', 'L', 'L', 'W' },
@@ -67,7 +67,7 @@ WWRRLWUWULWW
 WWUWWWULUWWW
 WWWWWWWWWWWW
 */
-const char map3[12][12] = {
+code char map3[12][12] = {
 	{ 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W' },
 	{ 'W', 'D', 'L', 'L', 'L', 'L', 'W', 'W', 'W', 'W', 'W', 'W' },
 	{ 'W', 'D', 'W', 'U', 'W', 'W', 'W', 'R', 'R', 'R', 'G', 'W' },
