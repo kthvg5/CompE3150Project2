@@ -1,6 +1,6 @@
 /*maps for maze
 key:
-W: Wall, Represented by a solit light
+W: Wall, Represented by a solid light
 R: Right is the quickest way to goal, Represented by no light
 L: Left is the quickest way to goal, Represented by no light
 U: Up is the quickest way to goal, Represented by no light
@@ -27,7 +27,7 @@ const char map1[7][7] = {
 	{ 'W', 'W', 'W', 'G', 'W', 'W', 'W' },
 	{ 'W', 'W', 'W', 'W', 'W', 'W', 'W' }
 };
-const unsigned char M1startX = 1;											 
+const unsigned char M1startX = 1;
 const unsigned char M1startY = 2;
 
 /*
