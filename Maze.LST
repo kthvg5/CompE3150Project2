@@ -1,4 +1,4 @@
-C51 COMPILER V6.02  MAZE                                                                   05/10/2016 19:46:05 PAGE 1   
+C51 COMPILER V6.02  MAZE                                                                   05/10/2016 20:12:52 PAGE 1   
 
 
 C51 COMPILER V6.02, COMPILATION OF MODULE MAZE
@@ -12,403 +12,349 @@ stmt level    source
    3          #include"uart.h"
    4          #include "maps.h"
    5          
-   6          sbit test = P2^4;
-   7          
-   8          void delay(long x)
-   9          {
-  10   1      	long i = 0;
-  11   1      	for (i; i<x; i++);
-  12   1      }
-  13          
-  14          void cheatMap(char** map_array, unsigned char arr_x, unsigned char arr_y) //rename map_array to group code
-             - name for the map array
-  15          {
-  16   1      	unsigned char i;
-  17   1      	unsigned char j;
-  18   1      	for (i = 0; i < arr_x; i++)
-  19   1      	{
-  20   2      
-  21   2      		for (j = 0; j < arr_y; j++)
-  22   2      		{
-  23   3      			uart_transmit(map_array[i][j]);
-  24   3      		}
-  25   2      		uart_transmit('\n'); //I think this will work?
-  26   2      	}
-  27   1      	uart_transmit(arr_x);
-  28   1      	uart_transmit('\n');
-  29   1      	uart_transmit(arr_y);
-  30   1      	return;
-  31   1      }
-  32          
-  33          void Redraw_map(unsigned char Play_x, unsigned char Play_y, const unsigned char** Map)
-  34          {
-  35   1      	unsigned char i = 0;
-  36   1      	//Shows what the 8 spaces around the player are
-  37   1      	//LED1
-  38   1      	if (Map[Play_x - 1][Play_y - 1] == 'W') //Wall
-  39   1      		test = 0;
-  40   1      	else if (Map[Play_x - 1][Play_y - 1] == 'G')
-  41   1      	{
-  42   2      		for (i; i < 3; i++)
-  43   2      		{
-  44   3      			P2^4 = 0;
-*** ERROR C141 IN LINE 44 OF .\MAZE.C: syntax error near '='
-  45   3      			delay(100);
-  46   3      			P2^4 = 1;
-*** ERROR C141 IN LINE 46 OF .\MAZE.C: syntax error near '='
-  47   3      			delay(100);
-  48   3      		}
-  49   2      	}
-  50   1      	else //Open
-  51   1      		P2^4 = 1;
-*** ERROR C141 IN LINE 51 OF .\MAZE.C: syntax error near '='
-C51 COMPILER V6.02  MAZE                                                                   05/10/2016 19:46:05 PAGE 2   
+   6          sbit LED1 = P2 ^ 4;
+   7          sbit LED2 = P0 ^ 5;
+   8          sbit LED3 = P2 ^ 7;
+   9          sbit LED4 = P0 ^ 6;
+  10          sbit LED5 = P1 ^ 6;
+  11          sbit LED6 = P0 ^ 4;
+  12          sbit LED7 = P2 ^ 5;
+  13          sbit LED8 = P0 ^ 7;
+  14          sbit LED9 = P2 ^ 6;
+  15          
+  16          sbit SW1 = P2 ^ 0;
+  17          sbit SW2 = P0 ^ 1;
+  18          sbit SW3 = P2 ^ 3;
+  19          sbit SW4 = P0 ^ 2;
+  20          sbit SW5 = P1 ^ 4;
+  21          sbit SW6 = P0 ^ 0;
+  22          sbit SW8 = P0 ^ 3;
+  23          
+  24          
+  25          
+  26          void delay(long x)
+  27          {
+  28   1      	long i = 0;
+  29   1      	for (i; i<x; i++);
+  30   1      }
+  31          
+  32          void cheatMap(const char** map_array, unsigned char arr_x, unsigned char arr_y) //rename map_array to grou
+             -p code name for the map array
+  33          {
+  34   1      	unsigned char i;
+  35   1      	unsigned char j;
+  36   1      	for (i = 0; i < arr_x; i++)
+  37   1      	{
+  38   2      
+  39   2      		for (j = 0; j < arr_y; j++)
+  40   2      		{
+  41   3      			uart_transmit(map_array[i][j]);
+  42   3      		}
+  43   2      		uart_transmit('\n'); //I think this will work?
+  44   2      	}
+  45   1      	uart_transmit(arr_x);
+  46   1      	uart_transmit('\n');
+  47   1      	uart_transmit(arr_y);
+  48   1      	return;
+  49   1      }
+  50          
+  51          void Redraw_Map(unsigned char Play_x, unsigned char Play_y, const char** Map)
+  52          {
+  53   1      	unsigned char i = 0;
+  54   1      	//Shows what the 8 spaces around the player are
+C51 COMPILER V6.02  MAZE                                                                   05/10/2016 20:12:52 PAGE 2   
 
-  52   1      	//LED2
-  53   1      	if (Map[Play_x][Play_y - 1] == 'W') //Wall
-  54   1      		P0^5 = 0;
-*** ERROR C141 IN LINE 54 OF .\MAZE.C: syntax error near '='
-  55   1      	else if (Map[Play_x][Play_y - 1] == 'G') //Goal
-*** ERROR C141 IN LINE 55 OF .\MAZE.C: syntax error near 'else'
-  56   1      	{
-  57   2      		for (i; i < 3; i++)
-  58   2      		{
-  59   3      			P0^5 = 0;
-*** ERROR C141 IN LINE 59 OF .\MAZE.C: syntax error near '='
-  60   3      			delay(100);
-  61   3      			P0^5 = 1;
-*** ERROR C141 IN LINE 61 OF .\MAZE.C: syntax error near '='
-  62   3      			delay(100);
-  63   3      		}
-  64   2      	}
-  65   1      	else //Open
-  66   1      		P0^5 = 1;
-*** ERROR C141 IN LINE 66 OF .\MAZE.C: syntax error near '='
-  67   1      	//LED3
-  68   1      	if (Map[Play_x + 1][Play_y - 1] == 'W') //Wall
-  69   1      		P2^7 = 0;
-*** ERROR C141 IN LINE 69 OF .\MAZE.C: syntax error near '='
-  70   1      	else if (Map[Play_x + 1][Play_y - 1] == 'G') //Goal
-*** ERROR C141 IN LINE 70 OF .\MAZE.C: syntax error near 'else'
-  71   1      	{
-  72   2      		for (i; i < 3; i++)
-  73   2      		{
-  74   3      			P2^7 = 0;
-*** ERROR C141 IN LINE 74 OF .\MAZE.C: syntax error near '='
-  75   3      			delay(100);
-  76   3      			P2^7 = 1;
-*** ERROR C141 IN LINE 76 OF .\MAZE.C: syntax error near '='
-  77   3      			delay(100);
-  78   3      		}
-  79   2      	}
-  80   1      	else //Open
-  81   1      		P2^7 = 1;
-*** ERROR C141 IN LINE 81 OF .\MAZE.C: syntax error near '='
-  82   1      	//LED4
-  83   1      	if (Map[Play_x - 1][Play_y] == 'W') //Wall
-  84   1      		P0^6 = 0;
-*** ERROR C141 IN LINE 84 OF .\MAZE.C: syntax error near '='
-  85   1      	else if (Map[Play_x - 1][Play_y] == 'G') //Goal
-*** ERROR C141 IN LINE 85 OF .\MAZE.C: syntax error near 'else'
-  86   1      	{
-  87   2      		for (i; i < 3; i++)
-  88   2      		{
-  89   3      			P0^6 = 0;
-*** ERROR C141 IN LINE 89 OF .\MAZE.C: syntax error near '='
-  90   3      			delay(100);
-  91   3      			P0^6 = 1;
-*** ERROR C141 IN LINE 91 OF .\MAZE.C: syntax error near '='
-  92   3      			delay(100);
-  93   3      		}
-  94   2      	}
-  95   1      	else //Open
-  96   1      		P0^6 = 1;
-*** ERROR C141 IN LINE 96 OF .\MAZE.C: syntax error near '='
-  97   1      	//LED5
-  98   1      	if (Map[Play_x][Play_y] == 'W') //Wall
-C51 COMPILER V6.02  MAZE                                                                   05/10/2016 19:46:05 PAGE 3   
+  55   1      	//LED1
+  56   1      	if (Map[Play_x - 1][Play_y - 1] == 'W') //Wall
+  57   1      		LED1 = 0;
+  58   1      	else if (Map[Play_x - 1][Play_y - 1] == 'G')
+  59   1      	{
+  60   2      		for (i; i < 3; i++)
+  61   2      		{
+  62   3      			LED1 = 0;
+  63   3      			delay(100);
+  64   3      			LED1 = 1;
+  65   3      			delay(100);
+  66   3      		}
+  67   2      	}
+  68   1      	else //Open
+  69   1      		LED1 = 1;
+  70   1      	//LED2
+  71   1      	if (Map[Play_x][Play_y - 1] == 'W') //Wall
+  72   1      		LED2 = 0;
+  73   1      	else if (Map[Play_x][Play_y - 1] == 'G') //Goal
+  74   1      	{
+  75   2      		for (i; i < 3; i++)
+  76   2      		{
+  77   3      			LED2 = 0;
+  78   3      			delay(100);
+  79   3      			LED2 = 1;
+  80   3      			delay(100);
+  81   3      		}
+  82   2      	}
+  83   1      	else //Open
+  84   1      		LED2 = 1;
+  85   1      	//LED3
+  86   1      	if (Map[Play_x + 1][Play_y - 1] == 'W') //Wall
+  87   1      		LED3 = 0;
+  88   1      	else if (Map[Play_x + 1][Play_y - 1] == 'G') //Goal
+  89   1      	{
+  90   2      		for (i; i < 3; i++)
+  91   2      		{
+  92   3      			LED3 = 0;
+  93   3      			delay(100);
+  94   3      			LED3 = 1;
+  95   3      			delay(100);
+  96   3      		}
+  97   2      	}
+  98   1      	else //Open
+  99   1      		LED3 = 1;
+ 100   1      	//LED4
+ 101   1      	if (Map[Play_x - 1][Play_y] == 'W') //Wall
+ 102   1      		LED4 = 0;
+ 103   1      	else if (Map[Play_x - 1][Play_y] == 'G') //Goal
+ 104   1      	{
+ 105   2      		for (i; i < 3; i++)
+ 106   2      		{
+ 107   3      			LED4 = 0;
+ 108   3      			delay(100);
+ 109   3      			LED4 = 1;
+ 110   3      			delay(100);
+ 111   3      		}
+ 112   2      	}
+ 113   1      	else //Open
+ 114   1      		LED4 = 1;
+ 115   1      	//LED5
+ 116   1      	if (Map[Play_x][Play_y] == 'W') //Wall
+C51 COMPILER V6.02  MAZE                                                                   05/10/2016 20:12:52 PAGE 3   
 
-  99   1      		P1^6 = 0;
-*** ERROR C141 IN LINE 99 OF .\MAZE.C: syntax error near '='
- 100   1      	else if (Map[Play_x][Play_y] == 'G') //Goal
-*** ERROR C141 IN LINE 100 OF .\MAZE.C: syntax error near 'else'
- 101   1      	{
- 102   2      		for (i; i < 3; i++)
- 103   2      		{
- 104   3      			P1^6 = 0;
-*** ERROR C141 IN LINE 104 OF .\MAZE.C: syntax error near '='
- 105   3      			delay(100);
- 106   3      			P1^6 = 1;
-*** ERROR C141 IN LINE 106 OF .\MAZE.C: syntax error near '='
- 107   3      			delay(100);
- 108   3      		}
- 109   2      	}
- 110   1      	else //Open
- 111   1      		P1^6 = 1;
-*** ERROR C141 IN LINE 111 OF .\MAZE.C: syntax error near '='
- 112   1      	//LED6
- 113   1      	if (Map[Play_x + 1][Play_y] == 'W') //Wall
- 114   1      		P0^4 = 0;
-*** ERROR C141 IN LINE 114 OF .\MAZE.C: syntax error near '='
- 115   1      	else if (Map[Play_x + 1][Play_y] == 'G') //Goal
-*** ERROR C141 IN LINE 115 OF .\MAZE.C: syntax error near 'else'
- 116   1      	{
- 117   2      		for (i; i < 3; i++)
- 118   2      		{
- 119   3      			P0^4 = 0;
-*** ERROR C141 IN LINE 119 OF .\MAZE.C: syntax error near '='
- 120   3      			delay(100);
- 121   3      			P0^4 = 1;
-*** ERROR C141 IN LINE 121 OF .\MAZE.C: syntax error near '='
- 122   3      			delay(100);
- 123   3      		}
- 124   2      	}
- 125   1      	else //Open
- 126   1      		P0^4 = 1;
-*** ERROR C141 IN LINE 126 OF .\MAZE.C: syntax error near '='
- 127   1      	//LED7
- 128   1      	if (Map[Play_x - 1][Play_y + 1] == 'W') //Wall
- 129   1      		P2^5 = 0;
-*** ERROR C141 IN LINE 129 OF .\MAZE.C: syntax error near '='
- 130   1      	else if (Map[Play_x - 1][Play_y + 1] == 'G') //Goal
-*** ERROR C141 IN LINE 130 OF .\MAZE.C: syntax error near 'else'
- 131   1      	{
- 132   2      		for (i; i < 3; i++)
- 133   2      		{
- 134   3      			P2^5 = 0;
-*** ERROR C141 IN LINE 134 OF .\MAZE.C: syntax error near '='
- 135   3      			delay(100);
- 136   3      			P2^5 = 1;
-*** ERROR C141 IN LINE 136 OF .\MAZE.C: syntax error near '='
- 137   3      			delay(100);
- 138   3      		}
- 139   2      	}
- 140   1      	else //Open
- 141   1      		P2^5 = 1;
-*** ERROR C141 IN LINE 141 OF .\MAZE.C: syntax error near '='
- 142   1      	//LED8
- 143   1      	if (Map[Play_x][Play_y + 1] == 'W') //Wall
- 144   1      		P0^7 = 0;
-*** ERROR C141 IN LINE 144 OF .\MAZE.C: syntax error near '='
-C51 COMPILER V6.02  MAZE                                                                   05/10/2016 19:46:05 PAGE 4   
+ 117   1      		LED5 = 0;
+ 118   1      	else if (Map[Play_x][Play_y] == 'G') //Goal
+ 119   1      	{
+ 120   2      		for (i; i < 3; i++)
+ 121   2      		{
+ 122   3      			LED5 = 0;
+ 123   3      			delay(100);
+ 124   3      			LED5 = 1;
+ 125   3      			delay(100);
+ 126   3      		}
+ 127   2      	}
+ 128   1      	else //Open
+ 129   1      		LED5 = 1;
+ 130   1      	//LED6
+ 131   1      	if (Map[Play_x + 1][Play_y] == 'W') //Wall
+ 132   1      		LED6 = 0;
+ 133   1      	else if (Map[Play_x + 1][Play_y] == 'G') //Goal
+ 134   1      	{
+ 135   2      		for (i; i < 3; i++)
+ 136   2      		{
+ 137   3      			LED6 = 0;
+ 138   3      			delay(100);
+ 139   3      			LED6 = 1;
+ 140   3      			delay(100);
+ 141   3      		}
+ 142   2      	}
+ 143   1      	else //Open
+ 144   1      		LED6 = 1;
+ 145   1      	//LED7
+ 146   1      	if (Map[Play_x - 1][Play_y + 1] == 'W') //Wall
+ 147   1      		LED7 = 0;
+ 148   1      	else if (Map[Play_x - 1][Play_y + 1] == 'G') //Goal
+ 149   1      	{
+ 150   2      		for (i; i < 3; i++)
+ 151   2      		{
+ 152   3      			LED7 = 0;
+ 153   3      			delay(100);
+ 154   3      			LED7 = 1;
+ 155   3      			delay(100);
+ 156   3      		}
+ 157   2      	}
+ 158   1      	else //Open
+ 159   1      		LED7 = 1;
+ 160   1      	//LED8
+ 161   1      	if (Map[Play_x][Play_y + 1] == 'W') //Wall
+ 162   1      		LED8 = 0;
+ 163   1      	else if (Map[Play_x][Play_y + 1] == 'G') //Goal
+ 164   1      	{
+ 165   2      		for (i; i < 3; i++)
+ 166   2      		{
+ 167   3      			LED8 = 0;
+ 168   3      			delay(100);
+ 169   3      			LED8 = 1;
+ 170   3      			delay(100);
+ 171   3      		}
+ 172   2      	}
+ 173   1      	else //Open
+ 174   1      		LED8 = 1;
+ 175   1      	//LED9
+ 176   1      	if (Map[Play_x + 1][Play_y + 1] == 'W') //Wall
+ 177   1      		LED9 = 0;
+ 178   1      	else if (Map[Play_x + 1][Play_y + 1] == 'G') //Goal
+C51 COMPILER V6.02  MAZE                                                                   05/10/2016 20:12:52 PAGE 4   
 
- 145   1      	else if (Map[Play_x][Play_y + 1] == 'G') //Goal
-*** ERROR C141 IN LINE 145 OF .\MAZE.C: syntax error near 'else'
- 146   1      	{
- 147   2      		for (i; i < 3; i++)
- 148   2      		{
- 149   3      			P0^7 = 0;
-*** ERROR C141 IN LINE 149 OF .\MAZE.C: syntax error near '='
- 150   3      			delay(100);
- 151   3      			P0^7 = 1;
-*** ERROR C141 IN LINE 151 OF .\MAZE.C: syntax error near '='
- 152   3      			delay(100);
- 153   3      		}
- 154   2      	}
- 155   1      	else //Open
- 156   1      		P0^7 = 1;
-*** ERROR C141 IN LINE 156 OF .\MAZE.C: syntax error near '='
- 157   1      	//LED9
- 158   1      	if (Map[Play_x + 1][Play_y + 1] == 'W') //Wall
- 159   1      		P2^6 = 0;
-*** ERROR C141 IN LINE 159 OF .\MAZE.C: syntax error near '='
- 160   1      	else if (Map[Play_x + 1][Play_y + 1] == 'G') //Goal
-*** ERROR C141 IN LINE 160 OF .\MAZE.C: syntax error near 'else'
- 161   1      	{
- 162   2      		for (i; i < 3; i++)
- 163   2      		{
- 164   3      			P2^6 = 0;
-*** ERROR C141 IN LINE 164 OF .\MAZE.C: syntax error near '='
- 165   3      			delay(100);
- 166   3      			P2^6 = 1;
-*** ERROR C141 IN LINE 166 OF .\MAZE.C: syntax error near '='
- 167   3      			delay(100);
- 168   3      		}
- 169   2      	}
- 170   1      	else //Open
- 171   1      		P2^6 = 1;
-*** ERROR C141 IN LINE 171 OF .\MAZE.C: syntax error near '='
- 172   1      
- 173   1      }
- 174          
- 175          //Button Actions
- 176          //Up button
- 177          void Up (unsigned char Play_x,unsigned char Play_y, const unsigned char** Map) {
- 178   1      	if (Map[Play_x][Play_y-1]!= 'W') 
- 179   1      		Play_y -= 1;
- 180   1      	Redraw_Map(Play_x, Play_y, Map);
-*** WARNING C206 IN LINE 180 OF .\MAZE.C: 'Redraw_Map': missing function-prototype
-*** ERROR C267 IN LINE 180 OF .\MAZE.C: 'Redraw_Map': requires ANSI-style prototype
- 181   1      	return;
- 182   1      }
- 183          
- 184          //Down
- 185          void Down (unsigned char Play_x,unsigned char Play_y, const unsigned char** Map) {
- 186   1      	if (Map[Play_x][Play_y + 1] != 'W')
- 187   1      		Play_y += 1;
- 188   1      	Redraw_Map(Play_x, Play_y, Map);
- 189   1      	return;
- 190   1      }
- 191          
- 192          //Right 
- 193          void Right(unsigned char Play_x,unsigned char Play_y, const unsigned char** Map) {
- 194   1      	if (Map[Play_x + 1][Play_y] != 'W')
- 195   1      		Play_x += 1;
-C51 COMPILER V6.02  MAZE                                                                   05/10/2016 19:46:05 PAGE 5   
+ 179   1      	{
+ 180   2      		for (i; i < 3; i++)
+ 181   2      		{
+ 182   3      			LED9 = 0;
+ 183   3      			delay(100);
+ 184   3      			LED9 = 1;
+ 185   3      			delay(100);
+ 186   3      		}
+ 187   2      	}
+ 188   1      	else //Open
+ 189   1      		LED9 = 1;
+ 190   1      
+ 191   1      }
+ 192          
+ 193          //Button Actions
+ 194          //Up button
+ 195          void Up (unsigned char Play_x,unsigned char Play_y, const char** Map) {
+ 196   1      	if (Map[Play_x][Play_y-1]!= 'W') 
+ 197   1      		Play_y -= 1;
+ 198   1      	Redraw_Map(Play_x, Play_y, Map);
+ 199   1      	return;
+ 200   1      }
+ 201          
+ 202          //Down
+ 203          void Down (unsigned char Play_x,unsigned char Play_y, const char** Map) {
+ 204   1      	if (Map[Play_x][Play_y + 1] != 'W')
+ 205   1      		Play_y += 1;
+ 206   1      	Redraw_Map(Play_x, Play_y, Map);
+ 207   1      	return;
+ 208   1      }
+ 209          
+ 210          //Right 
+ 211          void Right(unsigned char Play_x,unsigned char Play_y, const char** Map) {
+ 212   1      	if (Map[Play_x + 1][Play_y] != 'W')
+ 213   1      		Play_x += 1;
+ 214   1      	Redraw_Map(Play_x, Play_y, Map);
+ 215   1      	return;
+ 216   1      }
+ 217          
+ 218          //Left 
+ 219          void Left(unsigned char Play_x,unsigned char Play_y, const char** Map) {
+ 220   1      	if (Map[Play_x - 1][Play_y] != 'W')
+ 221   1      		Play_x -= 1;
+ 222   1      	Redraw_Map(Play_x, Play_y, Map);
+ 223   1      	return;
+ 224   1      }
+ 225          //Check if Player is at goal
+ 226          
+ 227          void GameStart(const char** Map, const unsigned char Start_x, const unsigned char Start_y) {
+ 228   1      	unsigned char GameOver = 0; //reset every new game
+ 229   1      	unsigned char Play_x = Start_x;	//Load starting positions
+ 230   1      	unsigned char Play_y = Start_y;
+ 231   1      	unsigned char i = 0;
+ 232   1      	unsigned char k = 0;
+ 233   1      
+ 234   1      	Redraw_Map(Play_x, Play_y, Map);
+ 235   1      
+ 236   1      	while (GameOver == 0) { //This loop plays the game until finished
+ 237   2      		while (SW1 == 0 || SW3 == 0 || SW2 == 0 || SW8 == 0 || SW4 == 0 || SW6 == 0) { //Check if any input
+ 238   3      			//Nothing to do here
+ 239   3      		}
+ 240   2      
+C51 COMPILER V6.02  MAZE                                                                   05/10/2016 20:12:52 PAGE 5   
 
- 196   1      	Redraw_Map(Play_x, Play_y, Map);
- 197   1      	return;
- 198   1      }
- 199          
- 200          //Left 
- 201          void Left(unsigned char Play_x,unsigned char Play_y, const unsigned char** Map) {
- 202   1      	if (Map[Play_x - 1][Play_y] != 'W')
- 203   1      		Play_x -= 1;
- 204   1      	Redraw_Map(Play_x, Play_y, Map);
- 205   1      	return;
- 206   1      }
- 207          //Check if Player is at goal
- 208          
- 209          void GameStart(Map[][], Start_x, Start_Y) {
-*** ERROR C141 IN LINE 209 OF .\MAZE.C: syntax error near '[', expected ')'
- 210   1      	bool GameOver = false; //reset every new game
-*** ERROR C202 IN LINE 210 OF .\MAZE.C: 'bool': undefined identifier
-*** ERROR C141 IN LINE 210 OF .\MAZE.C: syntax error near 'GameOver'
- 211   1      	unsigned char Play_x = Start_x;	//Load starting positions
-*** ERROR C141 IN LINE 211 OF .\MAZE.C: syntax error near 'unsigned'
-*** ERROR C202 IN LINE 211 OF .\MAZE.C: 'Play_x': undefined identifier
- 212   1      	unsigned char Play_y = Start_y;
-*** ERROR C141 IN LINE 212 OF .\MAZE.C: syntax error near 'unsigned'
-*** ERROR C202 IN LINE 212 OF .\MAZE.C: 'Play_y': undefined identifier
- 213   1      	Redraw_Map(Play_x, Play_y, Map[][])
-*** ERROR C202 IN LINE 213 OF .\MAZE.C: 'Play_x': undefined identifier
-*** ERROR C141 IN LINE 213 OF .\MAZE.C: syntax error near ']'
- 214   1      	unsigned char i = 0, k = 0;
- 215   1      
- 216   1      	while (GameOver == false) { //This loop plays the game until finished
-*** ERROR C202 IN LINE 216 OF .\MAZE.C: 'GameOver': undefined identifier
- 217   2      		while (P2^0 == 0 || P2^3 == 0 || P0^1 == 0 || P0^3 == 0 || P0^2 == 0 || P0^0 == 0) { //Check if any inpu
-             -t
- 218   3      			//Nothing to do here
- 219   3      		}
- 220   2      
- 221   2      		delay(10);
- 222   2      			//waiting for input
- 223   2      		if (P2^0 == 0) //Exit Button
- 224   2      			GameOver = false;
-*** ERROR C202 IN LINE 224 OF .\MAZE.C: 'GameOver': undefined identifier
- 225   2      		else if (P1^4 == 0) // Help Button
- 226   2      			;//Help(Play_x, Play_y, Map[][]);
- 227   2      		else if (P0^1 == 0)
- 228   2      			Up(Play_x, Play_y, Map[][]);
-*** ERROR C202 IN LINE 228 OF .\MAZE.C: 'Play_x': undefined identifier
-*** ERROR C141 IN LINE 228 OF .\MAZE.C: syntax error near ']'
- 229   2      		else if (P0^3 == 0)
- 230   2      			Down(Play_x, Play_y, Map[][]);
-*** ERROR C202 IN LINE 230 OF .\MAZE.C: 'Play_x': undefined identifier
-*** ERROR C141 IN LINE 230 OF .\MAZE.C: syntax error near ']'
- 231   2      		else if (P0^2 == 0)
- 232   2      			Left(Play_x, Play_y, Map[][]);
-*** ERROR C202 IN LINE 232 OF .\MAZE.C: 'Play_x': undefined identifier
-*** ERROR C141 IN LINE 232 OF .\MAZE.C: syntax error near ']'
- 233   2      		else if (P0^0 == 0)
- 234   2      			Right(Play_x, Play_y, Map[][]);
-*** ERROR C202 IN LINE 234 OF .\MAZE.C: 'Play_x': undefined identifier
-*** ERROR C141 IN LINE 234 OF .\MAZE.C: syntax error near ']'
- 235   2      		else if (P2^3 == 0)
- 236   2      			cheatMap(Map[][], Play_x, Play_y)
-*** ERROR C141 IN LINE 236 OF .\MAZE.C: syntax error near ']'
-C51 COMPILER V6.02  MAZE                                                                   05/10/2016 19:46:05 PAGE 6   
+ 241   2      		delay(10);
+ 242   2      			//waiting for input
+ 243   2      		if (SW1 == 0) //Exit Button
+ 244   2      			GameOver = 0;
+ 245   2      		else if (SW5 == 0) // Help Button
+ 246   2      			;//Help(Play_x, Play_y, Map[][]);
+ 247   2      		else if (SW2 == 0)
+ 248   2      			Up(Play_x, Play_y, Map);
+ 249   2      		else if (SW8 == 0)
+ 250   2      			Down(Play_x, Play_y, Map);
+ 251   2      		else if (SW4 == 0)
+ 252   2      			Left(Play_x, Play_y, Map);
+ 253   2      		else if (SW6 == 0)
+ 254   2      			Right(Play_x, Play_y, Map);
+ 255   2      		else if (SW3 == 0)
+ 256   2      			cheatMap(Map, Play_x, Play_y);
+ 257   2      			//Check if Game Over
+ 258   2      		if (Map[Play_x][Play_y] == 'G')
+ 259   2      			GameOver = 1;
+ 260   2      	}
+ 261   1      	return;
+ 262   1      }
+ 263          
+ 264          
+ 265          
+ 266          void playMenu()
+ 267          {
+ 268   1      	char* title = "Simon's A-MAZE-ing Adventures!";
+ 269   1      	char* star_bar = "*********************************";
+ 270   1      	char* menu1 = "Please select difficulty level: \n";
+ 271   1      	char* menu2 = "1) Easy          2) Medium          3) Hard          4)DEBUG \n";
+ 272   1      
+ 273   1      	unsigned char titlesize = sizeof(title) / sizeof(title[0]);
+ 274   1      	unsigned char starsize = sizeof(star_bar) / sizeof(title[0]);
+ 275   1      	unsigned char menu1size = sizeof(menu1) / sizeof(title[0]);
+ 276   1      	unsigned char menu2size = sizeof(menu2) / sizeof(title[0]);
+ 277   1      
+ 278   1      	unsigned char i;
+ 279   1      	for (i = 0; i < starsize; i++)
+ 280   1      	{
+ 281   2      		uart_transmit(star_bar[i]);
+ 282   2      	}
+ 283   1      	uart_transmit('\n');
+ 284   1      	for (i = 0; i < titlesize; i++)
+ 285   1      	{
+ 286   2      		uart_transmit(title[i]);
+ 287   2      	}
+ 288   1      	uart_transmit('\n');
+ 289   1      	for (i = 0; i < starsize; i++)
+ 290   1      	{
+ 291   2      		uart_transmit(star_bar[i]);
+ 292   2      	}
+ 293   1      	uart_transmit('\n');
+ 294   1      	uart_transmit('\n');
+ 295   1      	for (i = 0; i < menu1size; i++)
+ 296   1      	{
+ 297   2      		uart_transmit(menu1[i]);
+ 298   2      	}
+ 299   1      	uart_transmit('\n');
+ 300   1      	for (i = 0; i < menu2size; i++)
+ 301   1      	{
+ 302   2      		uart_transmit(menu2[i]);
+C51 COMPILER V6.02  MAZE                                                                   05/10/2016 20:12:52 PAGE 6   
 
-*** WARNING C209 IN LINE 236 OF .\MAZE.C: '_cheatMap': too few actual parameters
-*** ERROR C202 IN LINE 236 OF .\MAZE.C: 'Play_x': undefined identifier
-*** ERROR C141 IN LINE 236 OF .\MAZE.C: syntax error near ')'
- 237   2      			//Check if Game Over
- 238   2      		if (Map[Play_x][Play_y] == 'G')
- 239   2      			GameOver = true;
-*** ERROR C202 IN LINE 239 OF .\MAZE.C: 'GameOver': undefined identifier
- 240   2      	}
- 241   1      	return;
- 242   1      }
- 243          
- 244          
- 245          
- 246          void playMenu()
- 247          {
- 248   1      	char* title = "Simon's A-MAZE-ing Adventures!";
- 249   1      	char* star_bar = "*********************************";
- 250   1      	char* menu1 = "Please select difficulty level: \n";
- 251   1      	char* menu2 = "1) Easy          2) Medium          3) Hard          4)DEBUG \n";
- 252   1      
- 253   1      	unsigned char titlesize = sizeof(title) / sizeof(title[0]);
- 254   1      	unsigned char starsize = sizeof(star_bar) / sizeof(title[0]);
- 255   1      	unsigned char menu1size = sizeof(menu1) / sizeof(title[0]);
- 256   1      	unsigned char menu2size = sizeof(menu2) / sizeof(title[0]);
- 257   1      
- 258   1      	unsigned char i;
- 259   1      	for (i = 0; i < starsize; i++)
- 260   1      	{
- 261   2      		uart_transmit(star_bar[i]);
- 262   2      	}
- 263   1      	uart_transmit('\n');
- 264   1      	for (i = 0; i < titlesize; i++)
- 265   1      	{
- 266   2      		uart_transmit(title[i]);
- 267   2      	}
- 268   1      	uart_transmit('\n');
- 269   1      	for (i = 0; i < starsize; i++)
- 270   1      	{
- 271   2      		uart_transmit(star_bar[i]);
- 272   2      	}
- 273   1      	uart_transmit('\n');
- 274   1      	uart_transmit('\n');
- 275   1      	for (i = 0; i < menu1size; i++)
- 276   1      	{
- 277   2      		uart_transmit(menu1[i]);
- 278   2      	}
- 279   1      	uart_transmit('\n');
- 280   1      	for (i = 0; i < menu2size; i++)
- 281   1      	{
- 282   2      		uart_transmit(menu2[i]);
- 283   2      	}
- 284   1      	uart_transmit('\n');
- 285   1      
- 286   1      	while (1)
- 287   1      	{
- 288   2      		if (P2^0 == 0) //Exit Button
- 289   2      			GameStart(map1[7][7], M1startX, M1startY);
-*** ERROR C208 IN LINE 289 OF .\MAZE.C: '_GameStart': too many actual parameters
- 290   2      		//victory
- 291   2      		else if (P2^1 == 0)
- 292   2      			GameStart(map2[7][7], M2startX, M2startY);
-*** ERROR C208 IN LINE 292 OF .\MAZE.C: '_GameStart': too many actual parameters
-C51 COMPILER V6.02  MAZE                                                                   05/10/2016 19:46:05 PAGE 7   
+ 303   2      	}
+ 304   1      	uart_transmit('\n');
+ 305   1      
+ 306   1      	while (1)
+ 307   1      	{
+ 308   2      		if (SW1 == 0) //Exit Button
+ 309   2      			GameStart(&map1[7][7], M1startX, M1startY);
+*** WARNING C182 IN LINE 309 OF .\MAZE.C: pointer to different objects
+ 310   2      		//victory
+ 311   2      		else if (P2^1 == 0)
+ 312   2      			GameStart(&map2[7][7], M2startX, M2startY);
+*** WARNING C182 IN LINE 312 OF .\MAZE.C: pointer to different objects
+ 313   2      		//victory
+ 314   2      		else if (P2^2 == 0)
+ 315   2      			GameStart(&map3[12][12], M3startX, M3startY);
+*** WARNING C182 IN LINE 315 OF .\MAZE.C: pointer to different objects
+ 316   2      		//victory
+ 317   2      	}
+ 318   1      
+ 319   1      	return;
+ 320   1      }
+ 321          
+ 322          //Looping Code for playing the game
+ 323          void main(void)
+ 324          {
+ 325   1      	uart_init();
+ 326   1      	P2M1 = 0x00;
+ 327   1      	
+ 328   1      	while (1)
+ 329   1      	{
+ 330   2      		playMenu();
+ 331   2      	}
+ 332   1      
+ 333   1      	return;
+ 334   1      }	
+*** ERROR C249 IN LINE 334 OF .\MAZE.C: 'DATA': SEGMENT TOO LARGE
 
- 293   2      		//victory
- 294   2      		else if (P2^2 == 0)
- 295   2      			GameStart(map3[12][12], M3startX, M3startY);
-*** ERROR C208 IN LINE 295 OF .\MAZE.C: '_GameStart': too many actual parameters
- 296   2      		//victory
- 297   2      	}
- 298   1      
- 299   1      	return;
- 300   1      }
- 301          
- 302          //Looping Code for playing the game
- 303          void main(void)
- 304          {
- 305   1      	uart_init();
- 306   1      	P2M1 = 0x00;
- 307   1      	
- 308   1      	while (1)
- 309   1      	{
- 310   2      		playMenu();
- 311   2      
- 312   2      
- 313   2      	}
- 314   1      
- 315   1      	return;
- 316   1      }
- 317          	
-
-C51 COMPILATION COMPLETE.  2 WARNING(S),  70 ERROR(S)
+C51 COMPILATION COMPLETE.  3 WARNING(S),  1 ERROR(S)

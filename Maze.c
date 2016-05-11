@@ -3,15 +3,23 @@
 #include"uart.h"
 #include "maps.h"
 
-sbit LED1 = P2^4;
-sbit LED2 = P2 ^ 4;
-sbit LED3 = P2 ^ 4;
-sbit LED4 = P2 ^ 4;
-sbit LED5 = P2 ^ 4;
-sbit LED6 = P2 ^ 4;
-sbit LED7 = P2 ^ 4;
-sbit LED8 = P2 ^ 4;
-sbit LED9 = P2 ^ 4;
+sbit LED1 = P2 ^ 4;
+sbit LED2 = P0 ^ 5;
+sbit LED3 = P2 ^ 7;
+sbit LED4 = P0 ^ 6;
+sbit LED5 = P1 ^ 6;
+sbit LED6 = P0 ^ 4;
+sbit LED7 = P2 ^ 5;
+sbit LED8 = P0 ^ 7;
+sbit LED9 = P2 ^ 6;
+
+sbit SW1 = P2 ^ 0;
+sbit SW2 = P0 ^ 1;
+sbit SW3 = P2 ^ 3;
+sbit SW4 = P0 ^ 2;
+sbit SW5 = P1 ^ 4;
+sbit SW6 = P0 ^ 0;
+sbit SW8 = P0 ^ 3;
 
 
 
@@ -21,7 +29,7 @@ void delay(long x)
 	for (i; i<x; i++);
 }
 
-void cheatMap(char** map_array, unsigned char arr_x, unsigned char arr_y) //rename map_array to group code name for the map array
+void cheatMap(const char** map_array, unsigned char arr_x, unsigned char arr_y) //rename map_array to group code name for the map array
 {
 	unsigned char i;
 	unsigned char j;
@@ -40,151 +48,151 @@ void cheatMap(char** map_array, unsigned char arr_x, unsigned char arr_y) //rena
 	return;
 }
 
-void Redraw_map(unsigned char Play_x, unsigned char Play_y, const unsigned char** Map)
+void Redraw_Map(unsigned char Play_x, unsigned char Play_y, const char** Map)
 {
 	unsigned char i = 0;
 	//Shows what the 8 spaces around the player are
 	//LED1
 	if (Map[Play_x - 1][Play_y - 1] == 'W') //Wall
-		P2^4 = 0;
+		LED1 = 0;
 	else if (Map[Play_x - 1][Play_y - 1] == 'G')
 	{
 		for (i; i < 3; i++)
 		{
-			P2^4 = 0;
+			LED1 = 0;
 			delay(100);
-			P2^4 = 1;
+			LED1 = 1;
 			delay(100);
 		}
 	}
 	else //Open
-		P2^4 = 1;
+		LED1 = 1;
 	//LED2
 	if (Map[Play_x][Play_y - 1] == 'W') //Wall
-		P0^5 = 0;
+		LED2 = 0;
 	else if (Map[Play_x][Play_y - 1] == 'G') //Goal
 	{
 		for (i; i < 3; i++)
 		{
-			P0^5 = 0;
+			LED2 = 0;
 			delay(100);
-			P0^5 = 1;
+			LED2 = 1;
 			delay(100);
 		}
 	}
 	else //Open
-		P0^5 = 1;
+		LED2 = 1;
 	//LED3
 	if (Map[Play_x + 1][Play_y - 1] == 'W') //Wall
-		P2^7 = 0;
+		LED3 = 0;
 	else if (Map[Play_x + 1][Play_y - 1] == 'G') //Goal
 	{
 		for (i; i < 3; i++)
 		{
-			P2^7 = 0;
+			LED3 = 0;
 			delay(100);
-			P2^7 = 1;
+			LED3 = 1;
 			delay(100);
 		}
 	}
 	else //Open
-		P2^7 = 1;
+		LED3 = 1;
 	//LED4
 	if (Map[Play_x - 1][Play_y] == 'W') //Wall
-		P0^6 = 0;
+		LED4 = 0;
 	else if (Map[Play_x - 1][Play_y] == 'G') //Goal
 	{
 		for (i; i < 3; i++)
 		{
-			P0^6 = 0;
+			LED4 = 0;
 			delay(100);
-			P0^6 = 1;
+			LED4 = 1;
 			delay(100);
 		}
 	}
 	else //Open
-		P0^6 = 1;
+		LED4 = 1;
 	//LED5
 	if (Map[Play_x][Play_y] == 'W') //Wall
-		P1^6 = 0;
+		LED5 = 0;
 	else if (Map[Play_x][Play_y] == 'G') //Goal
 	{
 		for (i; i < 3; i++)
 		{
-			P1^6 = 0;
+			LED5 = 0;
 			delay(100);
-			P1^6 = 1;
+			LED5 = 1;
 			delay(100);
 		}
 	}
 	else //Open
-		P1^6 = 1;
+		LED5 = 1;
 	//LED6
 	if (Map[Play_x + 1][Play_y] == 'W') //Wall
-		P0^4 = 0;
+		LED6 = 0;
 	else if (Map[Play_x + 1][Play_y] == 'G') //Goal
 	{
 		for (i; i < 3; i++)
 		{
-			P0^4 = 0;
+			LED6 = 0;
 			delay(100);
-			P0^4 = 1;
+			LED6 = 1;
 			delay(100);
 		}
 	}
 	else //Open
-		P0^4 = 1;
+		LED6 = 1;
 	//LED7
 	if (Map[Play_x - 1][Play_y + 1] == 'W') //Wall
-		P2^5 = 0;
+		LED7 = 0;
 	else if (Map[Play_x - 1][Play_y + 1] == 'G') //Goal
 	{
 		for (i; i < 3; i++)
 		{
-			P2^5 = 0;
+			LED7 = 0;
 			delay(100);
-			P2^5 = 1;
+			LED7 = 1;
 			delay(100);
 		}
 	}
 	else //Open
-		P2^5 = 1;
+		LED7 = 1;
 	//LED8
 	if (Map[Play_x][Play_y + 1] == 'W') //Wall
-		P0^7 = 0;
+		LED8 = 0;
 	else if (Map[Play_x][Play_y + 1] == 'G') //Goal
 	{
 		for (i; i < 3; i++)
 		{
-			P0^7 = 0;
+			LED8 = 0;
 			delay(100);
-			P0^7 = 1;
+			LED8 = 1;
 			delay(100);
 		}
 	}
 	else //Open
-		P0^7 = 1;
+		LED8 = 1;
 	//LED9
 	if (Map[Play_x + 1][Play_y + 1] == 'W') //Wall
-		P2^6 = 0;
+		LED9 = 0;
 	else if (Map[Play_x + 1][Play_y + 1] == 'G') //Goal
 	{
 		for (i; i < 3; i++)
 		{
-			P2^6 = 0;
+			LED9 = 0;
 			delay(100);
-			P2^6 = 1;
+			LED9 = 1;
 			delay(100);
 		}
 	}
 	else //Open
-		P2^6 = 1;
+		LED9 = 1;
 
 }
 
 //Button Actions
 //Up button
-void Up (unsigned char Play_x,unsigned char Play_y, const unsigned char** Map) {
+void Up (unsigned char Play_x,unsigned char Play_y, const char** Map) {
 	if (Map[Play_x][Play_y-1]!= 'W') 
 		Play_y -= 1;
 	Redraw_Map(Play_x, Play_y, Map);
@@ -192,7 +200,7 @@ void Up (unsigned char Play_x,unsigned char Play_y, const unsigned char** Map) {
 }
 
 //Down
-void Down (unsigned char Play_x,unsigned char Play_y, const unsigned char** Map) {
+void Down (unsigned char Play_x,unsigned char Play_y, const char** Map) {
 	if (Map[Play_x][Play_y + 1] != 'W')
 		Play_y += 1;
 	Redraw_Map(Play_x, Play_y, Map);
@@ -200,7 +208,7 @@ void Down (unsigned char Play_x,unsigned char Play_y, const unsigned char** Map)
 }
 
 //Right 
-void Right(unsigned char Play_x,unsigned char Play_y, const unsigned char** Map) {
+void Right(unsigned char Play_x,unsigned char Play_y, const char** Map) {
 	if (Map[Play_x + 1][Play_y] != 'W')
 		Play_x += 1;
 	Redraw_Map(Play_x, Play_y, Map);
@@ -208,7 +216,7 @@ void Right(unsigned char Play_x,unsigned char Play_y, const unsigned char** Map)
 }
 
 //Left 
-void Left(unsigned char Play_x,unsigned char Play_y, const unsigned char** Map) {
+void Left(unsigned char Play_x,unsigned char Play_y, const char** Map) {
 	if (Map[Play_x - 1][Play_y] != 'W')
 		Play_x -= 1;
 	Redraw_Map(Play_x, Play_y, Map);
@@ -216,37 +224,39 @@ void Left(unsigned char Play_x,unsigned char Play_y, const unsigned char** Map) 
 }
 //Check if Player is at goal
 
-void GameStart(Map[][], Start_x, Start_Y) {
-	bool GameOver = false; //reset every new game
+void GameStart(const char** Map, const unsigned char Start_x, const unsigned char Start_y) {
+	unsigned char GameOver = 0; //reset every new game
 	unsigned char Play_x = Start_x;	//Load starting positions
 	unsigned char Play_y = Start_y;
-	Redraw_Map(Play_x, Play_y, Map[][])
-	unsigned char i = 0, k = 0;
+	unsigned char i = 0;
+	unsigned char k = 0;
 
-	while (GameOver == false) { //This loop plays the game until finished
-		while (P2^0 == 0 || P2^3 == 0 || P0^1 == 0 || P0^3 == 0 || P0^2 == 0 || P0^0 == 0) { //Check if any input
+	Redraw_Map(Play_x, Play_y, Map);
+
+	while (GameOver == 0) { //This loop plays the game until finished
+		while (SW1 == 0 || SW3 == 0 || SW2 == 0 || SW8 == 0 || SW4 == 0 || SW6 == 0) { //Check if any input
 			//Nothing to do here
 		}
 
 		delay(10);
 			//waiting for input
-		if (P2^0 == 0) //Exit Button
-			GameOver = false;
-		else if (P1^4 == 0) // Help Button
+		if (SW1 == 0) //Exit Button
+			GameOver = 0;
+		else if (SW5 == 0) // Help Button
 			;//Help(Play_x, Play_y, Map[][]);
-		else if (P0^1 == 0)
-			Up(Play_x, Play_y, Map[][]);
-		else if (P0^3 == 0)
-			Down(Play_x, Play_y, Map[][]);
-		else if (P0^2 == 0)
-			Left(Play_x, Play_y, Map[][]);
-		else if (P0^0 == 0)
-			Right(Play_x, Play_y, Map[][]);
-		else if (P2^3 == 0)
-			cheatMap(Map[][], Play_x, Play_y)
+		else if (SW2 == 0)
+			Up(Play_x, Play_y, Map);
+		else if (SW8 == 0)
+			Down(Play_x, Play_y, Map);
+		else if (SW4 == 0)
+			Left(Play_x, Play_y, Map);
+		else if (SW6 == 0)
+			Right(Play_x, Play_y, Map);
+		else if (SW3 == 0)
+			cheatMap(Map, Play_x, Play_y);
 			//Check if Game Over
 		if (Map[Play_x][Play_y] == 'G')
-			GameOver = true;
+			GameOver = 1;
 	}
 	return;
 }
@@ -295,14 +305,14 @@ void playMenu()
 
 	while (1)
 	{
-		if (P2^0 == 0) //Exit Button
-			GameStart(map1[7][7], M1startX, M1startY);
+		if (SW1 == 0) //Exit Button
+			GameStart(&map1[7][7], M1startX, M1startY);
 		//victory
 		else if (P2^1 == 0)
-			GameStart(map2[7][7], M2startX, M2startY);
+			GameStart(&map2[7][7], M2startX, M2startY);
 		//victory
 		else if (P2^2 == 0)
-			GameStart(map3[12][12], M3startX, M3startY);
+			GameStart(&map3[12][12], M3startX, M3startY);
 		//victory
 	}
 
@@ -318,10 +328,7 @@ void main(void)
 	while (1)
 	{
 		playMenu();
-
-
 	}
 
 	return;
-}
-	
+}	
