@@ -1,7 +1,8 @@
 #include<reg932.h>
 #include<stdlib.h>
-#include"uart.h"
 #include "maps.h"
+#include "uart.h"
+
 
 sbit LED1 = P2 ^ 4;
 sbit LED2 = P0 ^ 5;
@@ -19,17 +20,45 @@ sbit SW3 = P2 ^ 3;
 sbit SW4 = P0 ^ 2;
 sbit SW5 = P1 ^ 4;
 sbit SW6 = P0 ^ 0;
+sbit SW7 = P2 ^ 1;
 sbit SW8 = P0 ^ 3;
+sbit SW9 = P2 ^ 2;
 
+void delay (long x);
+void cheatMap(/*const*/ char map_array[7][7], /*const*/ unsigned char arr_x, /*const*/ unsigned char arr_y);
+void Redraw_Map(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[7][7]);
+char Up(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[7][7]);
+char Down(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[7][7]);
+char Left(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[7][7]);
+char Right(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[7][7]);
+void GameStart(/*const*/ char Map[7][7], /*const*/ unsigned char Start_x, /*const*/ unsigned char Start_y);
+void playMenu();
 
+//Looping Code for playing the game
+void main(void)
+{
+	P0M1 = 0;
+	P1M1 = 0;
+	P2M1 = 0;
+	P3M1 = 0;
 
-void delay(long x)
+	uart_init();
+	
+	while (1)
+	{
+		playMenu();
+	}
+
+	return;
+}	
+
+/*void delay(long x)
 {
 	long i = 0;
 	for (i; i<x; i++);
-}
+}*/
 
-void cheatMap(const char** map_array, unsigned char arr_x, unsigned char arr_y) //rename map_array to group code name for the map array
+void cheatMap(/*const*/ char map_array[7][7], unsigned char arr_x, unsigned char arr_y) //rename map_array to group code name for the map array
 {
 	unsigned char i;
 	unsigned char j;
@@ -40,15 +69,13 @@ void cheatMap(const char** map_array, unsigned char arr_x, unsigned char arr_y) 
 		{
 			uart_transmit(map_array[i][j]);
 		}
-		uart_transmit('\n'); //I think this will work?
+		uart_transmit('\n');
+		uart_transmit('\r');//I think this will work?
 	}
-	uart_transmit(arr_x);
-	uart_transmit('\n');
-	uart_transmit(arr_y);
 	return;
 }
 
-void Redraw_Map(unsigned char Play_x, unsigned char Play_y, const char** Map)
+void Redraw_Map(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[7][7])
 {
 	unsigned char i = 0;
 	//Shows what the 8 spaces around the player are
@@ -188,147 +215,160 @@ void Redraw_Map(unsigned char Play_x, unsigned char Play_y, const char** Map)
 	else //Open
 		LED9 = 1;
 
+	return;
 }
-
 //Button Actions
 //Up button
-void Up (unsigned char Play_x,unsigned char Play_y, const char** Map) {
-	if (Map[Play_x][Play_y-1]!= 'W') 
+char Up(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[7][7]) {
+	if (Map[Play_x][Play_y - 1] != 'W')
 		Play_y -= 1;
 	Redraw_Map(Play_x, Play_y, Map);
-	return;
+	return Play_y;
 }
 
 //Down
-void Down (unsigned char Play_x,unsigned char Play_y, const char** Map) {
+char Down(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[7][7]) {
 	if (Map[Play_x][Play_y + 1] != 'W')
 		Play_y += 1;
 	Redraw_Map(Play_x, Play_y, Map);
-	return;
+	return Play_y;
 }
 
 //Right 
-void Right(unsigned char Play_x,unsigned char Play_y, const char** Map) {
+char Right(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[7][7]) {
 	if (Map[Play_x + 1][Play_y] != 'W')
 		Play_x += 1;
 	Redraw_Map(Play_x, Play_y, Map);
-	return;
+	return Play_x;
 }
 
 //Left 
-void Left(unsigned char Play_x,unsigned char Play_y, const char** Map) {
+char Left(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[7][7]) {
 	if (Map[Play_x - 1][Play_y] != 'W')
 		Play_x -= 1;
 	Redraw_Map(Play_x, Play_y, Map);
-	return;
+	return Play_x;
 }
 //Check if Player is at goal
 
-void GameStart(const char** Map, const unsigned char Start_x, const unsigned char Start_y) {
+void GameStart(/*const*/ char Map[7][7], /*const*/ unsigned char Start_x, /*const*/ unsigned char Start_y) {
 	unsigned char GameOver = 0; //reset every new game
 	unsigned char Play_x = Start_x;	//Load starting positions
 	unsigned char Play_y = Start_y;
 	unsigned char i = 0;
 	unsigned char k = 0;
 
+	//to transmit a number, use value+48
+
+	uart_transmit(Play_x+48);
+	uart_transmit('\n');
+	uart_transmit('\r');
+	uart_transmit(Play_y+48);
+	uart_transmit('\n');
+	uart_transmit('\r');
+
 	Redraw_Map(Play_x, Play_y, Map);
 
-	while (GameOver == 0) { //This loop plays the game until finished
-		while (SW1 == 0 || SW3 == 0 || SW2 == 0 || SW8 == 0 || SW4 == 0 || SW6 == 0) { //Check if any input
+	while (GameOver == 0) 
+	{ //This loop plays the game until finished
+		while (SW1 == 0 || SW3 == 0 || SW2 == 0 || SW8 == 0 || SW4 == 0 || SW6 == 0) 
+		{ //Check if any input
 			//Nothing to do here
 		}
 
 		delay(10);
-			//waiting for input
+		uart_transmit(Play_x + 48);
+		uart_transmit('\n');
+		uart_transmit('\r');
+		uart_transmit(Play_y + 48);
+		uart_transmit('\n');
+		uart_transmit('\r');
+		//waiting for input
 		if (SW1 == 0) //Exit Button
 			GameOver = 0;
 		else if (SW5 == 0) // Help Button
 			;//Help(Play_x, Play_y, Map[][]);
 		else if (SW2 == 0)
-			Up(Play_x, Play_y, Map);
+			Play_y = Up(Play_x, Play_y, Map);
 		else if (SW8 == 0)
-			Down(Play_x, Play_y, Map);
+			Play_y = Down(Play_x, Play_y, Map);
 		else if (SW4 == 0)
-			Left(Play_x, Play_y, Map);
+			Play_x = Left(Play_x, Play_y, Map);
 		else if (SW6 == 0)
-			Right(Play_x, Play_y, Map);
+			Play_x = Right(Play_x, Play_y, Map);
 		else if (SW3 == 0)
-			cheatMap(Map, Play_x, Play_y);
-			//Check if Game Over
+			cheatMap(Map, 7, 7);
+		//Check if Game Over
 		if (Map[Play_x][Play_y] == 'G')
 			GameOver = 1;
 	}
 	return;
 }
 
-
-
 void playMenu()
 {
 	char* title = "Simon's A-MAZE-ing Adventures!";
 	char* star_bar = "*********************************";
 	char* menu1 = "Please select difficulty level: \n";
-	char* menu2 = "1) Easy          2) Medium          3) Hard          4)DEBUG \n";
+	char* menu2 = "1) Easy          2) Medium          3) Hard \n";
 
-	unsigned char titlesize = sizeof(title) / sizeof(title[0]);
-	unsigned char starsize = sizeof(star_bar) / sizeof(title[0]);
-	unsigned char menu1size = sizeof(menu1) / sizeof(title[0]);
-	unsigned char menu2size = sizeof(menu2) / sizeof(title[0]);
-
-	unsigned char i;
-	for (i = 0; i < starsize; i++)
+	unsigned char i = 0;
+	while (star_bar[i] != '\0')
 	{
 		uart_transmit(star_bar[i]);
+		i++;
 	}
 	uart_transmit('\n');
-	for (i = 0; i < titlesize; i++)
+	uart_transmit('\r');
+	i = 0;
+	while (title[i] != '\0')
 	{
 		uart_transmit(title[i]);
+		i++;
 	}
 	uart_transmit('\n');
-	for (i = 0; i < starsize; i++)
+	uart_transmit('\r');
+	i = 0;
+	while (star_bar[i] != '\0')
 	{
 		uart_transmit(star_bar[i]);
+		i++;
 	}
 	uart_transmit('\n');
+	uart_transmit('\r');
 	uart_transmit('\n');
-	for (i = 0; i < menu1size; i++)
+	uart_transmit('\r');
+	i = 0;
+	while (menu1[i] != '\0')
 	{
 		uart_transmit(menu1[i]);
+		i++;
 	}
 	uart_transmit('\n');
-	for (i = 0; i < menu2size; i++)
+	uart_transmit('\r');
+	i = 0;
+	while (menu2[i] != '\0')
 	{
 		uart_transmit(menu2[i]);
+		i++;
 	}
 	uart_transmit('\n');
+	uart_transmit('\r');
+	i = 0;
 
 	while (1)
 	{
-		if (SW1 == 0) //Exit Button
-			GameStart(&map1[7][7], M1startX, M1startY);
+		if (SW3 == 0)
+			GameStart(map1, 1, 2);
 		//victory
-		else if (P2^1 == 0)
-			GameStart(&map2[7][7], M2startX, M2startY);
+		/*else if (SW7 == 0)
+			//GameStart(&(&map2[0][0]), M2startX, M2startY);
 		//victory
-		else if (P2^2 == 0)
-			GameStart(&map3[12][12], M3startX, M3startY);
+		else if (SW9 == 0)*/
+			//GameStart(&(&map3[0][0]), M3startX, M3startY);
 		//victory
 	}
 
 	return;
 }
 
-//Looping Code for playing the game
-void main(void)
-{
-	uart_init();
-	P2M1 = 0x00;
-	
-	while (1)
-	{
-		playMenu();
-	}
-
-	return;
-}	

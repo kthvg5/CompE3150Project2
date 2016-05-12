@@ -18,7 +18,7 @@ WWWDWWW
 WWWGWWW
 WWWWWWW
 */
-code char map1[7][7] = {
+code /*const*/ char map1[7][7] = {
 	{ 'W', 'W', 'W', 'W', 'W', 'W', 'W' },
 	{ 'W', 'W', 'W', 'W', 'W', 'W', 'W' },
 	{ 'W', 'R', 'R', 'D', 'W', 'W', 'W' },
@@ -27,8 +27,8 @@ code char map1[7][7] = {
 	{ 'W', 'W', 'W', 'G', 'W', 'W', 'W' },
 	{ 'W', 'W', 'W', 'W', 'W', 'W', 'W' }
 };
-const unsigned char M1startX = 1;
-const unsigned char M1startY = 2;
+/*const*/ unsigned char M1startX = 1;
+/*const*/ unsigned char M1startY = 2;
 
 /*
 map 2 5x5
@@ -40,7 +40,7 @@ WWRRRDW
 WRUWWGW
 WWWWWWW
 */
-code char map2[7][7] = {
+code /*const*/ char map2[7][7] = {
 	{ 'W', 'W', 'W', 'W', 'W', 'W', 'W' },
 	{ 'W', 'D', 'W', 'W', 'D', 'W', 'W' },
 	{ 'W', 'R', 'R', 'D', 'L', 'L', 'W' },
@@ -49,8 +49,8 @@ code char map2[7][7] = {
 	{ 'W', 'R', 'U', 'W', 'W', 'G', 'W' },
 	{ 'W', 'W', 'W', 'W', 'W', 'W', 'W' }
 };
-const unsigned char M2startX = 1;
-const unsigned char M2startY = 1;
+/*const*/ unsigned char M2startX = 1;
+/*const*/ unsigned char M2startY = 1;
 
 /*
 map 3 10x10
@@ -67,7 +67,7 @@ WWRRLWUWULWW
 WWUWWWULUWWW
 WWWWWWWWWWWW
 */
-code char map3[12][12] = {
+code /*const*/ char map3[12][12] = {
 	{ 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W' },
 	{ 'W', 'D', 'L', 'L', 'L', 'L', 'W', 'W', 'W', 'W', 'W', 'W' },
 	{ 'W', 'D', 'W', 'U', 'W', 'W', 'W', 'R', 'R', 'R', 'G', 'W' },
@@ -81,5 +81,5 @@ code char map3[12][12] = {
 	{ 'W', 'W', 'U', 'W', 'W', 'W', 'U', 'L', 'U', 'W', 'W', 'W' },
 	{ 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W' }
 	};
-	const unsigned char M3startX = 2;
-	const unsigned char M3startY = 10;
+	/*const*/ unsigned char M3startX = 2;
+	/*const*/ unsigned char M3startY = 10;
