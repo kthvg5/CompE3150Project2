@@ -1,3 +1,9 @@
+/*
+Programmer:Andrew Truong
+Date Created: 5/10/2016
+Date Last modified: 5/12/2016
+File: Sound.C
+*/
 #include <reg932.h>
 
 #define E3				((OSC_FREQ/4)/164.81)  // P1,P2-allon   	(61)
@@ -62,6 +68,8 @@ code char  dur[4][20] = {	// Victory Fanfare
 							16,16,16,16,16,16,16,16,16,16,16,16,24,8,32,0,0,0,0,0, 
 							16,16,16,16,16,8,8,16,16,16,8,8,16,16,16,16,32,0,0,0,
 							16,16,16,16,16,16,16,16,16,16,16,16,24,8,32,0,0,0,0,0,};
+
+//need to define with sbit what speaker is, thought it was P1.7							
 void wallHit(void)
 {
 	ET0=1;//sets timer on
