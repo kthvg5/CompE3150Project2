@@ -1,4 +1,4 @@
-C51 COMPILER V6.02  MAZE                                                                   05/12/2016 11:22:12 PAGE 1   
+C51 COMPILER V6.02  MAZE                                                                   05/12/2016 11:38:44 PAGE 1   
 
 
 C51 COMPILER V6.02, COMPILATION OF MODULE MAZE
@@ -12,416 +12,578 @@ stmt level    source
    3          #include "maps.h"
    4          #include "uart.h"
    5          
-   6          
-   7          sbit LED1 = P2 ^ 4;
-   8          sbit LED2 = P0 ^ 5;
-   9          sbit LED3 = P2 ^ 7;
-  10          sbit LED4 = P0 ^ 6;
-  11          sbit LED5 = P1 ^ 6;
-  12          sbit LED6 = P0 ^ 4;
-  13          sbit LED7 = P2 ^ 5;
-  14          sbit LED8 = P0 ^ 7;
-  15          sbit LED9 = P2 ^ 6;
-  16          
-  17          sbit SW1 = P2 ^ 0;
-  18          sbit SW2 = P0 ^ 1;
-  19          sbit SW3 = P2 ^ 3;
-  20          sbit SW4 = P0 ^ 2;
-  21          sbit SW5 = P1 ^ 4;
-  22          sbit SW6 = P0 ^ 0;
-  23          sbit SW7 = P2 ^ 1;
-  24          sbit SW8 = P0 ^ 3;
-  25          sbit SW9 = P2 ^ 2;
-  26          
-  27          void delay (long x);
-  28          void cheatMap(/*const*/ char map_array[7][7], /*const*/ unsigned char arr_x, /*const*/ unsigned char arr_y
-             -);
-  29          void Redraw_Map(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[7][7]);
-  30          char Up(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[7][7]);
-  31          char Down(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[7][7]);
-  32          char Left(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[7][7]);
-  33          char Right(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[7][7]);
-  34          char GameStart(/*const*/ char Map[7][7], /*const*/ unsigned char Start_x, /*const*/ unsigned char Start_y)
-             -;
-  35          void playMenu();
-  36          void clearGame();
-  37          
-  38          //Looping Code for playing the game
-  39          void main(void)
-  40          {
-  41   1      	P0M1 = 0;
-  42   1      	P1M1 = 0;
-  43   1      	P2M1 = 0;
-  44   1      	P3M1 = 0;
-  45   1      
-  46   1      	uart_init();
-  47   1      	
-  48   1      	while (1)
-  49   1      	{
-  50   2      		playMenu();
-  51   2      		clearGame();
-  52   2      	}
-  53   1      
-C51 COMPILER V6.02  MAZE                                                                   05/12/2016 11:22:12 PAGE 2   
+   6          #define E3				((OSC_FREQ/4)/164.81)  // P1,P2-allon   	(61)
+   7          #define F3				((OSC_FREQ/4)/174.61)  // P1,P0-allon		(60)
+   8          #define G3				((OSC_FREQ/4)/196.00)  // P2-allon			(29)
+   9          #define Ab3				((OSC_FREQ/4)/207.65)  // P0-allon			(28)
+  10          #define A3				((OSC_FREQ/4)/220.00)  // P1,P0-Yel,Amb		(62)
+  11          #define Bb3				((OSC_FREQ/4)/233.08)  // P1,P2-Yel,Grn		(49)
+  12          #define B3				((OSC_FREQ/4)/246.94)  // P0-Yel,Amb		(30)
+  13          #define C4				((OSC_FREQ/4)/261.63)  // P2-Yel,Grn		(17)
+  14          #define Db4				((OSC_FREQ/4)/277.18)  // P1,P0-Red,Grn		(46)
+  15          #define D4				((OSC_FREQ/4)/293.67)  // P0-Red,Grn		(14)
+  16          #define Eb4				((OSC_FREQ/4)/311.13)  // P1,P2-Red,Amb		(43)
+  17          #define E4				((OSC_FREQ/4)/329.63)  // P2-Red,Amb		(11)
+  18          #define F4				((OSC_FREQ/4)/349.23)  // P1,P0-Yel,Grn		(48)
+  19          #define Gb4				((OSC_FREQ/4)/369.99)  // P1,P0-Amb,Grn		(50)
+  20          #define G4				((OSC_FREQ/4)/392.00)  // P0-Amb,Grn		(18)
+  21          #define Ab4				((OSC_FREQ/4)/415.30)  // P1,P0-Red,Yel		(44)
+  22          #define A4				((OSC_FREQ/4)/440.00)  // P0-Red,Yel		(12)
+  23          #define Bb4				((OSC_FREQ/4)/466.16)  // P1,P0-Red,Amb		(42)
+  24          #define B4				((OSC_FREQ/4)/493.88)  // P0-Red,Amb		(10)
+  25          #define C5				((OSC_FREQ/4)/523.25)  // P0-Yel,Grn		(16)
+  26          #define Db5				((OSC_FREQ/4)/554.37)  // P1, P2-Red,Grn	(47)
+  27          #define D5				((OSC_FREQ/4)/587.33)  // P2-Red,Grn		(15)
+  28          #define Eb5				((OSC_FREQ/4)/622.25)  // P1,P2-Amb,Grn		(51)
+  29          #define E5				((OSC_FREQ/4)/659.26)  // P2-Amb,Grn		(19)
+  30          #define F5				((OSC_FREQ/4)/698.46)  // P2-Yel,Amb		(31)
+  31          #define Gb5				((OSC_FREQ/4)/739.99)  // P1,P2-Yel,Amb		(63)
+  32          #define G5				((OSC_FREQ/4)/783.99)  // P2-Red,Yel		(13)
+  33          #define Ab5				((OSC_FREQ/4)/830.61)  // P1,P2-Red,Yel 	(45)	
+  34          #define A5				((OSC_FREQ/4)/880.00)  // P1,P0-Grn			(38)
+  35          #define Bb5				((OSC_FREQ/4)/932.33)  // P1,P0-Yel			(36)
+  36          #define B5				((OSC_FREQ/4)/987.77)  // P1,P2-Grn			(39)
+  37          #define C6				((OSC_FREQ/4)/1046.5)  // P2-Grn (per_08)	(7)
+  38          #define Db6				((OSC_FREQ/4)/1108.7)  // P1,P0-Red			(40)
+  39          #define D6				((OSC_FREQ/4)/1174.7)  // P0-Red			(8)
+  40          #define Eb6				((OSC_FREQ/4)/1244.5)  // P1,P2-Amb			(41)
+  41          #define E6				((OSC_FREQ/4)/1318.5)  // P2-Amb (per_04)	(9)
+  42          #define F6				((OSC_FREQ/4)/1396.9)  // P0-Grn			(6)
+  43          #define Gb6				((OSC_FREQ/4)/1480.0)  // P1,P2-Yel			(35)
+  44          #define G6				((OSC_FREQ/4)/1568.0)  // P2-Yel (per_02)	(3)
+  45          #define Ab6				((OSC_FREQ/4)/1661.2)  // P1,P0-Amb			(34)
+  46          #define A6				((OSC_FREQ/4)/1760.0)  // P0-Amb			(2)
+  47          #define Bb6				((OSC_FREQ/4)/1864.7)  // P1,P2-Red			(33)
+  48          #define B6				((OSC_FREQ/4)/1975.5)  // P2-Red (per_01)	(1)
+  49          #define C7				((OSC_FREQ/4)/2093.0)  // P0-Yel			(4)
+  50          #define D7				((OSC_FREQ/4)/2349.3)  // P1				(32)
+  51          
+  52          #ifdef SPEAKER
+              code int   period[] = { 0, B6, A6, G6, C7, 0, F6, C6, D6, E6, B4, E4, A4, G5, D4, D5, C5,
+              C4, G4, E5, 0, 0, 0, 0, 0, 0, 0, 0, Ab3, G3, B3, F5, D7,
+              Bb6, Ab6, Gb6, Bb5, 0, A5, B5, Db6, Eb6, Bb4, Eb4, Ab4, Ab5, Db4, Db5, F4,
+C51 COMPILER V6.02  MAZE                                                                   05/12/2016 11:38:44 PAGE 2   
 
-  54   1      	return;
-  55   1      }	
-  56          
-  57          /*void delay(long x)
-  58          {
-  59          	long i = 0;
-  60          	for (i; i<x; i++);
-  61          }*/
-  62          
-  63          void cheatMap(/*const*/ char map_array[7][7], unsigned char arr_x, unsigned char arr_y) //rename map_array
-             - to group code name for the map array
-  64          {
-  65   1      	unsigned char i;
-  66   1      	unsigned char j;
-  67   1      	for (i = 0; i < arr_x; i++)
-  68   1      	{
-  69   2      
-  70   2      		for (j = 0; j < arr_y; j++)
-  71   2      		{
-  72   3      			uart_transmit(map_array[j][i]);
-  73   3      		}
-  74   2      		uart_transmit('\n');
-  75   2      		uart_transmit('\r');//I think this will work?
-  76   2      	}
-  77   1      	return;
-  78   1      }
-  79          
-  80          void Redraw_Map(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[7][7])
-  81          {
-  82   1      	unsigned char i = 0;
-  83   1      	//Shows what the 8 spaces around the player are
-  84   1      	//LED1
-  85   1      	if (Map[Play_x - 1][Play_y - 1] == 'W') //Wall
-  86   1      		LED1 = 0;
-  87   1      	else if (Map[Play_x - 1][Play_y - 1] == 'G')
-  88   1      	{
-  89   2      		for (i; i < 3; i++)
-  90   2      		{
-  91   3      			LED1 = 0;
-  92   3      			delay(10000);
-  93   3      			LED1 = 1;
-  94   3      			delay(10000);
-  95   3      		}
-  96   2      	}
-  97   1      	else //Open
-  98   1      		LED1 = 1;
-  99   1      	//LED2
- 100   1      	if (Map[Play_x][Play_y - 1] == 'W') //Wall
- 101   1      		LED2 = 0;
- 102   1      	else if (Map[Play_x][Play_y - 1] == 'G') //Goal
- 103   1      	{
- 104   2      		for (i; i < 3; i++)
- 105   2      		{
- 106   3      			LED2 = 0;
- 107   3      			delay(10000);
- 108   3      			LED2 = 1;
- 109   3      			delay(10000);
- 110   3      		}
- 111   2      	}
- 112   1      	else //Open
- 113   1      		LED2 = 1;
- 114   1      	//LED3
-C51 COMPILER V6.02  MAZE                                                                   05/12/2016 11:22:12 PAGE 3   
+              Bb3, Gb4, Eb5, 0, 0, 0, 0, 0, 0, 0, 0, F3, E3, A3, Gb5 };
+              
+              code char  notes[4][20] = {// Victory Fanfare
+              	11, 11, 11, 11, 17, 14, 11, 14, 11, 31, 48, 31, 48, 45, 0, 0, 0, 0, 0, 0,
+              	17, 45, 38, 45, 38, 38, 31, 48, 11, 48, 14, 14, 31, 48, 31, 48, 45, 0, 0, 0,
+              	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+              	17, 45, 31, 45, 38, 38, 31, 48, 31, 45, 39, 39, 0, 0, 0, 0, 0, 0, 0, 0, };
+              code char  dur[4][20] = {	// Victory Fanfare
+              	16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 24, 8, 32, 0, 0, 0, 0, 0,
+              	16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 24, 8, 32, 0, 0, 0, 0, 0,
+              	16, 16, 16, 16, 16, 8, 8, 16, 16, 16, 8, 8, 16, 16, 16, 16, 32, 0, 0, 0,
+              	16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 24, 8, 32, 0, 0, 0, 0, 0, };
+              
+              
+              sbit LED1 = P2 ^ 4;
+              sbit LED2 = P0 ^ 5;
+              sbit LED3 = P2 ^ 7;
+              sbit LED4 = P0 ^ 6;
+              sbit LED5 = P1 ^ 6;
+              sbit LED6 = P0 ^ 4;
+              sbit LED7 = P2 ^ 5;
+              sbit LED8 = P0 ^ 7;
+              sbit LED9 = P2 ^ 6;
+              
+              sbit SW1 = P2 ^ 0;
+              sbit SW2 = P0 ^ 1;
+              sbit SW3 = P2 ^ 3;
+              sbit SW4 = P0 ^ 2;
+              sbit SW5 = P1 ^ 4;
+              sbit SW6 = P0 ^ 0;
+              sbit SW7 = P2 ^ 1;
+              sbit SW8 = P0 ^ 3;
+              sbit SW9 = P2 ^ 2;
+              
+              sbit SPEAK = P1 ^ 7;
+              
+              void delay (long x);
+              void cheatMap(/*const*/ char map_array[12][12], /*const*/ unsigned char arr_x, /*const*/ unsigned char arr
+             -_y);
+              void Redraw_Map(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[12][12]);
+              char Up(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[12][12]);
+              char Down(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[12][12]);
+              char Left(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[12][12]);
+              char Right(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[12][12]);
+              char GameStart(/*const*/ char Map[12][12], /*const*/ unsigned char Start_x, /*const*/ unsigned char Start_
+             -y);
+              void playMenu();
+              void clearGame();
+              void wallHit(void);
+              void Delay250HZ(void);
+              void win(void);
+              void finish(char n, char d);
+              void finish(char n, char d)
+              
+              
+              //Looping Code for playing the game
+              void main(void)
+              {
+              	P0M1 = 0;
+              	P1M1 = 0;
+              	P2M1 = 0;
+              	P3M1 = 0;
+C51 COMPILER V6.02  MAZE                                                                   05/12/2016 11:38:44 PAGE 3   
 
- 115   1      	if (Map[Play_x + 1][Play_y - 1] == 'W') //Wall
- 116   1      		LED3 = 0;
- 117   1      	else if (Map[Play_x + 1][Play_y - 1] == 'G') //Goal
- 118   1      	{
- 119   2      		for (i; i < 3; i++)
- 120   2      		{
- 121   3      			LED3 = 0;
- 122   3      			delay(10000);
- 123   3      			LED3 = 1;
- 124   3      			delay(10000);
- 125   3      		}
- 126   2      	}
- 127   1      	else //Open
- 128   1      		LED3 = 1;
- 129   1      	//LED4
- 130   1      	if (Map[Play_x - 1][Play_y] == 'W') //Wall
- 131   1      		LED4 = 0;
- 132   1      	else if (Map[Play_x - 1][Play_y] == 'G') //Goal
- 133   1      	{
- 134   2      		for (i; i < 3; i++)
- 135   2      		{
- 136   3      			LED4 = 0;
- 137   3      			delay(10000);
- 138   3      			LED4 = 1;
- 139   3      			delay(10000);
- 140   3      		}
- 141   2      	}
- 142   1      	else //Open
- 143   1      		LED4 = 1;
- 144   1      	//LED5
- 145   1      	if (Map[Play_x][Play_y] == 'W') //Wall
- 146   1      		LED5 = 0;
- 147   1      	else if (Map[Play_x][Play_y] == 'G') //Goal
- 148   1      	{
- 149   2      		for (i; i < 3; i++)
- 150   2      		{
- 151   3      			LED5 = 0;
- 152   3      			delay(10000);
- 153   3      			LED5 = 1;
- 154   3      			delay(10000);
- 155   3      		}
- 156   2      	}
- 157   1      	else //Open
- 158   1      		LED5 = 1;
- 159   1      	//LED6
- 160   1      	if (Map[Play_x + 1][Play_y] == 'W') //Wall
- 161   1      		LED6 = 0;
- 162   1      	else if (Map[Play_x + 1][Play_y] == 'G') //Goal
- 163   1      	{
- 164   2      		for (i; i < 3; i++)
- 165   2      		{
- 166   3      			LED6 = 0;
- 167   3      			delay(10000);
- 168   3      			LED6 = 1;
- 169   3      			delay(10000);
- 170   3      		}
- 171   2      	}
- 172   1      	else //Open
- 173   1      		LED6 = 1;
- 174   1      	//LED7
- 175   1      	if (Map[Play_x - 1][Play_y + 1] == 'W') //Wall
- 176   1      		LED7 = 0;
-C51 COMPILER V6.02  MAZE                                                                   05/12/2016 11:22:12 PAGE 4   
+              
+              	uart_init();
+              	
+              	while (1)
+              	{
+              		playMenu();
+              		clearGame();
+              	}
+              
+              	return;
+              }	
+              
+              /*void delay(long x)
+              {
+              	long i = 0;
+              	for (i; i<x; i++);
+              }*/
+              
+              void cheatMap(/*const*/ char map_array[12][12], unsigned char arr_x, unsigned char arr_y) //rename map_arr
+             -ay to group code name for the map array
+              {
+              	unsigned char i;
+              	unsigned char j;
+              	for (i = 0; i < arr_x; i++)
+              	{
+              
+              		for (j = 0; j < arr_y; j++)
+              		{
+              			uart_transmit(map_array[j][i]);
+              		}
+              		uart_transmit('\n');
+              		uart_transmit('\r');//I think this will work?
+              	}
+              	return;
+              }
+              
+              void Redraw_Map(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[12][12])
+              {
+              	unsigned char i = 0;
+              	//Shows what the 8 spaces around the player are
+              	//LED1
+              	if (Map[Play_x - 1][Play_y - 1] == 'W') //Wall
+              		LED1 = 0;
+              	else if (Map[Play_x - 1][Play_y - 1] == 'G')
+              	{
+              		for (i; i < 3; i++)
+              		{
+              			LED1 = 0;
+              			delay(10000);
+              			LED1 = 1;
+              			delay(10000);
+              		}
+              	}
+              	else //Open
+              		LED1 = 1;
+              	//LED2
+              	if (Map[Play_x][Play_y - 1] == 'W') //Wall
+              		LED2 = 0;
+              	else if (Map[Play_x][Play_y - 1] == 'G') //Goal
+              	{
+              		for (i; i < 3; i++)
+              		{
+C51 COMPILER V6.02  MAZE                                                                   05/12/2016 11:38:44 PAGE 4   
 
- 177   1      	else if (Map[Play_x - 1][Play_y + 1] == 'G') //Goal
- 178   1      	{
- 179   2      		for (i; i < 3; i++)
- 180   2      		{
- 181   3      			LED7 = 0;
- 182   3      			delay(10000);
- 183   3      			LED7 = 1;
- 184   3      			delay(10000);
- 185   3      		}
- 186   2      	}
- 187   1      	else //Open
- 188   1      		LED7 = 1;
- 189   1      	//LED8
- 190   1      	if (Map[Play_x][Play_y + 1] == 'W') //Wall
- 191   1      		LED8 = 0;
- 192   1      	else if (Map[Play_x][Play_y + 1] == 'G') //Goal
- 193   1      	{
- 194   2      		for (i; i < 3; i++)
- 195   2      		{
- 196   3      			LED8 = 0;
- 197   3      			delay(10000);
- 198   3      			LED8 = 1;
- 199   3      			delay(10000);
- 200   3      		}
- 201   2      	}
- 202   1      	else //Open
- 203   1      		LED8 = 1;
- 204   1      	//LED9
- 205   1      	if (Map[Play_x + 1][Play_y + 1] == 'W') //Wall
- 206   1      		LED9 = 0;
- 207   1      	else if (Map[Play_x + 1][Play_y + 1] == 'G') //Goal
- 208   1      	{
- 209   2      		for (i; i < 3; i++)
- 210   2      		{
- 211   3      			LED9 = 0;
- 212   3      			delay(10000);
- 213   3      			LED9 = 1;
- 214   3      			delay(10000);
- 215   3      		}
- 216   2      	}
- 217   1      	else //Open
- 218   1      		LED9 = 1;
- 219   1      
- 220   1      	return;
- 221   1      }
- 222          //Button Actions
- 223          //Up button
- 224          char Up(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[7][7]) {
- 225   1      	if (Map[Play_x][Play_y - 1] != 'W')
- 226   1      		Play_y -= 1;
- 227   1      	Redraw_Map(Play_x, Play_y, Map);
- 228   1      	return Play_y;
- 229   1      }
- 230          
- 231          //Down
- 232          char Down(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[7][7]) {
- 233   1      	if (Map[Play_x][Play_y + 1] != 'W')
- 234   1      		Play_y += 1;
- 235   1      	Redraw_Map(Play_x, Play_y, Map);
- 236   1      	return Play_y;
- 237   1      }
- 238          
-C51 COMPILER V6.02  MAZE                                                                   05/12/2016 11:22:12 PAGE 5   
+              			LED2 = 0;
+              			delay(10000);
+              			LED2 = 1;
+              			delay(10000);
+              		}
+              	}
+              	else //Open
+              		LED2 = 1;
+              	//LED3
+              	if (Map[Play_x + 1][Play_y - 1] == 'W') //Wall
+              		LED3 = 0;
+              	else if (Map[Play_x + 1][Play_y - 1] == 'G') //Goal
+              	{
+              		for (i; i < 3; i++)
+              		{
+              			LED3 = 0;
+              			delay(10000);
+              			LED3 = 1;
+              			delay(10000);
+              		}
+              	}
+              	else //Open
+              		LED3 = 1;
+              	//LED4
+              	if (Map[Play_x - 1][Play_y] == 'W') //Wall
+              		LED4 = 0;
+              	else if (Map[Play_x - 1][Play_y] == 'G') //Goal
+              	{
+              		for (i; i < 3; i++)
+              		{
+              			LED4 = 0;
+              			delay(10000);
+              			LED4 = 1;
+              			delay(10000);
+              		}
+              	}
+              	else //Open
+              		LED4 = 1;
+              	//LED5
+              	if (Map[Play_x][Play_y] == 'W') //Wall
+              		LED5 = 0;
+              	else if (Map[Play_x][Play_y] == 'G') //Goal
+              	{
+              		for (i; i < 3; i++)
+              		{
+              			LED5 = 0;
+              			delay(10000);
+              			LED5 = 1;
+              			delay(10000);
+              		}
+              	}
+              	else //Open
+              		LED5 = 1;
+              	//LED6
+              	if (Map[Play_x + 1][Play_y] == 'W') //Wall
+              		LED6 = 0;
+              	else if (Map[Play_x + 1][Play_y] == 'G') //Goal
+              	{
+              		for (i; i < 3; i++)
+              		{
+              			LED6 = 0;
+              			delay(10000);
+C51 COMPILER V6.02  MAZE                                                                   05/12/2016 11:38:44 PAGE 5   
 
- 239          //Right 
- 240          char Right(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[7][7]) {
- 241   1      	if (Map[Play_x + 1][Play_y] != 'W')
- 242   1      		Play_x += 1;
- 243   1      	Redraw_Map(Play_x, Play_y, Map);
- 244   1      	return Play_x;
- 245   1      }
- 246          
- 247          //Left 
- 248          char Left(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[7][7]) {
- 249   1      	if (Map[Play_x - 1][Play_y] != 'W')
- 250   1      		Play_x -= 1;
- 251   1      	Redraw_Map(Play_x, Play_y, Map);
- 252   1      	return Play_x;
- 253   1      }
- 254          //Check if Player is at goal
- 255          
- 256          char GameStart(/*const*/ char Map[7][7], /*const*/ unsigned char Start_x, /*const*/ unsigned char Start_y)
-             - {
- 257   1      	unsigned char GameOver = 0; //reset every new game
- 258   1      	unsigned char Play_x = Start_x;	//Load starting positions
- 259   1      	unsigned char Play_y = Start_y;
- 260   1      	unsigned char i = 0;
- 261   1      	unsigned char k = 0;
- 262   1      
- 263   1      	//to transmit a number, use value+48
- 264   1      
- 265   1      	uart_transmit(Play_x+48);
- 266   1      	uart_transmit('\n');
- 267   1      	uart_transmit('\r');
- 268   1      	uart_transmit(Play_y+48);
- 269   1      	uart_transmit('\n');
- 270   1      	uart_transmit('\r');
- 271   1      
- 272   1      	Redraw_Map(Play_x, Play_y, Map);
- 273   1      
- 274   1      	while (GameOver == 0) 
- 275   1      	{ //This loop plays the game until finished
- 276   2      		while (SW1 == 0 || SW3 == 0 || SW2 == 0 || SW8 == 0 || SW4 == 0 || SW6 == 0) 
- 277   2      		{ //Check if any input
- 278   3      			//Nothing to do here
- 279   3      		}
- 280   2      
- 281   2      		delay(10);
- 282   2      
- 283   2      		//waiting for input
- 284   2      		if (SW1 == 0) //Exit Button
- 285   2      			GameOver = 1;
- 286   2      		else if (SW5 == 0) // Help Button
- 287   2      			;//Help(Play_x, Play_y, Map[][]);
- 288   2      		else if (SW2 == 0)
- 289   2      			Play_y = Up(Play_x, Play_y, Map);
- 290   2      		else if (SW8 == 0)
- 291   2      			Play_y = Down(Play_x, Play_y, Map);
- 292   2      		else if (SW4 == 0)
- 293   2      			Play_x = Left(Play_x, Play_y, Map);
- 294   2      		else if (SW6 == 0)
- 295   2      			Play_x = Right(Play_x, Play_y, Map);
- 296   2      		else if (SW3 == 0)
- 297   2      			cheatMap(Map, 7, 7);
- 298   2      		//Check if Game Over
- 299   2      		if (Map[Play_x][Play_y] == 'G')
-C51 COMPILER V6.02  MAZE                                                                   05/12/2016 11:22:12 PAGE 6   
+              			LED6 = 1;
+              			delay(10000);
+              		}
+              	}
+              	else //Open
+              		LED6 = 1;
+              	//LED7
+              	if (Map[Play_x - 1][Play_y + 1] == 'W') //Wall
+              		LED7 = 0;
+              	else if (Map[Play_x - 1][Play_y + 1] == 'G') //Goal
+              	{
+              		for (i; i < 3; i++)
+              		{
+              			LED7 = 0;
+              			delay(10000);
+              			LED7 = 1;
+              			delay(10000);
+              		}
+              	}
+              	else //Open
+              		LED7 = 1;
+              	//LED8
+              	if (Map[Play_x][Play_y + 1] == 'W') //Wall
+              		LED8 = 0;
+              	else if (Map[Play_x][Play_y + 1] == 'G') //Goal
+              	{
+              		for (i; i < 3; i++)
+              		{
+              			LED8 = 0;
+              			delay(10000);
+              			LED8 = 1;
+              			delay(10000);
+              		}
+              	}
+              	else //Open
+              		LED8 = 1;
+              	//LED9
+              	if (Map[Play_x + 1][Play_y + 1] == 'W') //Wall
+              		LED9 = 0;
+              	else if (Map[Play_x + 1][Play_y + 1] == 'G') //Goal
+              	{
+              		for (i; i < 3; i++)
+              		{
+              			LED9 = 0;
+              			delay(10000);
+              			LED9 = 1;
+              			delay(10000);
+              		}
+              	}
+              	else //Open
+              		LED9 = 1;
+              
+              	return;
+              }
+              //Button Actions
+              //Up button
+              char Up(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[12][12]) {
+              	if (Map[Play_x][Play_y - 1] != 'W')
+              		Play_y -= 1;
+              	Redraw_Map(Play_x, Play_y, Map);
+              	return Play_y;
+              }
+C51 COMPILER V6.02  MAZE                                                                   05/12/2016 11:38:44 PAGE 6   
 
- 300   2      			GameOver = 1;
- 301   2      	}
- 302   1      	return GameOver;
- 303   1      }
- 304          
- 305          void playMenu()
- 306          {
- 307   1      	char reset = 0;
- 308   1      	
- 309   1      	char* title = "Simon's A-MAZE-ing Adventures!";
- 310   1      	char* star_bar = "*********************************";
- 311   1      	char* menu1 = "Please select difficulty level: \n";
- 312   1      	char* menu2 = "1) Easy          2) Medium          3) Hard \n";
- 313   1      
- 314   1      	unsigned char i = 0;
- 315   1      	while (star_bar[i] != '\0')
- 316   1      	{
- 317   2      		uart_transmit(star_bar[i]);
- 318   2      		i++;
- 319   2      	}
- 320   1      	uart_transmit('\n');
- 321   1      	uart_transmit('\r');
- 322   1      	i = 0;
- 323   1      	while (title[i] != '\0')
- 324   1      	{
- 325   2      		uart_transmit(title[i]);
- 326   2      		i++;
- 327   2      	}
- 328   1      	uart_transmit('\n');
- 329   1      	uart_transmit('\r');
- 330   1      	i = 0;
- 331   1      	while (star_bar[i] != '\0')
- 332   1      	{
- 333   2      		uart_transmit(star_bar[i]);
- 334   2      		i++;
- 335   2      	}
- 336   1      	uart_transmit('\n');
- 337   1      	uart_transmit('\r');
- 338   1      	uart_transmit('\n');
- 339   1      	uart_transmit('\r');
- 340   1      	i = 0;
- 341   1      	while (menu1[i] != '\0')
- 342   1      	{
- 343   2      		uart_transmit(menu1[i]);
- 344   2      		i++;
- 345   2      	}
- 346   1      	uart_transmit('\n');
- 347   1      	uart_transmit('\r');
- 348   1      	i = 0;
- 349   1      	while (menu2[i] != '\0')
- 350   1      	{
- 351   2      		uart_transmit(menu2[i]);
- 352   2      		i++;
- 353   2      	}
- 354   1      	uart_transmit('\n');
- 355   1      	uart_transmit('\r');
- 356   1      	i = 0;
- 357   1      
- 358   1      	while (reset == 0)
- 359   1      	{
- 360   2      		if (SW3 == 0)
- 361   2      			reset = GameStart(map1, 2, 1); //fix valuse to actual variables here
-C51 COMPILER V6.02  MAZE                                                                   05/12/2016 11:22:12 PAGE 7   
+              
+              //Down
+              char Down(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[12][12]) {
+              	if (Map[Play_x][Play_y + 1] != 'W')
+              		Play_y += 1;
+              	Redraw_Map(Play_x, Play_y, Map);
+              	return Play_y;
+              }
+              
+              //Right 
+              char Right(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[12][12]) {
+              	if (Map[Play_x + 1][Play_y] != 'W')
+              		Play_x += 1;
+              	Redraw_Map(Play_x, Play_y, Map);
+              	return Play_x;
+              }
+              
+              //Left 
+              char Left(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[12][12]) {
+              	if (Map[Play_x - 1][Play_y] != 'W')
+              		Play_x -= 1;
+              	Redraw_Map(Play_x, Play_y, Map);
+              	return Play_x;
+              }
+              //Check if Player is at goal
+              
+              char GameStart(/*const*/ char Map[12][12], /*const*/ unsigned char Start_x, /*const*/ unsigned char Start_
+             -y) {
+              	unsigned char GameOver = 0; //reset every new game
+              	unsigned char Play_x = Start_x;	//Load starting positions
+              	unsigned char Play_y = Start_y;
+              	unsigned char i = 0;
+              	unsigned char k = 0;
+              
+              	//to transmit a number, use value+48
+              
+              	uart_transmit(Play_x+48);
+              	uart_transmit('\n');
+              	uart_transmit('\r');
+              	uart_transmit(Play_y+48);
+              	uart_transmit('\n');
+              	uart_transmit('\r');
+              
+              	Redraw_Map(Play_x, Play_y, Map);
+              
+              	while (GameOver == 0) 
+              	{ //This loop plays the game until finished
+              		while (SW1 == 0 || SW3 == 0 || SW2 == 0 || SW8 == 0 || SW4 == 0 || SW6 == 0) 
+              		{ //Check if any input
+              			//Nothing to do here
+              		}
+              
+              		delay(10);
+              
+              		//waiting for input
+              		if (SW1 == 0) //Exit Button
+              			GameOver = 1;
+              		else if (SW5 == 0) // Help Button
+              			;//Help(Play_x, Play_y, Map[][]);
+              		else if (SW2 == 0)
+              			Play_y = Up(Play_x, Play_y, Map);
+              		else if (SW8 == 0)
+C51 COMPILER V6.02  MAZE                                                                   05/12/2016 11:38:44 PAGE 7   
 
- 362   2      		//victory
- 363   2      		/*else if (SW7 == 0)
- 364   2      			//GameStart(&(&map2[0][0]), M2startX, M2startY);
- 365   2      		//victory
- 366   2      		else if (SW9 == 0)*/
- 367   2      			//GameStart(&(&map3[0][0]), M3startX, M3startY);
- 368   2      		//victory
- 369   2      	}
- 370   1      
- 371   1      	return;
- 372   1      }
- 373          
- 374          void clearGame()
- 375          {
- 376   1      	LED1 = 1;
- 377   1      	LED2 = 1;
- 378   1      	LED3 = 1;
- 379   1      	LED4 = 1;
- 380   1      	LED5 = 1;
- 381   1      	LED6 = 1;
- 382   1      	LED7 = 1;
- 383   1      	LED8 = 1;
- 384   1      	LED9 = 1;
- 385   1      
- 386   1      	return;
- 387   1      }
- 388          
+              			Play_y = Down(Play_x, Play_y, Map);
+              		else if (SW4 == 0)
+              			Play_x = Left(Play_x, Play_y, Map);
+              		else if (SW6 == 0)
+              			Play_x = Right(Play_x, Play_y, Map);
+              		else if (SW3 == 0)
+              			cheatMap(Map, 7, 7);
+              		//Check if Game Over
+              		if (Map[Play_x][Play_y] == 'G')
+              			GameOver = 1;
+              	}
+              	return GameOver;
+              }
+              
+              void playMenu()
+              {
+              	char reset = 0;
+              	
+              	char* title = "Simon's A-MAZE-ing Adventures!";
+              	char* star_bar = "*********************************";
+              	char* menu1 = "Please select difficulty level: \n";
+              	char* menu2 = "1) Easy          2) Medium          3) Hard \n";
+              
+              	unsigned char i = 0;
+              	while (star_bar[i] != '\0')
+              	{
+              		uart_transmit(star_bar[i]);
+              		i++;
+              	}
+              	uart_transmit('\n');
+              	uart_transmit('\r');
+              	i = 0;
+              	while (title[i] != '\0')
+              	{
+              		uart_transmit(title[i]);
+              		i++;
+              	}
+              	uart_transmit('\n');
+              	uart_transmit('\r');
+              	i = 0;
+              	while (star_bar[i] != '\0')
+              	{
+              		uart_transmit(star_bar[i]);
+              		i++;
+              	}
+              	uart_transmit('\n');
+              	uart_transmit('\r');
+              	uart_transmit('\n');
+              	uart_transmit('\r');
+              	i = 0;
+              	while (menu1[i] != '\0')
+              	{
+              		uart_transmit(menu1[i]);
+              		i++;
+              	}
+              	uart_transmit('\n');
+              	uart_transmit('\r');
+              	i = 0;
+              	while (menu2[i] != '\0')
+              	{
+              		uart_transmit(menu2[i]);
+              		i++;
+C51 COMPILER V6.02  MAZE                                                                   05/12/2016 11:38:44 PAGE 8   
 
+              	}
+              	uart_transmit('\n');
+              	uart_transmit('\r');
+              	i = 0;
+              
+              	while (reset == 0)
+              	{
+              		if (SW3 == 0)
+              			reset = GameStart(map1, 2, 1); //fix valuse to actual variables here
+              		//victory
+              		/*else if (SW7 == 0)
+              			//GameStart(&(&map2[0][0]), M2startX, M2startY);
+              		//victory
+              		else if (SW9 == 0)*/
+              			//GameStart(&(&map3[0][0]), M3startX, M3startY);
+              		//victory
+              	}
+              
+              	return;
+              }
+              
+              void clearGame()
+              {
+              	LED1 = 1;
+              	LED2 = 1;
+              	LED3 = 1;
+              	LED4 = 1;
+              	LED5 = 1;
+              	LED6 = 1;
+              	LED7 = 1;
+              	LED8 = 1;
+              	LED9 = 1;
+              
+              	return;
+              }
+              
+              void wallHit(void)
+              {
+              	ET0 = 1;//sets timer on
+              	pointer = 9;
+              	TF0 = 1;
+              	Delay250HZ();
+              
+              	pointer = 61;
+              	TF0 = 1;
+              	Delay250HZ();
+              	ET0 = 0;
+              }
+              
+              void Delay250HZ(void)
+              {
+              	SPEAK = 0;
+              	TF0 = 0;
+              	TR0 = 0;
+              	TL0 = 0x33
+              		TH0 = 0xFB
+              		TR0 = 1;
+              	while (TF0 != 0);
+              	TR0 = 0;
+              	TF0 = 0;
+              	SPEAK = 0;
+              }
+C51 COMPILER V6.02  MAZE                                                                   05/12/2016 11:38:44 PAGE 9   
 
-MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =   1630    ----
-   CONSTANT SIZE    =    387    ----
-   XDATA SIZE       =   ----    ----
-   PDATA SIZE       =   ----    ----
-   DATA SIZE        =      6      57
-   IDATA SIZE       =   ----    ----
-   BIT SIZE         =   ----    ----
-END OF MODULE INFORMATION.
+              
+              void win(void)
+              {
+              	char n, d;
+              	unsigned int i, j;
+              
+              	i = 0;
+              	j = 0;
+              	do
+              	{
+              		n = notes[j][i];  // read next note and duration
+              		d = dur[j][i];
+              		do
+              		{
+              			finish(n, d);  // use displ routine to play note and light LEDs
+              			i++;
+              			n = notes[j][i];  // repeat until dur=0 (indicates end of row (phrase))
+              			d = dur[j][i];
+              		} while (d != 0);
+              		i = 0;
+              		j++;
+              	} while (j<end);
+              }
+              
+              void finish(char n, char d){
+              //#ifdef SPEAKER
+              
+              	int dur_time;
+              	int t;
+              	if (d == 0)
+              	{
+              		dur_time = delay_t; // delay_t is a global variable used by simon
+              		t = 0;
+              	}
+              	else
+              	{
+              		dur_time = TEMPO*d; // TEMPO defines speed of all songs
+              		t = 20;	     	  // t=20 puts a small delay between notes
+              	}
+              
+              	pointer = &period[n];
+              
+              	if (*pointer != 0) {
+              		/* Enable timer */
+              		TH1 = -(*pointer) >> 8;
+              		TL1 = -(*pointer) & 0x0ff;
+              		TR1 = 1;
+              		ET1 = 1;
+              	}
+              
+              	sdelay(dur_time);
+              
+              	/* Disable timer */
+              	ET1 = 0;
+              	TR1 = 0;
+              
+              	if (t != 0) sdelay(t);
+              /*#*/else
+              	sdelay(delay_t);
+              //#endif
+              }
+              
+C51 COMPILER V6.02  MAZE                                                                   05/12/2016 11:38:44 PAGE 10  
 
+              void sdelay(int time)
+              {
+              	unsigned int    i;
+              
+              	while (time-- > 0) {
+              		for (i = 0; i<N_PAUSE; i++);
+              	}
+              }
+*** ERROR 316 IN LINE 555 OF .\Maze.c: unterminated conditionals
 
-C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
+C51 COMPILATION COMPLETE.  0 WARNING(S),  1 ERROR(S)

@@ -1,4 +1,4 @@
-BL51 BANKED LINKER/LOCATER V4.02                                                        05/12/2016  11:22:13  PAGE 1
+BL51 BANKED LINKER/LOCATER V4.02                                                        05/12/2016  11:29:07  PAGE 1
 
 
 BL51 BANKED LINKER/LOCATER V4.02, INVOKED BY:
@@ -40,26 +40,26 @@ LINK MAP OF MODULE:  CompE Project 2 (MAZE)
             CODE    0020H     0003H     UNIT         ?PR?UART_GET?UART
             CODE    0023H     0003H     ABSOLUTE     
             CODE    0026H     02F2H     UNIT         ?PR?_REDRAW_MAP?MAZE
-            CODE    0318H     0183H     UNIT         ?CO?MAZE
-            CODE    049BH     010BH     UNIT         ?PR?PLAYMENU?MAZE
-            CODE    05A6H     00FFH     UNIT         ?PR?_GAMESTART?MAZE
-            CODE    06A5H     008CH     UNIT         ?C_C51STARTUP
-            CODE    0731H     005CH     UNIT         ?C?LIB_CODE
-            CODE    078DH     004FH     UNIT         ?PR?_CHEATMAP?MAZE
-            CODE    07DCH     0043H     UNIT         ?PR?_DELAY?UART
-            CODE    081FH     003DH     UNIT         ?PR?_UP?MAZE
-            CODE    085CH     003CH     UNIT         ?PR?_DOWN?MAZE
-            CODE    0898H     0039H     UNIT         ?PR?_RIGHT?MAZE
-            CODE    08D1H     0039H     UNIT         ?PR?_LEFT?MAZE
-            CODE    090AH     0033H     UNIT         ?PR?UART_INIT?UART
-            CODE    093DH     0013H     UNIT         ?PR?CLEARGAME?MAZE
-            CODE    0950H     0013H     UNIT         ?C_INITSEG
-            CODE    0963H     000DH     UNIT         ?PR?UART_ISR?UART
+            CODE    0318H     0241H     UNIT         ?CO?MAZE
+            CODE    0559H     010BH     UNIT         ?PR?PLAYMENU?MAZE
+            CODE    0664H     00FFH     UNIT         ?PR?_GAMESTART?MAZE
+            CODE    0763H     008CH     UNIT         ?C_C51STARTUP
+            CODE    07EFH     005CH     UNIT         ?C?LIB_CODE
+            CODE    084BH     004FH     UNIT         ?PR?_CHEATMAP?MAZE
+            CODE    089AH     0043H     UNIT         ?PR?_DELAY?UART
+            CODE    08DDH     003DH     UNIT         ?PR?_UP?MAZE
+            CODE    091AH     003CH     UNIT         ?PR?_DOWN?MAZE
+            CODE    0956H     0039H     UNIT         ?PR?_RIGHT?MAZE
+            CODE    098FH     0039H     UNIT         ?PR?_LEFT?MAZE
+            CODE    09C8H     0033H     UNIT         ?PR?UART_INIT?UART
+            CODE    09FBH     0013H     UNIT         ?PR?CLEARGAME?MAZE
+            CODE    0A0EH     0013H     UNIT         ?C_INITSEG
+            CODE    0A21H     000DH     UNIT         ?PR?UART_ISR?UART
 
 
 
 OVERLAY MAP OF MODULE:   CompE Project 2 (MAZE)
-BL51 BANKED LINKER/LOCATER V4.02                                                      05/12/2016  11:22:13  PAGE 2
+BL51 BANKED LINKER/LOCATER V4.02                                                      05/12/2016  11:29:07  PAGE 2
 
 
 
@@ -119,7 +119,7 @@ SYMBOL TABLE OF MODULE:  CompE Project 2 (MAZE)
   ----------------------------------
 
   -------         MODULE        MAZE
-BL51 BANKED LINKER/LOCATER V4.02                                                      05/12/2016  11:22:13  PAGE 3
+BL51 BANKED LINKER/LOCATER V4.02                                                      05/12/2016  11:29:07  PAGE 3
 
 
   C:0000H         SYMBOL        _ICE_DUMMY_
@@ -137,9 +137,9 @@ SYMBOL TABLE OF MODULE:  CompE Project 2 (MAZE)
   B:00D0H.6       PUBLIC        AC
   B:0080H.7       PUBLIC        T1
   B:00A8H.7       PUBLIC        EA
-  C:093DH         PUBLIC        clearGame
+  C:09FBH         PUBLIC        clearGame
   B:00A0H.4       PUBLIC        LED1
-  C:078DH         PUBLIC        _cheatMap
+  C:084BH         PUBLIC        _cheatMap
   B:0080H.5       PUBLIC        LED2
   B:00E8H.2       PUBLIC        EC
   B:00A8H.6       PUBLIC        EWDRT
@@ -177,9 +177,9 @@ SYMBOL TABLE OF MODULE:  CompE Project 2 (MAZE)
   B:0098H.1       PUBLIC        TI
   B:00E8H.4       PUBLIC        ECCU
   B:00B8H.4       PUBLIC        PS
-  C:081FH         PUBLIC        _Up
+  C:08DDH         PUBLIC        _Up
   B:00D0H.2       PUBLIC        OV
-BL51 BANKED LINKER/LOCATER V4.02                                                      05/12/2016  11:22:13  PAGE 4
+BL51 BANKED LINKER/LOCATER V4.02                                                      05/12/2016  11:29:07  PAGE 4
 
 
   B:00A0H.4       PUBLIC        SS
@@ -217,7 +217,7 @@ SYMBOL TABLE OF MODULE:  CompE Project 2 (MAZE)
   B:00A8H.2       PUBLIC        EX1
   B:0088H.2       PUBLIC        IT1
   B:00D0H.0       PUBLIC        P
-  C:049BH         PUBLIC        playMenu
+  C:0559H         PUBLIC        playMenu
   B:0098H.7       PUBLIC        SM0
   B:0098H.6       PUBLIC        SM1
   B:0098H.5       PUBLIC        SM2
@@ -239,12 +239,12 @@ SYMBOL TABLE OF MODULE:  CompE Project 2 (MAZE)
   B:0080H.1       PUBLIC        SW2
   D:00D8H         PUBLIC        I2CON
   B:00A0H.3       PUBLIC        SW3
-BL51 BANKED LINKER/LOCATER V4.02                                                      05/12/2016  11:22:13  PAGE 5
+BL51 BANKED LINKER/LOCATER V4.02                                                      05/12/2016  11:29:07  PAGE 5
 
 
   B:0080H.2       PUBLIC        SW4
   B:0090H.4       PUBLIC        SW5
-  C:0898H         PUBLIC        _Right
+  C:0956H         PUBLIC        _Right
   B:0080H.0       PUBLIC        SW6
   B:00A0H.1       PUBLIC        SW7
   B:0080H.3       PUBLIC        SW8
@@ -257,19 +257,19 @@ SYMBOL TABLE OF MODULE:  CompE Project 2 (MAZE)
   B:00C8H.4       PUBLIC        ALTCD
   B:00A8H.4       PUBLIC        ESR
   B:00B0H.1       PUBLIC        XTAL1
-  C:08D1H         PUBLIC        _Left
+  C:098FH         PUBLIC        _Left
   B:00B0H.0       PUBLIC        XTAL2
   B:00E8H.6       PUBLIC        EST
-  C:05A6H         PUBLIC        _GameStart
+  C:0664H         PUBLIC        _GameStart
   C:03A9H         PUBLIC        map1
-  C:03DAH         PUBLIC        map2
-  C:040BH         PUBLIC        map3
+  C:0439H         PUBLIC        map2
+  C:04C9H         PUBLIC        map3
   B:00C8H.7       PUBLIC        PLEEN
   B:00B8H.4       PUBLIC        PSR
   B:00D0H.5       PUBLIC        F0
   B:00D8H.4       PUBLIC        STO
   B:00D0H.1       PUBLIC        F1
-  C:085CH         PUBLIC        _Down
+  C:091AH         PUBLIC        _Down
   B:0090H.5       PUBLIC        RST
   B:00D8H.0       PUBLIC        CRSEL
   D:00D0H         PUBLIC        PSW
@@ -297,21 +297,21 @@ SYMBOL TABLE OF MODULE:  CompE Project 2 (MAZE)
   D:003EH         SYMBOL        i
   D:003FH         SYMBOL        j
   -------         ENDDO         j
-  C:078DH         LINE#         63
-  C:0795H         LINE#         64
-BL51 BANKED LINKER/LOCATER V4.02                                                      05/12/2016  11:22:13  PAGE 6
+  C:084BH         LINE#         63
+  C:0853H         LINE#         64
+BL51 BANKED LINKER/LOCATER V4.02                                                      05/12/2016  11:29:07  PAGE 6
 
 
-  C:0795H         LINE#         67
-  C:079FH         LINE#         68
-  C:079FH         LINE#         70
-  C:07A9H         LINE#         71
-  C:07A9H         LINE#         72
-  C:07C9H         LINE#         73
-  C:07CDH         LINE#         74
-  C:07D2H         LINE#         75
-  C:07D7H         LINE#         76
-  C:07DBH         LINE#         78
+  C:0853H         LINE#         67
+  C:085DH         LINE#         68
+  C:085DH         LINE#         70
+  C:0867H         LINE#         71
+  C:0867H         LINE#         72
+  C:0887H         LINE#         73
+  C:088BH         LINE#         74
+  C:0890H         LINE#         75
+  C:0895H         LINE#         76
+  C:0899H         LINE#         78
   -------         ENDPROC       _CHEATMAP
   -------         PROC          _REDRAW_MAP
   D:003EH         SYMBOL        Play_x
@@ -359,7 +359,7 @@ SYMBOL TABLE OF MODULE:  CompE Project 2 (MAZE)
   C:010EH         LINE#         122
   C:0119H         LINE#         123
   C:011BH         LINE#         124
-BL51 BANKED LINKER/LOCATER V4.02                                                      05/12/2016  11:22:13  PAGE 7
+BL51 BANKED LINKER/LOCATER V4.02                                                      05/12/2016  11:29:07  PAGE 7
 
 
   C:0126H         LINE#         125
@@ -419,7 +419,7 @@ SYMBOL TABLE OF MODULE:  CompE Project 2 (MAZE)
   C:026EH         LINE#         188
   C:0270H         LINE#         190
   C:0295H         LINE#         191
-BL51 BANKED LINKER/LOCATER V4.02                                                      05/12/2016  11:22:13  PAGE 8
+BL51 BANKED LINKER/LOCATER V4.02                                                      05/12/2016  11:29:07  PAGE 8
 
 
   C:0299H         LINE#         192
@@ -452,48 +452,48 @@ SYMBOL TABLE OF MODULE:  CompE Project 2 (MAZE)
   D:0039H         SYMBOL        Play_x
   D:003AH         SYMBOL        Play_y
   D:003BH         SYMBOL        Map
-  C:081FH         LINE#         224
-  C:0829H         LINE#         225
-  C:084AH         LINE#         226
-  C:084CH         LINE#         227
-  C:0859H         LINE#         228
-  C:085BH         LINE#         229
+  C:08DDH         LINE#         224
+  C:08E7H         LINE#         225
+  C:0908H         LINE#         226
+  C:090AH         LINE#         227
+  C:0917H         LINE#         228
+  C:0919H         LINE#         229
   -------         ENDPROC       _UP
   -------         PROC          _DOWN
   D:0039H         SYMBOL        Play_x
   D:003AH         SYMBOL        Play_y
   D:003BH         SYMBOL        Map
-  C:085CH         LINE#         232
-  C:0866H         LINE#         233
-  C:0886H         LINE#         234
-  C:0888H         LINE#         235
-  C:0895H         LINE#         236
-  C:0897H         LINE#         237
+  C:091AH         LINE#         232
+  C:0924H         LINE#         233
+  C:0944H         LINE#         234
+  C:0946H         LINE#         235
+  C:0953H         LINE#         236
+  C:0955H         LINE#         237
   -------         ENDPROC       _DOWN
   -------         PROC          _RIGHT
   D:0039H         SYMBOL        Play_x
   D:003AH         SYMBOL        Play_y
   D:003BH         SYMBOL        Map
-  C:0898H         LINE#         240
-  C:08A2H         LINE#         241
-  C:08BFH         LINE#         242
-  C:08C1H         LINE#         243
-  C:08CEH         LINE#         244
-BL51 BANKED LINKER/LOCATER V4.02                                                      05/12/2016  11:22:13  PAGE 9
+  C:0956H         LINE#         240
+  C:0960H         LINE#         241
+  C:097DH         LINE#         242
+  C:097FH         LINE#         243
+  C:098CH         LINE#         244
+BL51 BANKED LINKER/LOCATER V4.02                                                      05/12/2016  11:29:07  PAGE 9
 
 
-  C:08D0H         LINE#         245
+  C:098EH         LINE#         245
   -------         ENDPROC       _RIGHT
   -------         PROC          _LEFT
   D:0039H         SYMBOL        Play_x
   D:003AH         SYMBOL        Play_y
   D:003BH         SYMBOL        Map
-  C:08D1H         LINE#         248
-  C:08DBH         LINE#         249
-  C:08F8H         LINE#         250
-  C:08FAH         LINE#         251
-  C:0907H         LINE#         252
-  C:0909H         LINE#         253
+  C:098FH         LINE#         248
+  C:0999H         LINE#         249
+  C:09B6H         LINE#         250
+  C:09B8H         LINE#         251
+  C:09C5H         LINE#         252
+  C:09C7H         LINE#         253
   -------         ENDPROC       _LEFT
   -------         PROC          _GAMESTART
   D:002FH         SYMBOL        Map
@@ -506,46 +506,46 @@ SYMBOL TABLE OF MODULE:  CompE Project 2 (MAZE)
   D:0037H         SYMBOL        i
   D:0038H         SYMBOL        k
   -------         ENDDO         k
-  C:05A6H         LINE#         256
-  C:05ACH         LINE#         257
-  C:05AFH         LINE#         258
-  C:05B1H         LINE#         259
-  C:05B4H         LINE#         260
-  C:05B6H         LINE#         261
-  C:05B8H         LINE#         265
-  C:05C0H         LINE#         266
-  C:05C5H         LINE#         267
-  C:05CAH         LINE#         268
-  C:05D2H         LINE#         269
-  C:05D7H         LINE#         270
-  C:05DCH         LINE#         272
-  C:05E9H         LINE#         274
-  C:05F0H         LINE#         275
-  C:05F0H         LINE#         276
-  C:0602H         LINE#         277
-  C:0602H         LINE#         279
-  C:0602H         LINE#         281
-  C:060DH         LINE#         284
-  C:0610H         LINE#         285
-  C:0615H         LINE#         286
-  C:0618H         LINE#         288
-  C:061BH         LINE#         289
-  C:062CH         LINE#         290
-  C:062FH         LINE#         291
-  C:0640H         LINE#         292
-  C:0643H         LINE#         293
-  C:0654H         LINE#         294
-  C:0657H         LINE#         295
-  C:0668H         LINE#         296
-  C:066BH         LINE#         297
-  C:0679H         LINE#         299
-BL51 BANKED LINKER/LOCATER V4.02                                                      05/12/2016  11:22:13  PAGE 10
+  C:0664H         LINE#         256
+  C:066AH         LINE#         257
+  C:066DH         LINE#         258
+  C:066FH         LINE#         259
+  C:0672H         LINE#         260
+  C:0674H         LINE#         261
+  C:0676H         LINE#         265
+  C:067EH         LINE#         266
+  C:0683H         LINE#         267
+  C:0688H         LINE#         268
+  C:0690H         LINE#         269
+  C:0695H         LINE#         270
+  C:069AH         LINE#         272
+  C:06A7H         LINE#         274
+  C:06AEH         LINE#         275
+  C:06AEH         LINE#         276
+  C:06C0H         LINE#         277
+  C:06C0H         LINE#         279
+  C:06C0H         LINE#         281
+  C:06CBH         LINE#         284
+  C:06CEH         LINE#         285
+  C:06D3H         LINE#         286
+  C:06D6H         LINE#         288
+  C:06D9H         LINE#         289
+  C:06EAH         LINE#         290
+  C:06EDH         LINE#         291
+  C:06FEH         LINE#         292
+  C:0701H         LINE#         293
+  C:0712H         LINE#         294
+  C:0715H         LINE#         295
+  C:0726H         LINE#         296
+  C:0729H         LINE#         297
+  C:0737H         LINE#         299
+BL51 BANKED LINKER/LOCATER V4.02                                                      05/12/2016  11:29:07  PAGE 10
 
 
-  C:069CH         LINE#         300
-  C:069FH         LINE#         301
-  C:06A2H         LINE#         302
-  C:06A4H         LINE#         303
+  C:075AH         LINE#         300
+  C:075DH         LINE#         301
+  C:0760H         LINE#         302
+  C:0762H         LINE#         303
   -------         ENDPROC       _GAMESTART
   -------         PROC          PLAYMENU
   -------         DO            PLAYMENU
@@ -556,79 +556,79 @@ SYMBOL TABLE OF MODULE:  CompE Project 2 (MAZE)
   D:002BH         SYMBOL        menu2
   D:002EH         SYMBOL        i
   -------         ENDDO         i
-  C:049BH         LINE#         305
-  C:049BH         LINE#         306
-  C:049BH         LINE#         307
-  C:049EH         LINE#         309
-  C:04A7H         LINE#         310
-  C:04B0H         LINE#         311
-  C:04B9H         LINE#         312
-  C:04C2H         LINE#         314
-  C:04C4H         LINE#         315
-  C:04D6H         LINE#         316
-  C:04D6H         LINE#         317
-  C:04D9H         LINE#         318
-  C:04DBH         LINE#         319
-  C:04DDH         LINE#         320
-  C:04E2H         LINE#         321
-  C:04E7H         LINE#         322
-  C:04EAH         LINE#         323
-  C:04FCH         LINE#         324
-  C:04FCH         LINE#         325
-  C:04FFH         LINE#         326
-  C:0501H         LINE#         327
-  C:0503H         LINE#         328
-  C:0508H         LINE#         329
-  C:050DH         LINE#         330
-  C:0510H         LINE#         331
-  C:0522H         LINE#         332
-  C:0522H         LINE#         333
-  C:0525H         LINE#         334
-  C:0527H         LINE#         335
-  C:0529H         LINE#         336
-  C:052EH         LINE#         337
-  C:0533H         LINE#         338
-  C:0538H         LINE#         339
-  C:053DH         LINE#         340
-  C:0540H         LINE#         341
-  C:0552H         LINE#         342
-  C:0552H         LINE#         343
-  C:0555H         LINE#         344
-  C:0557H         LINE#         345
-  C:0559H         LINE#         346
-  C:055EH         LINE#         347
-  C:0563H         LINE#         348
-  C:0566H         LINE#         349
-BL51 BANKED LINKER/LOCATER V4.02                                                      05/12/2016  11:22:13  PAGE 11
+  C:0559H         LINE#         305
+  C:0559H         LINE#         306
+  C:0559H         LINE#         307
+  C:055CH         LINE#         309
+  C:0565H         LINE#         310
+  C:056EH         LINE#         311
+  C:0577H         LINE#         312
+  C:0580H         LINE#         314
+  C:0582H         LINE#         315
+  C:0594H         LINE#         316
+  C:0594H         LINE#         317
+  C:0597H         LINE#         318
+  C:0599H         LINE#         319
+  C:059BH         LINE#         320
+  C:05A0H         LINE#         321
+  C:05A5H         LINE#         322
+  C:05A8H         LINE#         323
+  C:05BAH         LINE#         324
+  C:05BAH         LINE#         325
+  C:05BDH         LINE#         326
+  C:05BFH         LINE#         327
+  C:05C1H         LINE#         328
+  C:05C6H         LINE#         329
+  C:05CBH         LINE#         330
+  C:05CEH         LINE#         331
+  C:05E0H         LINE#         332
+  C:05E0H         LINE#         333
+  C:05E3H         LINE#         334
+  C:05E5H         LINE#         335
+  C:05E7H         LINE#         336
+  C:05ECH         LINE#         337
+  C:05F1H         LINE#         338
+  C:05F6H         LINE#         339
+  C:05FBH         LINE#         340
+  C:05FEH         LINE#         341
+  C:0610H         LINE#         342
+  C:0610H         LINE#         343
+  C:0613H         LINE#         344
+  C:0615H         LINE#         345
+  C:0617H         LINE#         346
+  C:061CH         LINE#         347
+  C:0621H         LINE#         348
+  C:0624H         LINE#         349
+BL51 BANKED LINKER/LOCATER V4.02                                                      05/12/2016  11:29:07  PAGE 11
 
 
-  C:0578H         LINE#         350
-  C:0578H         LINE#         351
-  C:057BH         LINE#         352
-  C:057DH         LINE#         353
-  C:057FH         LINE#         354
-  C:0584H         LINE#         355
-  C:0589H         LINE#         356
-  C:058CH         LINE#         358
-  C:0590H         LINE#         359
-  C:0590H         LINE#         360
-  C:0593H         LINE#         361
-  C:05A3H         LINE#         369
-  C:05A5H         LINE#         372
+  C:0636H         LINE#         350
+  C:0636H         LINE#         351
+  C:0639H         LINE#         352
+  C:063BH         LINE#         353
+  C:063DH         LINE#         354
+  C:0642H         LINE#         355
+  C:0647H         LINE#         356
+  C:064AH         LINE#         358
+  C:064EH         LINE#         359
+  C:064EH         LINE#         360
+  C:0651H         LINE#         361
+  C:0661H         LINE#         369
+  C:0663H         LINE#         372
   -------         ENDPROC       PLAYMENU
   -------         PROC          CLEARGAME
-  C:093DH         LINE#         374
-  C:093DH         LINE#         375
-  C:093DH         LINE#         376
-  C:093FH         LINE#         377
-  C:0941H         LINE#         378
-  C:0943H         LINE#         379
-  C:0945H         LINE#         380
-  C:0947H         LINE#         381
-  C:0949H         LINE#         382
-  C:094BH         LINE#         383
-  C:094DH         LINE#         384
-  C:094FH         LINE#         387
+  C:09FBH         LINE#         374
+  C:09FBH         LINE#         375
+  C:09FBH         LINE#         376
+  C:09FDH         LINE#         377
+  C:09FFH         LINE#         378
+  C:0A01H         LINE#         379
+  C:0A03H         LINE#         380
+  C:0A05H         LINE#         381
+  C:0A07H         LINE#         382
+  C:0A09H         LINE#         383
+  C:0A0BH         LINE#         384
+  C:0A0DH         LINE#         387
   -------         ENDPROC       CLEARGAME
   -------         ENDMOD        MAZE
 
@@ -659,7 +659,7 @@ SYMBOL TABLE OF MODULE:  CompE Project 2 (MAZE)
   D:00B7H         PUBLIC        IP0H
   B:00B8H.6       PUBLIC        PWDRT
   B:00C8H.0       PUBLIC        TMOD20
-BL51 BANKED LINKER/LOCATER V4.02                                                      05/12/2016  11:22:13  PAGE 12
+BL51 BANKED LINKER/LOCATER V4.02                                                      05/12/2016  11:29:07  PAGE 12
 
 
   B:00A8H.4       PUBLIC        ES
@@ -718,8 +718,8 @@ SYMBOL TABLE OF MODULE:  CompE Project 2 (MAZE)
   B:00A0H.6       PUBLIC        OCA
   B:0090H.6       PUBLIC        OCB
   B:00B8H.1       PUBLIC        PT0
-  C:090AH         PUBLIC        uart_init
-BL51 BANKED LINKER/LOCATER V4.02                                                      05/12/2016  11:22:13  PAGE 13
+  C:09C8H         PUBLIC        uart_init
+BL51 BANKED LINKER/LOCATER V4.02                                                      05/12/2016  11:29:07  PAGE 13
 
 
   B:0090H.7       PUBLIC        OCC
@@ -747,8 +747,8 @@ SYMBOL TABLE OF MODULE:  CompE Project 2 (MAZE)
   B:00B0H.1       PUBLIC        XTAL1
   B:00B0H.0       PUBLIC        XTAL2
   B:00E8H.6       PUBLIC        EST
-  C:0963H         PUBLIC        uart_isr
-  C:07DCH         PUBLIC        _delay
+  C:0A21H         PUBLIC        uart_isr
+  C:089AH         PUBLIC        _delay
   D:00A2H         PUBLIC        AUXR1
   B:00C8H.7       PUBLIC        PLEEN
   B:00B8H.4       PUBLIC        PSR
@@ -765,51 +765,51 @@ SYMBOL TABLE OF MODULE:  CompE Project 2 (MAZE)
   -------         DO            x
   D:0048H         SYMBOL        i
   -------         ENDDO         i
-  C:07DCH         LINE#         23
-  C:07E4H         LINE#         24
-  C:07E4H         LINE#         25
-  C:07EDH         LINE#         26
-  C:081EH         LINE#         27
+  C:089AH         LINE#         23
+  C:08A2H         LINE#         24
+  C:08A2H         LINE#         25
+  C:08ABH         LINE#         26
+  C:08DCH         LINE#         27
   -------         ENDPROC       _DELAY
   -------         PROC          UART_INIT
-  C:090AH         LINE#         36
-  C:090AH         LINE#         40
-  C:090AH         LINE#         43
-  C:090DH         LINE#         44
-  C:0910H         LINE#         46
-  C:0913H         LINE#         47
-  C:0913H         LINE#         48
-BL51 BANKED LINKER/LOCATER V4.02                                                      05/12/2016  11:22:13  PAGE 14
+  C:09C8H         LINE#         36
+  C:09C8H         LINE#         40
+  C:09C8H         LINE#         43
+  C:09CBH         LINE#         44
+  C:09CEH         LINE#         46
+  C:09D1H         LINE#         47
+  C:09D1H         LINE#         48
+BL51 BANKED LINKER/LOCATER V4.02                                                      05/12/2016  11:29:07  PAGE 14
 
 
-  C:0916H         LINE#         51
-  C:0919H         LINE#         54
-  C:091BH         LINE#         55
-  C:091EH         LINE#         56
-  C:0921H         LINE#         57
-  C:0924H         LINE#         60
-  C:0927H         LINE#         61
-  C:092AH         LINE#         62
-  C:092DH         LINE#         63
-  C:0930H         LINE#         66
-  C:0932H         LINE#         69
-  C:0935H         LINE#         70
-  C:0938H         LINE#         73
-  C:093AH         LINE#         74
-  C:093CH         LINE#         76
+  C:09D4H         LINE#         51
+  C:09D7H         LINE#         54
+  C:09D9H         LINE#         55
+  C:09DCH         LINE#         56
+  C:09DFH         LINE#         57
+  C:09E2H         LINE#         60
+  C:09E5H         LINE#         61
+  C:09E8H         LINE#         62
+  C:09EBH         LINE#         63
+  C:09EEH         LINE#         66
+  C:09F0H         LINE#         69
+  C:09F3H         LINE#         70
+  C:09F6H         LINE#         73
+  C:09F8H         LINE#         74
+  C:09FAH         LINE#         76
   -------         ENDPROC       UART_INIT
   -------         PROC          UART_ISR
-  C:0963H         LINE#         84
-  C:0963H         LINE#         86
-  C:0966H         LINE#         87
-  C:0966H         LINE#         91
-  C:0968H         LINE#         92
-  C:0968H         LINE#         94
-  C:096BH         LINE#         95
-  C:096BH         LINE#         97
-  C:096DH         LINE#         99
-  C:096FH         LINE#         100
-  C:096FH         LINE#         102
+  C:0A21H         LINE#         84
+  C:0A21H         LINE#         86
+  C:0A24H         LINE#         87
+  C:0A24H         LINE#         91
+  C:0A26H         LINE#         92
+  C:0A26H         LINE#         94
+  C:0A29H         LINE#         95
+  C:0A29H         LINE#         97
+  C:0A2BH         LINE#         99
+  C:0A2DH         LINE#         100
+  C:0A2DH         LINE#         102
   -------         ENDPROC       UART_ISR
   -------         PROC          _UART_TRANSMIT
   D:0007H         SYMBOL        c
@@ -829,17 +829,17 @@ SYMBOL TABLE OF MODULE:  CompE Project 2 (MAZE)
   -------         ENDMOD        UART
 
   -------         MODULE        ?C?CLDPTR
-  C:0731H         PUBLIC        ?C?CLDPTR
+  C:07EFH         PUBLIC        ?C?CLDPTR
   -------         ENDMOD        ?C?CLDPTR
 
   -------         MODULE        ?C?CLDOPTR
-  C:074AH         PUBLIC        ?C?CLDOPTR
+  C:0808H         PUBLIC        ?C?CLDOPTR
   -------         ENDMOD        ?C?CLDOPTR
 
   -------         MODULE        ?C?SLCMP
-  C:0777H         PUBLIC        ?C?SLCMP
+  C:0835H         PUBLIC        ?C?SLCMP
   -------         ENDMOD        ?C?SLCMP
-BL51 BANKED LINKER/LOCATER V4.02                                                      05/12/2016  11:22:13  PAGE 15
+BL51 BANKED LINKER/LOCATER V4.02                                                      05/12/2016  11:29:07  PAGE 15
 
 
 
