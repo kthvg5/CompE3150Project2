@@ -87,9 +87,9 @@ void Redraw_Map(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[7
 		for (i; i < 3; i++)
 		{
 			LED1 = 0;
-			delay(100);
+			delay(1000);
 			LED1 = 1;
-			delay(100);
+			delay(1000);
 		}
 	}
 	else //Open
@@ -102,9 +102,9 @@ void Redraw_Map(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[7
 		for (i; i < 3; i++)
 		{
 			LED2 = 0;
-			delay(100);
+			delay(1000);
 			LED2 = 1;
-			delay(100);
+			delay(1000);
 		}
 	}
 	else //Open
@@ -117,9 +117,9 @@ void Redraw_Map(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[7
 		for (i; i < 3; i++)
 		{
 			LED3 = 0;
-			delay(100);
+			delay(1000);
 			LED3 = 1;
-			delay(100);
+			delay(1000);
 		}
 	}
 	else //Open
@@ -132,9 +132,9 @@ void Redraw_Map(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[7
 		for (i; i < 3; i++)
 		{
 			LED4 = 0;
-			delay(100);
+			delay(1000);
 			LED4 = 1;
-			delay(100);
+			delay(1000);
 		}
 	}
 	else //Open
@@ -147,9 +147,9 @@ void Redraw_Map(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[7
 		for (i; i < 3; i++)
 		{
 			LED5 = 0;
-			delay(100);
+			delay(1000);
 			LED5 = 1;
-			delay(100);
+			delay(1000);
 		}
 	}
 	else //Open
@@ -162,9 +162,9 @@ void Redraw_Map(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[7
 		for (i; i < 3; i++)
 		{
 			LED6 = 0;
-			delay(100);
+			delay(1000);
 			LED6 = 1;
-			delay(100);
+			delay(1000);
 		}
 	}
 	else //Open
@@ -177,9 +177,9 @@ void Redraw_Map(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[7
 		for (i; i < 3; i++)
 		{
 			LED7 = 0;
-			delay(100);
+			delay(1000);
 			LED7 = 1;
-			delay(100);
+			delay(1000);
 		}
 	}
 	else //Open
@@ -192,9 +192,9 @@ void Redraw_Map(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[7
 		for (i; i < 3; i++)
 		{
 			LED8 = 0;
-			delay(100);
+			delay(1000);
 			LED8 = 1;
-			delay(100);
+			delay(1000);
 		}
 	}
 	else //Open
@@ -207,9 +207,9 @@ void Redraw_Map(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[7
 		for (i; i < 3; i++)
 		{
 			LED9 = 0;
-			delay(100);
+			delay(1000);
 			LED9 = 1;
-			delay(100);
+			delay(1000);
 		}
 	}
 	else //Open
@@ -359,7 +359,7 @@ void playMenu()
 	while (1)
 	{
 		if (SW3 == 0)
-			GameStart(map1, 1, 2);
+			GameStart(map1, 2, 1); //fix valuse to actual variables here
 		//victory
 		/*else if (SW7 == 0)
 			//GameStart(&(&map2[0][0]), M2startX, M2startY);

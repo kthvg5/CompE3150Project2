@@ -20,15 +20,18 @@ WWWWWWW
 */
 code /*const*/ char map1[7][7] = {
 	{ 'W', 'W', 'W', 'W', 'W', 'W', 'W' },
-	{ 'W', 'W', 'W', 'W', 'W', 'W', 'W' },
+	{ 'W', 'W', 'W**', 'W', 'W', 'W', 'W' },
 	{ 'W', 'R', 'R', 'D', 'W', 'W', 'W' },
 	{ 'W', 'W', 'W', 'D', 'W', 'W', 'W' },
 	{ 'W', 'W', 'W', 'D', 'W', 'W', 'W' },
 	{ 'W', 'W', 'W', 'G', 'W', 'W', 'W' },
 	{ 'W', 'W', 'W', 'W', 'W', 'W', 'W' }
 };
-/*const*/ unsigned char M1startX = 1;
-/*const*/ unsigned char M1startY = 2;
+/*const*/ unsigned char M1startX = 2;
+/*const*/ unsigned char M1startY = 1;
+
+//coordinate system is mirrored across XY axis, flip board around to see
+//without changing the map, just swap the X and Y in the the redraw, function, and maybe everything else (apply fixes invrementally)
 
 /*
 map 2 5x5
