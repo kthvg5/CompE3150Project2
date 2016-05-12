@@ -10,13 +10,7 @@ G: goal, Represented by a blinking light
 
 /*
 map 1, 5x5:
-WWWWWWW
-WWWWWWW
-WRRDWWW
-WWWDWWW
-WWWDWWW
-WWWGWWW
-WWWWWWW
+---Solution Figure it out---
 */
 code /*const*/ char map1[12][12] = {
 	{ 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W','W', 'W', 'W', 'W' },
@@ -40,13 +34,7 @@ code /*const*/ char map1[12][12] = {
 
 /*
 map 2 5x5
-WWWWWWW
-WDWWDWW
-WRRDLLW
-WWWDWWW
-WWRRRDW
-WRUWWGW
-WWWWWWW
+---Solution RDDRRDDR---
 */
 code /*const*/ char map2[12][12] = {
 	{ 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W','W', 'W', 'W', 'W' },
@@ -67,18 +55,7 @@ code /*const*/ char map2[12][12] = {
 
 /*
 map 3 10x10
-WWWWWWWWWWWW
-WDLLLLWWWWWW
-WDWUWWWRRRGW
-WDWWWDWUWWWW
-WRRDLLWUWDWW
-WUWDWWWULLWW
-WWWRRDWWWULW
-WWRUWRDWRUWW
-WWWUWWRRUWWW
-WWRRLWUWULWW
-WWUWWWULUWWW
-WWWWWWWWWWWW
+----Solution:LDLLLDDRDRDDLDLLUULLLDDD----
 */
 code /*const*/ char map3[12][12] = {
 	{ 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W' },
