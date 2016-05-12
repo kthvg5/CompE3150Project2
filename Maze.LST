@@ -1,4 +1,4 @@
-C51 COMPILER V6.02  MAZE                                                                   05/12/2016 11:57:40 PAGE 1   
+C51 COMPILER V6.02  MAZE                                                                   05/12/2016 12:04:36 PAGE 1   
 
 
 C51 COMPILER V6.02, COMPILATION OF MODULE MAZE
@@ -62,7 +62,7 @@ stmt level    source
   51   1      	P2M1 = 0;
   52   1      	P3M1 = 0;
   53   1      
-C51 COMPILER V6.02  MAZE                                                                   05/12/2016 11:57:40 PAGE 2   
+C51 COMPILER V6.02  MAZE                                                                   05/12/2016 12:04:36 PAGE 2   
 
   54   1      	uart_init();
   55   1      	
@@ -126,7 +126,7 @@ stmt level    source
  112   2      		for (i; i < 3; i++)
  113   2      		{
  114   3      			LED2 = 0;
-C51 COMPILER V6.02  MAZE                                                                   05/12/2016 11:57:40 PAGE 3   
+C51 COMPILER V6.02  MAZE                                                                   05/12/2016 12:04:36 PAGE 3   
 
  115   3      			delay(10000);
  116   3      			LED2 = 1;
@@ -190,7 +190,7 @@ stmt level    source
  174   3      			LED6 = 0;
  175   3      			delay(10000);
  176   3      			LED6 = 1;
-C51 COMPILER V6.02  MAZE                                                                   05/12/2016 11:57:40 PAGE 4   
+C51 COMPILER V6.02  MAZE                                                                   05/12/2016 12:04:36 PAGE 4   
 
  177   3      			delay(10000);
  178   3      		}
@@ -250,307 +250,318 @@ stmt level    source
  232          char Up(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[12][12]) {
  233   1      	if (Map[Play_x][Play_y - 1] != 'W')
  234   1      		Play_y -= 1;
- 235   1      	Redraw_Map(Play_x, Play_y, Map);
- 236   1      	return Play_y;
- 237   1      }
- 238          
-C51 COMPILER V6.02  MAZE                                                                   05/12/2016 11:57:40 PAGE 5   
+ 235   1      	else
+ 236   1      		wallHit();
+ 237   1      	Redraw_Map(Play_x, Play_y, Map);
+ 238   1      	return Play_y;
+C51 COMPILER V6.02  MAZE                                                                   05/12/2016 12:04:36 PAGE 5   
 
- 239          //Down
- 240          char Down(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[12][12]) {
- 241   1      	if (Map[Play_x][Play_y + 1] != 'W')
- 242   1      		Play_y += 1;
- 243   1      	Redraw_Map(Play_x, Play_y, Map);
- 244   1      	return Play_y;
- 245   1      }
- 246          
- 247          //Right 
- 248          char Right(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[12][12]) {
- 249   1      	if (Map[Play_x + 1][Play_y] != 'W')
- 250   1      		Play_x += 1;
- 251   1      	Redraw_Map(Play_x, Play_y, Map);
- 252   1      	return Play_x;
- 253   1      }
- 254          
- 255          //Left 
- 256          char Left(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[12][12]) {
- 257   1      	if (Map[Play_x - 1][Play_y] != 'W')
- 258   1      		Play_x -= 1;
- 259   1      	Redraw_Map(Play_x, Play_y, Map);
- 260   1      	return Play_x;
- 261   1      }
- 262          //Check if Player is at goal
- 263          
- 264          char GameStart(/*const*/ char Map[12][12], /*const*/ unsigned char Start_x, /*const*/ unsigned char Start_
+ 239   1      }
+ 240          
+ 241          //Down
+ 242          char Down(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[12][12]) {
+ 243   1      	if (Map[Play_x][Play_y + 1] != 'W')
+ 244   1      		Play_y += 1;
+ 245   1      	else
+ 246   1      		wallHit();
+ 247   1      	Redraw_Map(Play_x, Play_y, Map);
+ 248   1      	return Play_y;
+ 249   1      }
+ 250          
+ 251          //Right 
+ 252          char Right(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[12][12]) {
+ 253   1      	if (Map[Play_x + 1][Play_y] != 'W')
+ 254   1      		Play_x += 1;
+ 255   1      	else
+ 256   1      		wallHit();
+ 257   1      	Redraw_Map(Play_x, Play_y, Map);
+ 258   1      	return Play_x;
+ 259   1      }
+ 260          
+ 261          //Left 
+ 262          char Left(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[12][12]) {
+ 263   1      	if (Map[Play_x - 1][Play_y] != 'W')
+ 264   1      		Play_x -= 1;
+ 265   1      	else
+ 266   1      		wallHit();
+ 267   1      	Redraw_Map(Play_x, Play_y, Map);
+ 268   1      	return Play_x;
+ 269   1      }
+ 270          //Check if Player is at goal
+ 271          
+ 272          char GameStart(/*const*/ char Map[12][12], /*const*/ unsigned char Start_x, /*const*/ unsigned char Start_
              -y) {
- 265   1      	unsigned char GameOver = 0; //reset every new game
- 266   1      	unsigned char Play_x = Start_x;	//Load starting positions
- 267   1      	unsigned char Play_y = Start_y;
- 268   1      	unsigned char i = 0;
- 269   1      	unsigned char k = 0;
- 270   1      
- 271   1      	//to transmit a number, use value+48
- 272   1      
- 273   1      	uart_transmit(Play_x+48);
- 274   1      	uart_transmit('\n');
- 275   1      	uart_transmit('\r');
- 276   1      	uart_transmit(Play_y+48);
- 277   1      	uart_transmit('\n');
- 278   1      	uart_transmit('\r');
- 279   1      
- 280   1      	Redraw_Map(Play_x, Play_y, Map);
- 281   1      
- 282   1      	while (GameOver == 0) 
- 283   1      	{ //This loop plays the game until finished
- 284   2      		while (SW1 == 0 || SW3 == 0 || SW2 == 0 || SW8 == 0 || SW4 == 0 || SW6 == 0) 
- 285   2      		{ //Check if any input
- 286   3      			//Nothing to do here
- 287   3      		}
- 288   2      
- 289   2      		delay(10);
- 290   2      
- 291   2      		//waiting for input
- 292   2      		if (SW1 == 0) //Exit Button
- 293   2      			GameOver = 1;
- 294   2      		else if (SW5 == 0) // Help Button
- 295   2      			;//Help(Play_x, Play_y, Map[][]);
- 296   2      		else if (SW2 == 0)
- 297   2      			Play_y = Up(Play_x, Play_y, Map);
- 298   2      		else if (SW8 == 0)
- 299   2      			Play_y = Down(Play_x, Play_y, Map);
-C51 COMPILER V6.02  MAZE                                                                   05/12/2016 11:57:40 PAGE 6   
+ 273   1      	unsigned char GameOver = 0; //reset every new game
+ 274   1      	unsigned char Play_x = Start_x;	//Load starting positions
+ 275   1      	unsigned char Play_y = Start_y;
+ 276   1      	unsigned char i = 0;
+ 277   1      	unsigned char k = 0;
+ 278   1      
+ 279   1      	//to transmit a number, use value+48
+ 280   1      
+ 281   1      	uart_transmit(Play_x+48);
+ 282   1      	uart_transmit('\n');
+ 283   1      	uart_transmit('\r');
+ 284   1      	uart_transmit(Play_y+48);
+ 285   1      	uart_transmit('\n');
+ 286   1      	uart_transmit('\r');
+ 287   1      
+ 288   1      	Redraw_Map(Play_x, Play_y, Map);
+ 289   1      
+ 290   1      	while (GameOver == 0) 
+ 291   1      	{ //This loop plays the game until finished
+ 292   2      		while (SW1 == 0 || SW3 == 0 || SW2 == 0 || SW8 == 0 || SW4 == 0 || SW6 == 0) 
+ 293   2      		{ //Check if any input
+ 294   3      			//Nothing to do here
+ 295   3      		}
+ 296   2      
+ 297   2      		delay(10);
+ 298   2      
+ 299   2      		//waiting for input
+C51 COMPILER V6.02  MAZE                                                                   05/12/2016 12:04:36 PAGE 6   
 
- 300   2      		else if (SW4 == 0)
- 301   2      			Play_x = Left(Play_x, Play_y, Map);
- 302   2      		else if (SW6 == 0)
- 303   2      			Play_x = Right(Play_x, Play_y, Map);
- 304   2      		else if (SW3 == 0)
- 305   2      			cheatMap(Map, 12, 12);
- 306   2      		//Check if Game Over
- 307   2      		if (Map[Play_x][Play_y] == 'G')
- 308   2      			GameOver = 1;
- 309   2      	}
- 310   1      	return GameOver;
- 311   1      }
- 312          
- 313          void playMenu()
- 314          {
- 315   1      	char reset = 0;
- 316   1      	
- 317   1      	char* title = "Simon's A-MAZE-ing Adventures!";
- 318   1      	char* star_bar = "*********************************";
- 319   1      	char* menu1 = "Please select difficulty level: \n";
- 320   1      	char* menu2 = "1) Easy          2) Medium          3) Hard \n";
- 321   1      
- 322   1      	unsigned char i = 0;
- 323   1      	while (star_bar[i] != '\0')
- 324   1      	{
- 325   2      		uart_transmit(star_bar[i]);
- 326   2      		i++;
- 327   2      	}
- 328   1      	uart_transmit('\n');
- 329   1      	uart_transmit('\r');
- 330   1      	i = 0;
- 331   1      	while (title[i] != '\0')
- 332   1      	{
- 333   2      		uart_transmit(title[i]);
- 334   2      		i++;
- 335   2      	}
- 336   1      	uart_transmit('\n');
- 337   1      	uart_transmit('\r');
- 338   1      	i = 0;
- 339   1      	while (star_bar[i] != '\0')
- 340   1      	{
- 341   2      		uart_transmit(star_bar[i]);
- 342   2      		i++;
- 343   2      	}
- 344   1      	uart_transmit('\n');
- 345   1      	uart_transmit('\r');
- 346   1      	uart_transmit('\n');
- 347   1      	uart_transmit('\r');
- 348   1      	i = 0;
- 349   1      	while (menu1[i] != '\0')
- 350   1      	{
- 351   2      		uart_transmit(menu1[i]);
- 352   2      		i++;
- 353   2      	}
- 354   1      	uart_transmit('\n');
- 355   1      	uart_transmit('\r');
- 356   1      	i = 0;
- 357   1      	while (menu2[i] != '\0')
- 358   1      	{
- 359   2      		uart_transmit(menu2[i]);
- 360   2      		i++;
- 361   2      	}
-C51 COMPILER V6.02  MAZE                                                                   05/12/2016 11:57:40 PAGE 7   
+ 300   2      		if (SW1 == 0) //Exit Button
+ 301   2      			GameOver = 1;
+ 302   2      		else if (SW5 == 0) // Help Button
+ 303   2      			;//Help(Play_x, Play_y, Map[][]);
+ 304   2      		else if (SW2 == 0)
+ 305   2      			Play_y = Up(Play_x, Play_y, Map);
+ 306   2      		else if (SW8 == 0)
+ 307   2      			Play_y = Down(Play_x, Play_y, Map);
+ 308   2      		else if (SW4 == 0)
+ 309   2      			Play_x = Left(Play_x, Play_y, Map);
+ 310   2      		else if (SW6 == 0)
+ 311   2      			Play_x = Right(Play_x, Play_y, Map);
+ 312   2      		else if (SW3 == 0)
+ 313   2      			cheatMap(Map, 12, 12);
+ 314   2      		//Check if Game Over
+ 315   2      		if (Map[Play_x][Play_y] == 'G'){
+ 316   3      			GameOver = 1;
+ 317   3      			win();
+ 318   3      		}
+ 319   2      			
+ 320   2      	}
+ 321   1      	return GameOver;
+ 322   1      }
+ 323          
+ 324          void playMenu()
+ 325          {
+ 326   1      	char reset = 0;
+ 327   1      	
+ 328   1      	char* title = "Simon's A-MAZE-ing Adventures!";
+ 329   1      	char* star_bar = "*********************************";
+ 330   1      	char* menu1 = "Please select difficulty level: \n";
+ 331   1      	char* menu2 = "1) Easy          2) Medium          3) Hard \n";
+ 332   1      
+ 333   1      	unsigned char i = 0;
+ 334   1      	while (star_bar[i] != '\0')
+ 335   1      	{
+ 336   2      		uart_transmit(star_bar[i]);
+ 337   2      		i++;
+ 338   2      	}
+ 339   1      	uart_transmit('\n');
+ 340   1      	uart_transmit('\r');
+ 341   1      	i = 0;
+ 342   1      	while (title[i] != '\0')
+ 343   1      	{
+ 344   2      		uart_transmit(title[i]);
+ 345   2      		i++;
+ 346   2      	}
+ 347   1      	uart_transmit('\n');
+ 348   1      	uart_transmit('\r');
+ 349   1      	i = 0;
+ 350   1      	while (star_bar[i] != '\0')
+ 351   1      	{
+ 352   2      		uart_transmit(star_bar[i]);
+ 353   2      		i++;
+ 354   2      	}
+ 355   1      	uart_transmit('\n');
+ 356   1      	uart_transmit('\r');
+ 357   1      	uart_transmit('\n');
+ 358   1      	uart_transmit('\r');
+ 359   1      	i = 0;
+ 360   1      	while (menu1[i] != '\0')
+ 361   1      	{
+C51 COMPILER V6.02  MAZE                                                                   05/12/2016 12:04:36 PAGE 7   
 
- 362   1      	uart_transmit('\n');
- 363   1      	uart_transmit('\r');
- 364   1      	i = 0;
- 365   1      
- 366   1      	while (reset == 0)
- 367   1      	{
- 368   2      		if (SW3 == 0)
- 369   2      			reset = GameStart(map1, 2, 1); //fix valuse to actual variables here
- 370   2      		//victory
- 371   2      		/*else if (SW7 == 0)
- 372   2      			//GameStart(&(&map2[0][0]), M2startX, M2startY);
- 373   2      		//victory
- 374   2      		else if (SW9 == 0)*/
- 375   2      			//GameStart(&(&map3[0][0]), M3startX, M3startY);
- 376   2      		//victory
- 377   2      	}
- 378   1      
- 379   1      	return;
- 380   1      }
- 381          
- 382          void clearGame()
- 383          {
- 384   1      	LED1 = 1;
- 385   1      	LED2 = 1;
- 386   1      	LED3 = 1;
- 387   1      	LED4 = 1;
- 388   1      	LED5 = 1;
- 389   1      	LED6 = 1;
- 390   1      	LED7 = 1;
- 391   1      	LED8 = 1;
- 392   1      	LED9 = 1;
- 393   1      
- 394   1      	return;
- 395   1      }
- 396          
- 397          //SOUND STUFF
- 398          
- 399          #define OSC_FREQ 73732800 
- 400          #define N_PAUSE 250 
- 401          #define delay_t 700 //max delay
- 402          
- 403          #ifndef SPEAKER
- 404          #define E3				((OSC_FREQ/4)/164.81)  // P1,P2-allon   	(61)
- 405          #define F3				((OSC_FREQ/4)/174.61)  // P1,P0-allon		(60)
- 406          #define G3				((OSC_FREQ/4)/196.00)  // P2-allon			(29)
- 407          #define Ab3				((OSC_FREQ/4)/207.65)  // P0-allon			(28)
- 408          #define A3				((OSC_FREQ/4)/220.00)  // P1,P0-Yel,Amb		(62)
- 409          #define Bb3				((OSC_FREQ/4)/233.08)  // P1,P2-Yel,Grn		(49)
- 410          #define B3				((OSC_FREQ/4)/246.94)  // P0-Yel,Amb		(30)
- 411          #define C4				((OSC_FREQ/4)/261.63)  // P2-Yel,Grn		(17)
- 412          #define Db4				((OSC_FREQ/4)/277.18)  // P1,P0-Red,Grn		(46)
- 413          #define D4				((OSC_FREQ/4)/293.67)  // P0-Red,Grn		(14)
- 414          #define Eb4				((OSC_FREQ/4)/311.13)  // P1,P2-Red,Amb		(43)
- 415          #define E4				((OSC_FREQ/4)/329.63)  // P2-Red,Amb		(11)
- 416          #define F4				((OSC_FREQ/4)/349.23)  // P1,P0-Yel,Grn		(48)
- 417          #define Gb4				((OSC_FREQ/4)/369.99)  // P1,P0-Amb,Grn		(50)
- 418          #define G4				((OSC_FREQ/4)/392.00)  // P0-Amb,Grn		(18)
- 419          #define Ab4				((OSC_FREQ/4)/415.30)  // P1,P0-Red,Yel		(44)
- 420          #define A4				((OSC_FREQ/4)/440.00)  // P0-Red,Yel		(12)
- 421          #define Bb4				((OSC_FREQ/4)/466.16)  // P1,P0-Red,Amb		(42)
- 422          #define B4				((OSC_FREQ/4)/493.88)  // P0-Red,Amb		(10)
- 423          #define C5				((OSC_FREQ/4)/523.25)  // P0-Yel,Grn		(16)
-C51 COMPILER V6.02  MAZE                                                                   05/12/2016 11:57:40 PAGE 8   
+ 362   2      		uart_transmit(menu1[i]);
+ 363   2      		i++;
+ 364   2      	}
+ 365   1      	uart_transmit('\n');
+ 366   1      	uart_transmit('\r');
+ 367   1      	i = 0;
+ 368   1      	while (menu2[i] != '\0')
+ 369   1      	{
+ 370   2      		uart_transmit(menu2[i]);
+ 371   2      		i++;
+ 372   2      	}
+ 373   1      	uart_transmit('\n');
+ 374   1      	uart_transmit('\r');
+ 375   1      	i = 0;
+ 376   1      
+ 377   1      	while (reset == 0)
+ 378   1      	{
+ 379   2      		if (SW3 == 0)
+ 380   2      			reset = GameStart(map1, 2, 1); //fix valuse to actual variables here
+ 381   2      		//victory
+ 382   2      		/*else if (SW7 == 0)
+ 383   2      			//GameStart(&(&map2[0][0]), M2startX, M2startY);
+ 384   2      		//victory
+ 385   2      		else if (SW9 == 0)*/
+ 386   2      			//GameStart(&(&map3[0][0]), M3startX, M3startY);
+ 387   2      		//victory
+ 388   2      	}
+ 389   1      
+ 390   1      	return;
+ 391   1      }
+ 392          
+ 393          void clearGame()
+ 394          {
+ 395   1      	LED1 = 1;
+ 396   1      	LED2 = 1;
+ 397   1      	LED3 = 1;
+ 398   1      	LED4 = 1;
+ 399   1      	LED5 = 1;
+ 400   1      	LED6 = 1;
+ 401   1      	LED7 = 1;
+ 402   1      	LED8 = 1;
+ 403   1      	LED9 = 1;
+ 404   1      
+ 405   1      	return;
+ 406   1      }
+ 407          
+ 408          //SOUND STUFF
+ 409          
+ 410          #define OSC_FREQ 73732800 
+ 411          #define N_PAUSE 250 
+ 412          #define delay_t 700 //max delay
+ 413          
+ 414          #ifndef SPEAKER
+ 415          #define E3				((OSC_FREQ/4)/164.81)  // P1,P2-allon   	(61)
+ 416          #define F3				((OSC_FREQ/4)/174.61)  // P1,P0-allon		(60)
+ 417          #define G3				((OSC_FREQ/4)/196.00)  // P2-allon			(29)
+ 418          #define Ab3				((OSC_FREQ/4)/207.65)  // P0-allon			(28)
+ 419          #define A3				((OSC_FREQ/4)/220.00)  // P1,P0-Yel,Amb		(62)
+ 420          #define Bb3				((OSC_FREQ/4)/233.08)  // P1,P2-Yel,Grn		(49)
+ 421          #define B3				((OSC_FREQ/4)/246.94)  // P0-Yel,Amb		(30)
+ 422          #define C4				((OSC_FREQ/4)/261.63)  // P2-Yel,Grn		(17)
+ 423          #define Db4				((OSC_FREQ/4)/277.18)  // P1,P0-Red,Grn		(46)
+C51 COMPILER V6.02  MAZE                                                                   05/12/2016 12:04:36 PAGE 8   
 
- 424          #define Db5				((OSC_FREQ/4)/554.37)  // P1, P2-Red,Grn	(47)
- 425          #define D5				((OSC_FREQ/4)/587.33)  // P2-Red,Grn		(15)
- 426          #define Eb5				((OSC_FREQ/4)/622.25)  // P1,P2-Amb,Grn		(51)
- 427          #define E5				((OSC_FREQ/4)/659.26)  // P2-Amb,Grn		(19)
- 428          #define F5				((OSC_FREQ/4)/698.46)  // P2-Yel,Amb		(31)
- 429          #define Gb5				((OSC_FREQ/4)/739.99)  // P1,P2-Yel,Amb		(63)
- 430          #define G5				((OSC_FREQ/4)/783.99)  // P2-Red,Yel		(13)
- 431          #define Ab5				((OSC_FREQ/4)/830.61)  // P1,P2-Red,Yel 	(45)	
- 432          #define A5				((OSC_FREQ/4)/880.00)  // P1,P0-Grn			(38)
- 433          #define Bb5				((OSC_FREQ/4)/932.33)  // P1,P0-Yel			(36)
- 434          #define B5				((OSC_FREQ/4)/987.77)  // P1,P2-Grn			(39)
- 435          #define C6				((OSC_FREQ/4)/1046.5)  // P2-Grn (per_08)	(7)
- 436          #define Db6				((OSC_FREQ/4)/1108.7)  // P1,P0-Red			(40)
- 437          #define D6				((OSC_FREQ/4)/1174.7)  // P0-Red			(8)
- 438          #define Eb6				((OSC_FREQ/4)/1244.5)  // P1,P2-Amb			(41)
- 439          #define E6				((OSC_FREQ/4)/1318.5)  // P2-Amb (per_04)	(9)
- 440          #define F6				((OSC_FREQ/4)/1396.9)  // P0-Grn			(6)
- 441          #define Gb6				((OSC_FREQ/4)/1480.0)  // P1,P2-Yel			(35)
- 442          #define G6				((OSC_FREQ/4)/1568.0)  // P2-Yel (per_02)	(3)
- 443          #define Ab6				((OSC_FREQ/4)/1661.2)  // P1,P0-Amb			(34)
- 444          #define A6				((OSC_FREQ/4)/1760.0)  // P0-Amb			(2)
- 445          #define Bb6				((OSC_FREQ/4)/1864.7)  // P1,P2-Red			(33)
- 446          #define B6				((OSC_FREQ/4)/1975.5)  // P2-Red (per_01)	(1)
- 447          #define C7				((OSC_FREQ/4)/2093.0)  // P0-Yel			(4)
- 448          #define D7				((OSC_FREQ/4)/2349.3)  // P1				(32)
- 449          #endif
- 450          
- 451          #ifndef SPEAKER
- 452          code int   period[] = { 0, B6, A6, G6, C7, 0, F6, C6, D6, E6, B4, E4, A4, G5, D4, D5, C5,
- 453          C4, G4, E5, 0, 0, 0, 0, 0, 0, 0, 0, Ab3, G3, B3, F5, D7,
- 454          Bb6, Ab6, Gb6, Bb5, 0, A5, B5, Db6, Eb6, Bb4, Eb4, Ab4, Ab5, Db4, Db5, F4,
- 455          Bb3, Gb4, Eb5, 0, 0, 0, 0, 0, 0, 0, 0, F3, E3, A3, Gb5 };
- 456          
- 457          code char  notes[4][20] = {// Victory Fanfare
- 458          	11, 11, 11, 11, 17, 14, 11, 14, 11, 31, 48, 31, 48, 45, 0, 0, 0, 0, 0, 0,
- 459          	17, 45, 38, 45, 38, 38, 31, 48, 11, 48, 14, 14, 31, 48, 31, 48, 45, 0, 0, 0,
- 460          	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
- 461          	17, 45, 31, 45, 38, 38, 31, 48, 31, 45, 39, 39, 0, 0, 0, 0, 0, 0, 0, 0, };
- 462          code char  dur[4][20] = {	// Victory Fanfare
- 463          	16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 24, 8, 32, 0, 0, 0, 0, 0,
- 464          	16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 24, 8, 32, 0, 0, 0, 0, 0,
- 465          	16, 16, 16, 16, 16, 8, 8, 16, 16, 16, 8, 8, 16, 16, 16, 16, 32, 0, 0, 0,
- 466          	16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 24, 8, 32, 0, 0, 0, 0, 0, };
- 467          #endif
- 468          
- 469          int* pointer;
- 470          
- 471          void wallHit(void)
- 472          {
- 473   1      	ET0 = 1;//sets timer on
- 474   1      	pointer = 9;
-*** WARNING C196 IN LINE 474 OF .\MAZE.C: mspace probably invalid
- 475   1      	TF0 = 1;
- 476   1      	Delay250HZ();
- 477   1      
- 478   1      	pointer = 61;
-*** WARNING C196 IN LINE 478 OF .\MAZE.C: mspace probably invalid
- 479   1      	TF0 = 1;
- 480   1      	Delay250HZ();
- 481   1      	ET0 = 0;
- 482   1      }
- 483          
-C51 COMPILER V6.02  MAZE                                                                   05/12/2016 11:57:40 PAGE 9   
+ 424          #define D4				((OSC_FREQ/4)/293.67)  // P0-Red,Grn		(14)
+ 425          #define Eb4				((OSC_FREQ/4)/311.13)  // P1,P2-Red,Amb		(43)
+ 426          #define E4				((OSC_FREQ/4)/329.63)  // P2-Red,Amb		(11)
+ 427          #define F4				((OSC_FREQ/4)/349.23)  // P1,P0-Yel,Grn		(48)
+ 428          #define Gb4				((OSC_FREQ/4)/369.99)  // P1,P0-Amb,Grn		(50)
+ 429          #define G4				((OSC_FREQ/4)/392.00)  // P0-Amb,Grn		(18)
+ 430          #define Ab4				((OSC_FREQ/4)/415.30)  // P1,P0-Red,Yel		(44)
+ 431          #define A4				((OSC_FREQ/4)/440.00)  // P0-Red,Yel		(12)
+ 432          #define Bb4				((OSC_FREQ/4)/466.16)  // P1,P0-Red,Amb		(42)
+ 433          #define B4				((OSC_FREQ/4)/493.88)  // P0-Red,Amb		(10)
+ 434          #define C5				((OSC_FREQ/4)/523.25)  // P0-Yel,Grn		(16)
+ 435          #define Db5				((OSC_FREQ/4)/554.37)  // P1, P2-Red,Grn	(47)
+ 436          #define D5				((OSC_FREQ/4)/587.33)  // P2-Red,Grn		(15)
+ 437          #define Eb5				((OSC_FREQ/4)/622.25)  // P1,P2-Amb,Grn		(51)
+ 438          #define E5				((OSC_FREQ/4)/659.26)  // P2-Amb,Grn		(19)
+ 439          #define F5				((OSC_FREQ/4)/698.46)  // P2-Yel,Amb		(31)
+ 440          #define Gb5				((OSC_FREQ/4)/739.99)  // P1,P2-Yel,Amb		(63)
+ 441          #define G5				((OSC_FREQ/4)/783.99)  // P2-Red,Yel		(13)
+ 442          #define Ab5				((OSC_FREQ/4)/830.61)  // P1,P2-Red,Yel 	(45)	
+ 443          #define A5				((OSC_FREQ/4)/880.00)  // P1,P0-Grn			(38)
+ 444          #define Bb5				((OSC_FREQ/4)/932.33)  // P1,P0-Yel			(36)
+ 445          #define B5				((OSC_FREQ/4)/987.77)  // P1,P2-Grn			(39)
+ 446          #define C6				((OSC_FREQ/4)/1046.5)  // P2-Grn (per_08)	(7)
+ 447          #define Db6				((OSC_FREQ/4)/1108.7)  // P1,P0-Red			(40)
+ 448          #define D6				((OSC_FREQ/4)/1174.7)  // P0-Red			(8)
+ 449          #define Eb6				((OSC_FREQ/4)/1244.5)  // P1,P2-Amb			(41)
+ 450          #define E6				((OSC_FREQ/4)/1318.5)  // P2-Amb (per_04)	(9)
+ 451          #define F6				((OSC_FREQ/4)/1396.9)  // P0-Grn			(6)
+ 452          #define Gb6				((OSC_FREQ/4)/1480.0)  // P1,P2-Yel			(35)
+ 453          #define G6				((OSC_FREQ/4)/1568.0)  // P2-Yel (per_02)	(3)
+ 454          #define Ab6				((OSC_FREQ/4)/1661.2)  // P1,P0-Amb			(34)
+ 455          #define A6				((OSC_FREQ/4)/1760.0)  // P0-Amb			(2)
+ 456          #define Bb6				((OSC_FREQ/4)/1864.7)  // P1,P2-Red			(33)
+ 457          #define B6				((OSC_FREQ/4)/1975.5)  // P2-Red (per_01)	(1)
+ 458          #define C7				((OSC_FREQ/4)/2093.0)  // P0-Yel			(4)
+ 459          #define D7				((OSC_FREQ/4)/2349.3)  // P1				(32)
+ 460          #endif
+ 461          
+ 462          #ifndef SPEAKER
+ 463          code int   period[] = { 0, B6, A6, G6, C7, 0, F6, C6, D6, E6, B4, E4, A4, G5, D4, D5, C5,
+ 464          C4, G4, E5, 0, 0, 0, 0, 0, 0, 0, 0, Ab3, G3, B3, F5, D7,
+ 465          Bb6, Ab6, Gb6, Bb5, 0, A5, B5, Db6, Eb6, Bb4, Eb4, Ab4, Ab5, Db4, Db5, F4,
+ 466          Bb3, Gb4, Eb5, 0, 0, 0, 0, 0, 0, 0, 0, F3, E3, A3, Gb5 };
+ 467          
+ 468          code char  notes[4][20] = {// Victory Fanfare
+ 469          	11, 11, 11, 11, 17, 14, 11, 14, 11, 31, 48, 31, 48, 45, 0, 0, 0, 0, 0, 0,
+ 470          	17, 45, 38, 45, 38, 38, 31, 48, 11, 48, 14, 14, 31, 48, 31, 48, 45, 0, 0, 0,
+ 471          	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+ 472          	17, 45, 31, 45, 38, 38, 31, 48, 31, 45, 39, 39, 0, 0, 0, 0, 0, 0, 0, 0, };
+ 473          code char  dur[4][20] = {	// Victory Fanfare
+ 474          	16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 24, 8, 32, 0, 0, 0, 0, 0,
+ 475          	16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 24, 8, 32, 0, 0, 0, 0, 0,
+ 476          	16, 16, 16, 16, 16, 8, 8, 16, 16, 16, 8, 8, 16, 16, 16, 16, 32, 0, 0, 0,
+ 477          	16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 24, 8, 32, 0, 0, 0, 0, 0, };
+ 478          #endif
+ 479          
+ 480          int* pointer;
+ 481          
+ 482          void wallHit(void)
+ 483          {
+ 484   1      	ET0 = 1;//sets timer on
+ 485   1      	pointer = 9;
+C51 COMPILER V6.02  MAZE                                                                   05/12/2016 12:04:36 PAGE 9   
 
- 484          void Delay250HZ(void)
- 485          {
- 486   1      	SPEAK = 0;
- 487   1      	TF0 = 0;
- 488   1      	TR0 = 0;
- 489   1      	TL0 = 0x33;
- 490   1      		TH0 = 0xFB;
- 491   1      		TR0 = 1;
- 492   1      	while (TF0 != 0);
- 493   1      	TR0 = 0;
- 494   1      	TF0 = 0;
- 495   1      	SPEAK = 0;
- 496   1      }
- 497          
- 498          void win(void)
- 499          {
- 500   1      	char n, d;
- 501   1      	unsigned int i, j;
- 502   1      
- 503   1      	i = 0;
- 504   1      	j = 0;
- 505   1      	do
- 506   1      	{
- 507   2      		n = notes[j][i];  // read next note and duration
- 508   2      		d = dur[j][i];
- 509   2      		do
- 510   2      		{
- 511   3      			finish(n, d);  // use displ routine to play note and light LEDs
- 512   3      			i++;
- 513   3      			n = notes[j][i];  // repeat until dur=0 (indicates end of row (phrase))
- 514   3      			d = dur[j][i];
- 515   3      		} while (d != 0);
- 516   2      		i = 0;
- 517   2      		j++;
- 518   2      	} while (j<20);
- 519   1      }
- 520          
- 521          void finish(char n, char d){
- 522   1      #ifdef SPEAKER
+*** WARNING C196 IN LINE 485 OF .\MAZE.C: mspace probably invalid
+ 486   1      	TF0 = 1;
+ 487   1      	Delay250HZ();
+ 488   1      
+ 489   1      	pointer = 61;
+*** WARNING C196 IN LINE 489 OF .\MAZE.C: mspace probably invalid
+ 490   1      	TF0 = 1;
+ 491   1      	Delay250HZ();
+ 492   1      	ET0 = 0;
+ 493   1      }
+ 494          
+ 495          void Delay250HZ(void)
+ 496          {
+ 497   1      	SPEAK = 1;
+ 498   1      	TF0 = 1;
+ 499   1      	TR0 = 1;
+ 500   1      	TL0 = 0x33;
+ 501   1      		TH0 = 0xFB;
+ 502   1      		TR0 = 1;
+ 503   1      	while (TF0 != 1);
+ 504   1      	TR0 = 0;
+ 505   1      	TF0 = 0;
+ 506   1      	SPEAK = 0;
+ 507   1      }
+ 508          
+ 509          void win(void)
+ 510          {
+ 511   1      	char n, d;
+ 512   1      	unsigned int i, j;
+ 513   1      
+ 514   1      	i = 0;
+ 515   1      	j = 0;
+ 516   1      	do
+ 517   1      	{
+ 518   2      		n = notes[j][i];  // read next note and duration
+ 519   2      		d = dur[j][i];
+ 520   2      		do
+ 521   2      		{
+ 522   3      			finish(n, d);  // use displ routine to play note and light LEDs
+ 523   3      			i++;
+ 524   3      			n = notes[j][i];  // repeat until dur=0 (indicates end of row (phrase))
+ 525   3      			d = dur[j][i];
+ 526   3      		} while (d != 0);
+ 527   2      		i = 0;
+ 528   2      		j++;
+ 529   2      	} while (j<20);
+ 530   1      }
+ 531          
+ 532          void finish(char n, char d){
+ 533   1      #ifdef SPEAKER
               
               	int dur_time;
               	int t;
@@ -563,6 +574,8 @@ stmt level    source
               	{
               		dur_time = TEMPO*d; // TEMPO defines speed of all songs
               		t = 20;	     	  // t=20 puts a small delay between notes
+C51 COMPILER V6.02  MAZE                                                                   05/12/2016 12:04:36 PAGE 10  
+
               	}
               
               	pointer = &period[n];
@@ -574,8 +587,6 @@ stmt level    source
               		TR1 = 1;
               		ET1 = 1;
               	}
-C51 COMPILER V6.02  MAZE                                                                   05/12/2016 11:57:40 PAGE 10  
-
               
               	sdelay(dur_time);
               
@@ -585,24 +596,24 @@ stmt level    source
               
               	if (t != 0) sdelay(t);
               #else
- 555   1      	sdelay(delay_t);
- 556   1      #endif
- 557   1      }
-*** WARNING C280 IN LINE 521 OF .\MAZE.C: 'n': unreferenced local variable
-*** WARNING C280 IN LINE 521 OF .\MAZE.C: 'd': unreferenced local variable
- 558          
- 559          void sdelay(int time)
- 560          {
- 561   1      	unsigned int    i;
- 562   1      
- 563   1      	while (time-- > 0) {
- 564   2      		for (i = 0; i<N_PAUSE; i++);
- 565   2      	}
- 566   1      }
+ 566   1      	sdelay(delay_t);
+ 567   1      #endif
+ 568   1      }
+*** WARNING C280 IN LINE 532 OF .\MAZE.C: 'n': unreferenced local variable
+*** WARNING C280 IN LINE 532 OF .\MAZE.C: 'd': unreferenced local variable
+ 569          
+ 570          void sdelay(int time)
+ 571          {
+ 572   1      	unsigned int    i;
+ 573   1      
+ 574   1      	while (time-- > 0) {
+ 575   2      		for (i = 0; i<N_PAUSE; i++);
+ 576   2      	}
+ 577   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =   1905    ----
+   CODE SIZE        =   1928    ----
    CONSTANT SIZE    =    865    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----

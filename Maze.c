@@ -232,6 +232,8 @@ void Redraw_Map(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[1
 char Up(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[12][12]) {
 	if (Map[Play_x][Play_y - 1] != 'W')
 		Play_y -= 1;
+	else
+		wallHit();
 	Redraw_Map(Play_x, Play_y, Map);
 	return Play_y;
 }
@@ -240,6 +242,8 @@ char Up(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[12][12]) 
 char Down(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[12][12]) {
 	if (Map[Play_x][Play_y + 1] != 'W')
 		Play_y += 1;
+	else
+		wallHit();
 	Redraw_Map(Play_x, Play_y, Map);
 	return Play_y;
 }
@@ -248,6 +252,8 @@ char Down(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[12][12]
 char Right(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[12][12]) {
 	if (Map[Play_x + 1][Play_y] != 'W')
 		Play_x += 1;
+	else
+		wallHit();
 	Redraw_Map(Play_x, Play_y, Map);
 	return Play_x;
 }
@@ -256,6 +262,8 @@ char Right(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[12][12
 char Left(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[12][12]) {
 	if (Map[Play_x - 1][Play_y] != 'W')
 		Play_x -= 1;
+	else
+		wallHit();
 	Redraw_Map(Play_x, Play_y, Map);
 	return Play_x;
 }
@@ -304,8 +312,11 @@ char GameStart(/*const*/ char Map[12][12], /*const*/ unsigned char Start_x, /*co
 		else if (SW3 == 0)
 			cheatMap(Map, 12, 12);
 		//Check if Game Over
-		if (Map[Play_x][Play_y] == 'G')
+		if (Map[Play_x][Play_y] == 'G'){
 			GameOver = 1;
+			win();
+		}
+			
 	}
 	return GameOver;
 }
@@ -483,13 +494,13 @@ void wallHit(void)
 
 void Delay250HZ(void)
 {
-	SPEAK = 0;
-	TF0 = 0;
-	TR0 = 0;
+	SPEAK = 1;
+	TF0 = 1;
+	TR0 = 1;
 	TL0 = 0x33;
 		TH0 = 0xFB;
 		TR0 = 1;
-	while (TF0 != 0);
+	while (TF0 != 1);
 	TR0 = 0;
 	TF0 = 0;
 	SPEAK = 0;
