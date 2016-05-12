@@ -41,6 +41,7 @@ void win(void);
 void finish(char n, char d);
 void finish(char n, char d);
 void sdelay(int time);
+void Help(unsigned char Play_x, unsigned char Play_y, char Map[12][12]);
 
 
 //Looping Code for playing the game
@@ -51,6 +52,7 @@ void main(void)
 	P2M1 = 0;
 	P3M1 = 0;
 	TMOD = 0x11;
+	EA = 1;
 
 	uart_init();
 	
@@ -294,7 +296,7 @@ char GameStart(/*const*/ char Map[12][12], /*const*/ unsigned char Start_x, /*co
 		if (SW1 == 0) //Exit Button
 			GameOver = 1;
 		else if (SW5 == 0) // Help Button
-			;//Help(Play_x, Play_y, Map[][]);
+			Help(Play_x, Play_y, Map);
 		else if (SW2 == 0)
 			Play_y = Up(Play_x, Play_y, Map);
 		else if (SW8 == 0)
@@ -377,7 +379,7 @@ void playMenu()
 			reset = GameStart(map2, 1, 1);
 		//victory
 		else if (SW9 == 0)
-			reset = GameStart(map2, 10, 2);
+			reset = GameStart(map3, 10, 2);
 		//victory
 	}
 
@@ -397,6 +399,49 @@ void clearGame()
 	LED9 = 1;
 
 	return;
+}
+
+//After pressing the help button
+void Help(unsigned char Play_x, unsigned char Play_y, char Map[12][12]) {
+	char i = 0;	
+
+	if (Map[Play_x][Play_y] == 'U') {
+		i = 0;
+		for (i; i < 3; i++) {
+			LED6 = 0;
+			delay(10000);
+			LED6 = 1;
+			delay(10000);
+		}
+	}
+	else if (Map[Play_x][Play_y] == 'D') {
+		i = 0;
+		for (i; i < 3; i++) {
+			LED4 = 0;
+			delay(10000);
+			LED4 = 1;
+			delay(10000);
+		}
+	}
+	else if (Map[Play_x][Play_y] == 'L') {
+		i = 0;
+		for (i; i < 3; i++) {
+			LED2 = 0;
+			delay(10000);
+			LED2 = 1;
+			delay(10000);
+		}
+	}
+	else if (Map[Play_x][Play_y] == 'R') {
+		i = 0;
+		for (i; i < 3; i++) {
+			LED8 = 0;
+			delay(10000);
+			LED8 = 1;
+			delay(10000);
+		}
+	}
+
 }
 
 //SOUND STUFF
