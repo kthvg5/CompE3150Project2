@@ -52,6 +52,8 @@ File: Sound.C
 #define C7				((OSC_FREQ/4)/2093.0)  // P0-Yel			(4)
 #define D7				((OSC_FREQ/4)/2349.3)  // P1				(32)
 
+#define dur_time 700 //max delay
+
 #ifdef SPEAKER
 code int   period[] = { 0,B6,A6,G6,C7,0,F6,C6,D6,E6,B4,E4,A4,G5,D4,D5,C5,
 						C4,G4,E5,0,0,0,0,0,0,0,0,Ab3,G3,B3,F5,D7,
