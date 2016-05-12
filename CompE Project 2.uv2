@@ -6,6 +6,7 @@ Target (Target 1), 0x0000 // Tools: 'MCS-51'
 Group (Source Group 1)
 
 File 1,1,<.\Maze.c><Maze.c>
+File 1,1,<.\uart.c><uart.c>
 
 
 Options 1,0,0  // Target 'Target 1'
@@ -24,7 +25,7 @@ Options 1,0,0  // Target 'Target 1'
  EnvLib ()
  EnvReg (ÿGeneric\)
  OrgReg (ÿGeneric\)
- TgStat=9
+ TgStat=0
  OutDir (.\)
  OutName (CompE Project 2)
  GenApp=1
