@@ -1,4 +1,4 @@
-C51 COMPILER V6.02  UART                                                                   05/11/2016 19:26:40 PAGE 1   
+C51 COMPILER V6.02  UART                                                                   05/12/2016 12:39:14 PAGE 1   
 
 
 C51 COMPILER V6.02, COMPILATION OF MODULE UART
@@ -62,7 +62,7 @@ stmt level    source
   53   1        // configure baud rate generator
   54   1        BRGCON = 0x00;
   55   1        BRGR0 = 0xF0;
-C51 COMPILER V6.02  UART                                                                   05/11/2016 19:26:40 PAGE 2   
+C51 COMPILER V6.02  UART                                                                   05/12/2016 12:39:14 PAGE 2   
 
   56   1        BRGR1 = 0x02;
   57   1        BRGCON = 0x03;
@@ -126,7 +126,7 @@ stmt level    source
  115   1      } // uart_transmit
  116          
  117          /***********************************************************************
-C51 COMPILER V6.02  UART                                                                   05/11/2016 19:26:40 PAGE 3   
+C51 COMPILER V6.02  UART                                                                   05/12/2016 12:39:14 PAGE 3   
 
  118          DESC:    Gets a received 8-bit value from the UART
  119          RETURNS: Received data

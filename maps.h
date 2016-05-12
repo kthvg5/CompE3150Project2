@@ -94,5 +94,5 @@ code /*const*/ char map3[12][12] = {
 	{ 'W', 'W', 'L', 'W', 'W', 'W', 'L', 'U', 'L', 'W', 'W', 'W' },
 	{ 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W' }
 	};
-	/*const*/ unsigned char M3startX = 2;
-	/*const*/ unsigned char M3startY = 10; //fix this
+	/*const*/ unsigned char M3startX = 10;
+	/*const*/ unsigned char M3startY = 2; //fix this

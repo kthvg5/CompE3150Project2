@@ -83,7 +83,9 @@ void wallHit(void)
 	TF0=0;
 	Delay250HZ();
 	ET0=1;
+	return;
 }
+
 void Delay250HZ(void)
 {
 	P1.7=0;
@@ -96,6 +98,7 @@ void Delay250HZ(void)
 	TR0=0;
 	TF0=0;
 	P1.7=1;
+	return;
 }
 
 void win(void)
@@ -120,6 +123,7 @@ void win(void)
 	i=0;
 	j++;
 	} while (j<end);
+	return;
 }
 
 void finish(char n,char d){
@@ -159,6 +163,8 @@ void finish(char n,char d){
 #else
     sdelay(delay_t);
 #endif
+
+	return;
 }		 
 
 void sdelay(int time )
@@ -168,4 +174,5 @@ void sdelay(int time )
     while( time-- > 0 ) {
         for( i=0 ; i<N_PAUSE ; i++ ) ;
     }
+	return;
 }

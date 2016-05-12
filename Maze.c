@@ -50,6 +50,7 @@ void main(void)
 	P1M1 = 0;
 	P2M1 = 0;
 	P3M1 = 0;
+	TMOD = 0x11;
 
 	uart_init();
 	
@@ -278,13 +279,6 @@ char GameStart(/*const*/ char Map[12][12], /*const*/ unsigned char Start_x, /*co
 
 	//to transmit a number, use value+48
 
-	uart_transmit(Play_x+48);
-	uart_transmit('\n');
-	uart_transmit('\r');
-	uart_transmit(Play_y+48);
-	uart_transmit('\n');
-	uart_transmit('\r');
-
 	Redraw_Map(Play_x, Play_y, Map);
 
 	while (GameOver == 0) 
@@ -314,7 +308,7 @@ char GameStart(/*const*/ char Map[12][12], /*const*/ unsigned char Start_x, /*co
 		//Check if Game Over
 		if (Map[Play_x][Play_y] == 'G'){
 			GameOver = 1;
-			win();
+			//win();
 		}
 			
 	}
@@ -379,11 +373,11 @@ void playMenu()
 		if (SW3 == 0)
 			reset = GameStart(map1, 2, 1); //fix valuse to actual variables here
 		//victory
-		/*else if (SW7 == 0)
-			//GameStart(&(&map2[0][0]), M2startX, M2startY);
+		else if (SW7 == 0)
+			reset = GameStart(map2, 1, 1);
 		//victory
-		else if (SW9 == 0)*/
-			//GameStart(&(&map3[0][0]), M3startX, M3startY);
+		else if (SW9 == 0)
+			reset = GameStart(map2, 10, 2);
 		//victory
 	}
 
@@ -406,12 +400,14 @@ void clearGame()
 }
 
 //SOUND STUFF
+#define SPEAKER
 
 #define OSC_FREQ 73732800 
 #define N_PAUSE 250 
 #define delay_t 700 //max delay
+#define TEMPO			(OSC_FREQ/204800)		/* Duration of a 64th note */
 
-#ifndef SPEAKER
+#ifdef SPEAKER
 #define E3				((OSC_FREQ/4)/164.81)  // P1,P2-allon   	(61)
 #define F3				((OSC_FREQ/4)/174.61)  // P1,P0-allon		(60)
 #define G3				((OSC_FREQ/4)/196.00)  // P2-allon			(29)
@@ -459,11 +455,13 @@ void clearGame()
 #define D7				((OSC_FREQ/4)/2349.3)  // P1				(32)
 #endif
 
-#ifndef SPEAKER
+#ifdef SPEAKER
 code int   period[] = { 0, B6, A6, G6, C7, 0, F6, C6, D6, E6, B4, E4, A4, G5, D4, D5, C5,
 C4, G4, E5, 0, 0, 0, 0, 0, 0, 0, 0, Ab3, G3, B3, F5, D7,
 Bb6, Ab6, Gb6, Bb5, 0, A5, B5, Db6, Eb6, Bb4, Eb4, Ab4, Ab5, Db4, Db5, F4,
 Bb3, Gb4, Eb5, 0, 0, 0, 0, 0, 0, 0, 0, F3, E3, A3, Gb5 };
+
+int* pointer;
 
 code char  notes[4][20] = {// Victory Fanfare
 	11, 11, 11, 11, 17, 14, 11, 14, 11, 31, 48, 31, 48, 45, 0, 0, 0, 0, 0, 0,
@@ -475,103 +473,115 @@ code char  dur[4][20] = {	// Victory Fanfare
 	16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 24, 8, 32, 0, 0, 0, 0, 0,
 	16, 16, 16, 16, 16, 8, 8, 16, 16, 16, 8, 8, 16, 16, 16, 16, 32, 0, 0, 0,
 	16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 24, 8, 32, 0, 0, 0, 0, 0, };
-#endif
 
-int* pointer;
+void clk(void) interrupt 3 using 1
+{
+	TH1 = -(*pointer) >> 8;
+	TL1 = -(*pointer) & 0x0ff;
+	SPEAK = ~SPEAK;
+}
+#endif
 
 void wallHit(void)
 {
-	ET0 = 1;//sets timer on
+	ET0=0;//sets timer on
 	pointer = 9;
-	TF0 = 1;
+	TF0=0;
 	Delay250HZ();
-
+	
 	pointer = 61;
-	TF0 = 1;
+	TF0=0;
 	Delay250HZ();
-	ET0 = 0;
+	ET0=1;
+	return;
 }
 
 void Delay250HZ(void)
 {
-	SPEAK = 1;
-	TF0 = 1;
-	TR0 = 1;
-	TL0 = 0x33;
-		TH0 = 0xFB;
-		TR0 = 1;
-	while (TF0 != 1);
-	TR0 = 0;
-	TF0 = 0;
-	SPEAK = 0;
+	SPEAK=0;
+	TF0=0;
+	TL0=0x33;
+	TH0=0xFB;
+	TR0=1;
+	while(TF0 != 1)
+	{};
+	TR0=0;
+	TF0=0;
+	SPEAK=1;
+	return;
 }
 
 void win(void)
 {
 	char n, d;
-	unsigned int i, j;
-
-	i = 0;
-	j = 0;
-	do
+	unsigned int i,j;
+	
+	i=0;
+	j=0;
+	
+	do 
 	{
-		n = notes[j][i];  // read next note and duration
-		d = dur[j][i];
-		do
+		n=notes[j][i];  // read next note and duration
+		d=dur[j][i];
+		do 
 		{
-			finish(n, d);  // use displ routine to play note and light LEDs
+			finish(n,d);  // use displ routine to play note and light LEDs
 			i++;
-			n = notes[j][i];  // repeat until dur=0 (indicates end of row (phrase))
-			d = dur[j][i];
-		} while (d != 0);
-		i = 0;
-		j++;
-	} while (j<20);
+			n=notes[j][i];  // repeat until dur=0 (indicates end of row (phrase))
+			d=dur[j][i];
+		} while (d!=0);
+	i=0;
+	j++;
+	} while (j < 4);
+	return;
 }
 
-void finish(char n, char d){
 #ifdef SPEAKER
-
+void finish(char n,char d)
+{
+    //ET1=0;
+	//TR1=0;
 	int dur_time;
 	int t;
-	if (d == 0)
+	if (d==0) //boop
 	{
-		dur_time = delay_t; // delay_t is a global variable used by simon
-		t = 0;
+		dur_time=delay_t; // delay_t is a global variable used by simon
+		t=0;
 	}
 	else
 	{
-		dur_time = TEMPO*d; // TEMPO defines speed of all songs
-		t = 20;	     	  // t=20 puts a small delay between notes
+		dur_time=TEMPO*d; // TEMPO defines speed of all songs
+		t=20;	     	  // t=20 puts a small delay between notes
 	}
 
-	pointer = &period[n];
+  	pointer = &period[n];
 
-	if (*pointer != 0) {
-		/* Enable timer */
-		TH1 = -(*pointer) >> 8;
-		TL1 = -(*pointer) & 0x0ff; //boop
-		TR1 = 1;
-		ET1 = 1;
-	}
+    if( *pointer != 0 ) {
+        /* Enable timer */
+        TH1=-(*pointer)>>8;
+        TL1=-(*pointer)&0x0ff;
+        TR1=0;
+        ET1=0;
+    }
 
-	sdelay(dur_time);
+    sdelay(dur_time);
 
-	/* Disable timer */
-	ET1 = 0;
-	TR1 = 0;
+    /* Disable timer */
+    ET1=1;
+    TR1=1;
 
-	if (t != 0) sdelay(t);
-#else
-	sdelay(delay_t);
-#endif
+	if(t!=0) sdelay(t);
+
+	return;
 }
+#endif
 
-void sdelay(int time)
+void sdelay(int time )
 {
-	unsigned int    i;
+    unsigned int i;
 
-	while (time-- > 0) {
-		for (i = 0; i<N_PAUSE; i++);
-	}
+    while( time-- > 0 ) {
+        for( i=0 ; i<N_PAUSE ; i++ ) ;
+    }
+	return;
 }
