@@ -18,14 +18,19 @@ WWWDWWW
 WWWGWWW
 WWWWWWW
 */
-code /*const*/ char map1[7][7] = {
-	{ 'W', 'W', 'W', 'W', 'W', 'W', 'W' },
-	{ 'W', 'W', 'W', 'W', 'W', 'W', 'W' },
-	{ 'W', 'D', 'D', 'R', 'W', 'W', 'W' },
-	{ 'W', 'W', 'W', 'R', 'W', 'W', 'W' },
-	{ 'W', 'W', 'W', 'R', 'W', 'W', 'W' },
-	{ 'W', 'W', 'W', 'G', 'W', 'W', 'W' },
-	{ 'W', 'W', 'W', 'W', 'W', 'W', 'W' }
+code /*const*/ char map1[12][12] = {
+	{ 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W','W', 'W', 'W', 'W' },
+	{ 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W','W', 'W', 'W', 'W' },
+	{ 'W', 'R', 'R', 'D', 'W', 'W', 'W', 'W','W', 'W', 'W', 'W' },
+	{ 'W', 'W', 'W', 'D', 'W', 'W', 'W', 'W','W', 'W', 'W', 'W' },
+	{ 'W', 'W', 'W', 'D', 'W', 'W', 'W', 'W','W', 'W', 'W', 'W' },
+	{ 'W', 'W', 'W', 'G', 'W', 'W', 'W', 'W','W', 'W', 'W', 'W' },
+	{ 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W','W', 'W', 'W', 'W' },
+	{ 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W','W', 'W', 'W', 'W' },
+	{ 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W','W', 'W', 'W', 'W' },
+	{ 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W','W', 'W', 'W', 'W' },
+	{ 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W','W', 'W', 'W', 'W' },
+	{ 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W','W', 'W', 'W', 'W' }
 };
 /*const*/ unsigned char M1startX = 2;
 /*const*/ unsigned char M1startY = 1;
@@ -43,17 +48,22 @@ WWRRRDW
 WRUWWGW
 WWWWWWW
 */
-code /*const*/ char map2[7][7] = {
-	{ 'W', 'W', 'W', 'W', 'W', 'W', 'W' },
-	{ 'W', 'D', 'W', 'W', 'D', 'W', 'W' },
-	{ 'W', 'R', 'R', 'D', 'L', 'L', 'W' },
-	{ 'W', 'W', 'W', 'D', 'W', 'W', 'W' },
-	{ 'W', 'W', 'R', 'R', 'R', 'D', 'W' },
-	{ 'W', 'R', 'U', 'W', 'W', 'G', 'W' },
-	{ 'W', 'W', 'W', 'W', 'W', 'W', 'W' }
+code /*const*/ char map2[12][12] = {
+	{ 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W','W', 'W', 'W', 'W' },
+	{ 'W', 'D', 'W', 'W', 'D', 'W', 'W', 'W','W', 'W', 'W', 'W' },
+	{ 'W', 'R', 'R', 'D', 'L', 'L', 'W', 'W','W', 'W', 'W', 'W' },
+	{ 'W', 'W', 'W', 'D', 'W', 'W', 'W', 'W','W', 'W', 'W', 'W' },
+	{ 'W', 'W', 'R', 'R', 'R', 'D', 'W', 'W','W', 'W', 'W', 'W' },
+	{ 'W', 'R', 'U', 'W', 'W', 'G', 'W', 'W','W', 'W', 'W', 'W' },
+	{ 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W','W', 'W', 'W', 'W' },
+	{ 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W','W', 'W', 'W', 'W' },
+	{ 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W','W', 'W', 'W', 'W' },
+	{ 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W','W', 'W', 'W', 'W' },
+	{ 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W','W', 'W', 'W', 'W' },
+	{ 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W','W', 'W', 'W', 'W' }
 };
 /*const*/ unsigned char M2startX = 1;
-/*const*/ unsigned char M2startY = 1;
+/*const*/ unsigned char M2startY = 1; //fix this
 
 /*
 map 3 10x10
@@ -85,4 +95,4 @@ code /*const*/ char map3[12][12] = {
 	{ 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W' }
 	};
 	/*const*/ unsigned char M3startX = 2;
-	/*const*/ unsigned char M3startY = 10;
+	/*const*/ unsigned char M3startY = 10; //fix this
