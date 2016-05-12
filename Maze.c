@@ -31,8 +31,9 @@ char Up(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[7][7]);
 char Down(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[7][7]);
 char Left(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[7][7]);
 char Right(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[7][7]);
-void GameStart(/*const*/ char Map[7][7], /*const*/ unsigned char Start_x, /*const*/ unsigned char Start_y);
+char GameStart(/*const*/ char Map[7][7], /*const*/ unsigned char Start_x, /*const*/ unsigned char Start_y);
 void playMenu();
+void clearGame();
 
 //Looping Code for playing the game
 void main(void)
@@ -47,6 +48,7 @@ void main(void)
 	while (1)
 	{
 		playMenu();
+		clearGame();
 	}
 
 	return;
@@ -67,7 +69,7 @@ void cheatMap(/*const*/ char map_array[7][7], unsigned char arr_x, unsigned char
 
 		for (j = 0; j < arr_y; j++)
 		{
-			uart_transmit(map_array[i][j]);
+			uart_transmit(map_array[j][i]);
 		}
 		uart_transmit('\n');
 		uart_transmit('\r');//I think this will work?
@@ -87,9 +89,9 @@ void Redraw_Map(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[7
 		for (i; i < 3; i++)
 		{
 			LED1 = 0;
-			delay(1000);
+			delay(10000);
 			LED1 = 1;
-			delay(1000);
+			delay(10000);
 		}
 	}
 	else //Open
@@ -102,9 +104,9 @@ void Redraw_Map(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[7
 		for (i; i < 3; i++)
 		{
 			LED2 = 0;
-			delay(1000);
+			delay(10000);
 			LED2 = 1;
-			delay(1000);
+			delay(10000);
 		}
 	}
 	else //Open
@@ -117,9 +119,9 @@ void Redraw_Map(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[7
 		for (i; i < 3; i++)
 		{
 			LED3 = 0;
-			delay(1000);
+			delay(10000);
 			LED3 = 1;
-			delay(1000);
+			delay(10000);
 		}
 	}
 	else //Open
@@ -132,9 +134,9 @@ void Redraw_Map(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[7
 		for (i; i < 3; i++)
 		{
 			LED4 = 0;
-			delay(1000);
+			delay(10000);
 			LED4 = 1;
-			delay(1000);
+			delay(10000);
 		}
 	}
 	else //Open
@@ -147,9 +149,9 @@ void Redraw_Map(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[7
 		for (i; i < 3; i++)
 		{
 			LED5 = 0;
-			delay(1000);
+			delay(10000);
 			LED5 = 1;
-			delay(1000);
+			delay(10000);
 		}
 	}
 	else //Open
@@ -162,9 +164,9 @@ void Redraw_Map(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[7
 		for (i; i < 3; i++)
 		{
 			LED6 = 0;
-			delay(1000);
+			delay(10000);
 			LED6 = 1;
-			delay(1000);
+			delay(10000);
 		}
 	}
 	else //Open
@@ -177,9 +179,9 @@ void Redraw_Map(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[7
 		for (i; i < 3; i++)
 		{
 			LED7 = 0;
-			delay(1000);
+			delay(10000);
 			LED7 = 1;
-			delay(1000);
+			delay(10000);
 		}
 	}
 	else //Open
@@ -192,9 +194,9 @@ void Redraw_Map(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[7
 		for (i; i < 3; i++)
 		{
 			LED8 = 0;
-			delay(1000);
+			delay(10000);
 			LED8 = 1;
-			delay(1000);
+			delay(10000);
 		}
 	}
 	else //Open
@@ -207,9 +209,9 @@ void Redraw_Map(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[7
 		for (i; i < 3; i++)
 		{
 			LED9 = 0;
-			delay(1000);
+			delay(10000);
 			LED9 = 1;
-			delay(1000);
+			delay(10000);
 		}
 	}
 	else //Open
@@ -251,7 +253,7 @@ char Left(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[7][7]) 
 }
 //Check if Player is at goal
 
-void GameStart(/*const*/ char Map[7][7], /*const*/ unsigned char Start_x, /*const*/ unsigned char Start_y) {
+char GameStart(/*const*/ char Map[7][7], /*const*/ unsigned char Start_x, /*const*/ unsigned char Start_y) {
 	unsigned char GameOver = 0; //reset every new game
 	unsigned char Play_x = Start_x;	//Load starting positions
 	unsigned char Play_y = Start_y;
@@ -277,15 +279,10 @@ void GameStart(/*const*/ char Map[7][7], /*const*/ unsigned char Start_x, /*cons
 		}
 
 		delay(10);
-		uart_transmit(Play_x + 48);
-		uart_transmit('\n');
-		uart_transmit('\r');
-		uart_transmit(Play_y + 48);
-		uart_transmit('\n');
-		uart_transmit('\r');
+
 		//waiting for input
 		if (SW1 == 0) //Exit Button
-			GameOver = 0;
+			GameOver = 1;
 		else if (SW5 == 0) // Help Button
 			;//Help(Play_x, Play_y, Map[][]);
 		else if (SW2 == 0)
@@ -302,11 +299,13 @@ void GameStart(/*const*/ char Map[7][7], /*const*/ unsigned char Start_x, /*cons
 		if (Map[Play_x][Play_y] == 'G')
 			GameOver = 1;
 	}
-	return;
+	return GameOver;
 }
 
 void playMenu()
 {
+	char reset = 0;
+	
 	char* title = "Simon's A-MAZE-ing Adventures!";
 	char* star_bar = "*********************************";
 	char* menu1 = "Please select difficulty level: \n";
@@ -356,10 +355,10 @@ void playMenu()
 	uart_transmit('\r');
 	i = 0;
 
-	while (1)
+	while (reset == 0)
 	{
 		if (SW3 == 0)
-			GameStart(map1, 2, 1); //fix valuse to actual variables here
+			reset = GameStart(map1, 2, 1); //fix valuse to actual variables here
 		//victory
 		/*else if (SW7 == 0)
 			//GameStart(&(&map2[0][0]), M2startX, M2startY);
@@ -368,6 +367,21 @@ void playMenu()
 			//GameStart(&(&map3[0][0]), M3startX, M3startY);
 		//victory
 	}
+
+	return;
+}
+
+void clearGame()
+{
+	LED1 = 1;
+	LED2 = 1;
+	LED3 = 1;
+	LED4 = 1;
+	LED5 = 1;
+	LED6 = 1;
+	LED7 = 1;
+	LED8 = 1;
+	LED9 = 1;
 
 	return;
 }
