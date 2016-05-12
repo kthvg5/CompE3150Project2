@@ -32,10 +32,10 @@ DESC:    Gets a received 8-bit value from the UART
 RETURNS: Received data
 CAUTION: uart_init must be called first
 ************************************************************************/
-extern unsigned char uart_get
+/*extern unsigned char uart_get
   (
   void
-  );
+  );*/
 
 /***********************************************************************
 DESC:    Initializes UART for mode 1

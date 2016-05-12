@@ -52,7 +52,8 @@ void main(void)
 	P2M1 = 0;
 	P3M1 = 0;
 	TMOD = 0x11;
-	EA = 1;
+	/*EA = 1;
+	ET0 = 1;*/
 
 	uart_init();
 	
@@ -236,7 +237,11 @@ char Up(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[12][12]) 
 	if (Map[Play_x][Play_y - 1] != 'W')
 		Play_y -= 1;
 	else
+	{
 		wallHit();
+		delay(10000);
+		wallHit();
+	}
 	Redraw_Map(Play_x, Play_y, Map);
 	return Play_y;
 }
@@ -246,7 +251,11 @@ char Down(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[12][12]
 	if (Map[Play_x][Play_y + 1] != 'W')
 		Play_y += 1;
 	else
+	{
 		wallHit();
+		delay(10000);
+		wallHit();
+	}
 	Redraw_Map(Play_x, Play_y, Map);
 	return Play_y;
 }
@@ -256,7 +265,11 @@ char Right(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[12][12
 	if (Map[Play_x + 1][Play_y] != 'W')
 		Play_x += 1;
 	else
+	{
 		wallHit();
+		delay(10000);
+		wallHit();
+	}
 	Redraw_Map(Play_x, Play_y, Map);
 	return Play_x;
 }
@@ -266,7 +279,11 @@ char Left(unsigned char Play_x, unsigned char Play_y, /*const*/ char Map[12][12]
 	if (Map[Play_x - 1][Play_y] != 'W')
 		Play_x -= 1;
 	else
+	{
 		wallHit();
+		delay(10000);
+		wallHit();
+	}
 	Redraw_Map(Play_x, Play_y, Map);
 	return Play_x;
 }
@@ -278,6 +295,7 @@ char GameStart(/*const*/ char Map[12][12], /*const*/ unsigned char Start_x, /*co
 	unsigned char Play_y = Start_y;
 	unsigned char i = 0;
 	unsigned char k = 0;
+	char q = 0;
 
 	//to transmit a number, use value+48
 
@@ -311,6 +329,13 @@ char GameStart(/*const*/ char Map[12][12], /*const*/ unsigned char Start_x, /*co
 		if (Map[Play_x][Play_y] == 'G'){
 			GameOver = 1;
 			//win();
+			for (q; q < 5; q++)
+			{
+				wallHit();
+				delay(10000);
+				wallHit();
+				delay(10000);
+			}
 		}
 			
 	}
@@ -408,31 +433,13 @@ void Help(unsigned char Play_x, unsigned char Play_y, char Map[12][12]) {
 	if (Map[Play_x][Play_y] == 'U') {
 		i = 0;
 		for (i; i < 3; i++) {
-			LED6 = 0;
-			delay(10000);
-			LED6 = 1;
-			delay(10000);
-		}
-	}
-	else if (Map[Play_x][Play_y] == 'D') {
-		i = 0;
-		for (i; i < 3; i++) {
-			LED4 = 0;
-			delay(10000);
-			LED4 = 1;
-			delay(10000);
-		}
-	}
-	else if (Map[Play_x][Play_y] == 'L') {
-		i = 0;
-		for (i; i < 3; i++) {
 			LED2 = 0;
 			delay(10000);
 			LED2 = 1;
 			delay(10000);
 		}
 	}
-	else if (Map[Play_x][Play_y] == 'R') {
+	else if (Map[Play_x][Play_y] == 'D') {
 		i = 0;
 		for (i; i < 3; i++) {
 			LED8 = 0;
@@ -441,6 +448,26 @@ void Help(unsigned char Play_x, unsigned char Play_y, char Map[12][12]) {
 			delay(10000);
 		}
 	}
+	else if (Map[Play_x][Play_y] == 'L') {
+		i = 0;
+		for (i; i < 3; i++) {
+			LED4 = 0;
+			delay(10000);
+			LED4 = 1;
+			delay(10000);
+		}
+	}
+	else if (Map[Play_x][Play_y] == 'R') {
+		i = 0;
+		for (i; i < 3; i++) {
+			LED6 = 0;
+			delay(10000);
+			LED6 = 1;
+			delay(10000);
+		}
+	}
+
+	Redraw_Map(Play_x, Play_y, Map);
 
 }
 
@@ -519,17 +546,17 @@ code char  dur[4][20] = {	// Victory Fanfare
 	16, 16, 16, 16, 16, 8, 8, 16, 16, 16, 8, 8, 16, 16, 16, 16, 32, 0, 0, 0,
 	16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 24, 8, 32, 0, 0, 0, 0, 0, };
 
-void clk(void) interrupt 3 using 1
+/*void clk(void) interrupt 3 using 1
 {
 	TH1 = -(*pointer) >> 8;
 	TL1 = -(*pointer) & 0x0ff;
 	SPEAK = ~SPEAK;
-}
+}*/
 #endif
 
 void wallHit(void)
 {
-	ET0=0;//sets timer on
+	/*TR0=1;//sets timer on
 	pointer = 9;
 	TF0=0;
 	Delay250HZ();
@@ -537,13 +564,21 @@ void wallHit(void)
 	pointer = 61;
 	TF0=0;
 	Delay250HZ();
-	ET0=1;
+	ET0=1;*/
+	char i = 0;
+	for (i; i < 20; i++)
+	{
+		SPEAK = 0;
+		Delay250HZ();
+		SPEAK = ~SPEAK;
+		Delay250HZ();
+	}
+		
 	return;
 }
 
 void Delay250HZ(void)
 {
-	SPEAK=0;
 	TF0=0;
 	TL0=0x33;
 	TH0=0xFB;
@@ -552,7 +587,6 @@ void Delay250HZ(void)
 	{};
 	TR0=0;
 	TF0=0;
-	SPEAK=1;
 	return;
 }
 
@@ -586,8 +620,8 @@ void finish(char n,char d)
 {
     //ET1=0;
 	//TR1=0;
-	int dur_time;
-	int t;
+	int dur_time = 0;
+	int t = 0;
 	if (d==0) //boop
 	{
 		dur_time=delay_t; // delay_t is a global variable used by simon
@@ -621,12 +655,12 @@ void finish(char n,char d)
 }
 #endif
 
-void sdelay(int time )
+void sdelay(int time)
 {
     unsigned int i;
-
-    while( time-- > 0 ) {
+    while( time > 0 ) {
         for( i=0 ; i<N_PAUSE ; i++ ) ;
+		time--;
     }
 	return;
 }
