@@ -74,29 +74,28 @@ code char  dur[4][20] = {	// Victory Fanfare
 //need to define with sbit what speaker is, thought it was P1.7							
 void wallHit(void)
 {
-	ET0=1;//sets timer on
+	ET0=0;//sets timer on
 	pointer = 9;
-	TF0=1;
+	TF0=0;
 	Delay250HZ();
 	
 	pointer = 61;
-	TF0=1;
+	TF0=0;
 	Delay250HZ();
-	ET0=0;
+	ET0=1;
 }
 void Delay250HZ(void)
 {
 	P1.7=0;
 	TF0=0;
-	TR0=0;
 	TL0=0x33
 	TH0=0xFB
 	TR0=1;
-	while(TF0 != 0)
+	while(TF0 != 1)
 	{};
 	TR0=0;
 	TF0=0;
-	P1.7=0;
+	P1.7=1;
 }
 
 void win(void)
@@ -106,6 +105,7 @@ void win(void)
 	
 	i=0;
 	j=0;
+	
 	do 
 	{
 		n=notes[j][i];  // read next note and duration
@@ -120,12 +120,12 @@ void win(void)
 	i=0;
 	j++;
 	} while (j<end);
-	
 }
 
 void finish(char n,char d){
 #ifdef SPEAKER
-	
+	ET1=0;
+	TR1=0;
 	int dur_time;
 	int t;
 	if (d==0)
@@ -145,27 +145,27 @@ void finish(char n,char d){
         /* Enable timer */
         TH1=-(*pointer)>>8;
         TL1=-(*pointer)&0x0ff;
-        TR1=1;
-        ET1=1;
+        TR1=0;
+        ET1=0;
     }
 
     sdelay(dur_time);
 
     /* Disable timer */
-    ET1=0;
-    TR1=0;
+    ET1=1;
+    TR1=1;
 
 	if(t!=0) sdelay(t);
 #else
     sdelay(delay_t);
 #endif
 }		 
+
 void sdelay(int time )
 {
-    unsigned int    i;
+    unsigned int i;
 
     while( time-- > 0 ) {
         for( i=0 ; i<N_PAUSE ; i++ ) ;
     }
 }
-
